@@ -1,6 +1,7 @@
 package frozenstream.readstar.data;
 
 import frozenstream.readstar.Constants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
@@ -13,12 +14,18 @@ public class StarManager {
     private static final int[] primary_id = new int[32768];
     private static final Vec3[] star_pos = new Vec3[32768];
 
+    private static boolean star_prepared = false;
+
+    private static final Map<String, Integer> star_id_map = new HashMap<>();
+
     public static StarData getStarData(int id) {
         return star[id];
     }
 
     public static void updateClientData(List<StarData> newData) {
-        Map<String, Integer> star_id_map = new HashMap<>();
+        star_id_map.clear();
+
+
         size = newData.size();
         int main_star_id = -1;
 
@@ -46,6 +53,7 @@ public class StarManager {
         }
     }
 
+    // 递归获取星体位置
     private static void updateStar(int id, double t) {
         if (star_pos[id] != null) return;
         if (primary_id[id] == -1) {
@@ -61,7 +69,11 @@ public class StarManager {
         for (int i = 0; i < size; i++) {
             updateStar(i, t);
         }
-        for (int i = 0; i < size; i++) Constants.LOG.info("星体 {} 的位置为: {}", star[i].name(), star_pos[i]);
+
+        if(size > 0) {
+            for (int i = 0; i < size; i++) Constants.LOG.info("星体 {} 的位置为: {}", star[i].name(), star_pos[i]);
+            star_prepared = true;
+        }
     }
 
     /**
@@ -83,13 +95,19 @@ public class StarManager {
         return term1.add(term2);
     }
 
-    public static ArrayList<Vec3> getStarInSky(int id, double t) {
+    public static ArrayList<Vec3> getStarInSky(String name) {
+        if(!star_prepared) {
+            Constants.LOG.warn("数据未准备好，请稍后再试...");
+            return new ArrayList<>();
+        }
+        ArrayList<Vec3> pos = new ArrayList<>();
+        int id = star_id_map.get(name);
+
         Vec3 axis = new Vec3(star[id].axis().get(0), star[id].axis().get(1), star[id].axis().get(2));
         if(axis.length() == 0)axis = new Vec3(0, 1, 0);
         else axis = axis.normalize();
         String orbiting = star[id].orbiting();
 
-        ArrayList<Vec3> insky = new ArrayList<Vec3>();
 
         if (orbiting.equals("Centre") || orbiting.equals("None")) {
             Vec3 prim_vec = new Vec3(1,0,0);
@@ -101,33 +119,45 @@ public class StarManager {
             Vec3 y_axis = cur_vec.normalize();
             Vec3 z_axis = axis.normalize();
 
-            // 应用矩阵变换以获得局部坐标系中的坐标
-            double x = star_pos[id].dot(x_axis);
-            double y = star_pos[id].dot(y_axis);
-            double z = star_pos[id].dot(z_axis);
+            for (int other_id = 0; other_id < size; other_id++) {
+                if (id == other_id) continue;
+                // 应用矩阵变换以获得局部坐标系中的坐标
+                Vec3 rel_pos = star_pos[other_id].subtract(star_pos[id]);
+                double x = rel_pos.dot(x_axis);
+                double y = rel_pos.dot(y_axis);
+                double z = rel_pos.dot(z_axis);
 
-            insky.add(new Vec3(x, y, z));
+                pos.add(new Vec3(x, y, z));
+            }
+            return pos;
         }
-        else {
-            Vec3 prim_vec = star_pos[primary_id[id]].subtract(star_pos[id]);
-            double n = axis.dot(prim_vec);
-            Vec3 noon_vec = prim_vec.subtract(axis.scale(n));
 
-            double theta = (t-6000)/12000*Math.PI;
-            Vec3 cur_vec = rotateVectorAroundAxis(noon_vec, axis, theta);
+        Vec3 prim_vec = star_pos[primary_id[id]].subtract(star_pos[id]);
+        double n = axis.dot(prim_vec);
+        Vec3 noon_vec = prim_vec.subtract(axis.scale(n));
 
-            // 计算叉积以获得x轴方向
-            Vec3 x_axis = axis.cross(cur_vec).normalize();
-            Vec3 y_axis = cur_vec.normalize();
-            Vec3 z_axis = axis.normalize();
+        long daytime = Minecraft.getInstance().level.getDayTime();
+        double theta = (double) (daytime - 6000) /12000*Math.PI;
+        Vec3 cur_vec = rotateVectorAroundAxis(noon_vec, axis, theta);
 
+        // 计算叉积以获得x轴方向
+        Vec3 x_axis = axis.cross(cur_vec).normalize();
+        Vec3 y_axis = cur_vec.normalize();
+        Vec3 z_axis = axis.normalize();
+
+        for (int other_id = 0; other_id < size; other_id++) {
+            if (id == other_id) continue;
             // 应用矩阵变换以获得局部坐标系中的坐标
-            double x = star_pos[id].dot(x_axis);
-            double y = star_pos[id].dot(y_axis);
-            double z = star_pos[id].dot(z_axis);
+            Vec3 rel_pos = star_pos[other_id].subtract(star_pos[id]);
+            double x = rel_pos.dot(x_axis);
+            double y = rel_pos.dot(y_axis);
+            double z = rel_pos.dot(z_axis);
 
-            insky.add(new Vec3(x, y, z));
+            Constants.LOG.info("star {} get position {} {} {}",star[other_id].name(), x, y, z);
+            pos.add(new Vec3(x, y, z));
         }
-        return insky;
+        return pos;
     }
+
+
 }

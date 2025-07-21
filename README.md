@@ -1,25 +1,17 @@
 
-Installation information
+简介 Introduction
 =======
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+NeoForge Minecraft 1.21.1
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+这个模组将更加真实的星体运行逻辑加入到游戏中。
+This mod add more realistic celestial body operation logic to the game.
+加入了单体引力的星系模型，星体的位置完全由开普勒定律推导。
+A galaxy model incorporating single body gravity, where the positions of celestial bodies are entirely derived from Kepler's laws.
+加入了更真实的行星自转和公转效果，现在天空中的星体轨迹不再一成不变。
+With the addition of more realistic planetary rotation and revolution effects, the trajectories of celestial bodies in the sky are no longer fixed.
+加入了更高级的望远镜，现在它可以缩放并且显示星体信息。
+Advanced telescopes have been added, which can now zoom in and display celestial body information.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+没有使用mixin
+No mixin used

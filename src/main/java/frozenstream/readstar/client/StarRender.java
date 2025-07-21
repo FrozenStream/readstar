@@ -4,8 +4,10 @@ import frozenstream.readstar.Constants;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import frozenstream.readstar.data.StarManager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,6 +20,9 @@ import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
+
+import java.util.ArrayList;
 
 
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
@@ -72,12 +77,10 @@ public class StarRender {
         // 定义时间段（单位：游戏刻）
         float alpha = getAlpha(level);
 
-        RenderStar( f, alpha, 45, 0, 45);
-        RenderStar( f, alpha, 30, 60, 27);
-        RenderStar( f, alpha, 34, 2, 24);
-        RenderStar( f, alpha, 45, 11, 64);
-        RenderStar( f, alpha, 64, 22, 64);
-        RenderStar( f, alpha, 33, 5, 2);
+        ArrayList<Vec3> starpos = StarManager.getStarInSky("Earth");
+        for (Vec3 pos : starpos) {
+            RenderStar(20,alpha,rotateVectorTo(pos));
+        }
 
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableBlend();
@@ -85,18 +88,14 @@ public class StarRender {
 
     }
 
-    private static void RenderStar(float size, float alpha, float XRot, float YRot, float ZRot) {
+    private static void RenderStar(float size, float alpha, Matrix4f Matrix) {
         Matrix4f tmpMatrix = new Matrix4f(originMatrix);
-
-        tmpMatrix.rotate(Axis.YP.rotationDegrees(YRot));
-        tmpMatrix.rotate(Axis.XP.rotationDegrees(XRot));
-        tmpMatrix.rotate(Axis.ZP.rotationDegrees(ZRot));
-        tmpMatrix.translate(0, 0, -100);
+        tmpMatrix.mul(Matrix);
         BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        bufferBuilder.addVertex(tmpMatrix, -size, -size, 0).setUv(0, 0).setColor(1.0f, 1.0f, 1.0f, alpha);
-        bufferBuilder.addVertex(tmpMatrix, size, -size, 0).setUv(1, 0).setColor(1.0f, 1.0f, 1.0f, alpha);
-        bufferBuilder.addVertex(tmpMatrix, size, size, 0).setUv(1, 1).setColor(1.0f, 1.0f, 1.0f, alpha);
-        bufferBuilder.addVertex(tmpMatrix, -size, size, 0).setUv(0, 1).setColor(1.0f, 1.0f, 1.0f, alpha);
+        bufferBuilder.addVertex(tmpMatrix, size, size, 100).setUv(1, 1).setColor(1.0f, 1.0f, 1.0f, alpha);
+        bufferBuilder.addVertex(tmpMatrix, size, -size, 100).setUv(0, 1).setColor(1.0f, 1.0f, 1.0f, alpha);
+        bufferBuilder.addVertex(tmpMatrix, -size, -size, 100).setUv(0, 0).setColor(1.0f, 1.0f, 1.0f, alpha);
+        bufferBuilder.addVertex(tmpMatrix, -size, size, 100).setUv(1, 0).setColor(1.0f, 1.0f, 1.0f, alpha);
         BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
     }
 
@@ -136,5 +135,62 @@ public class StarRender {
             if(value>=min)return (float) (value - min) / length;
             else return (float) (value + (long) 24000 -min) / length;
         }
+    }
+
+    public static Matrix4f rotateVectorTo(Vec3 target) {
+        // 归一化目标向量
+        Vector3f v2 = new Vector3f((float) target.x, (float) target.y, (float) target.z).normalize();
+        // 原始向量 (0, 0, -1)
+        Vector3f v1 = new Vector3f(0, 0, -1);
+
+        // 计算旋转轴
+        Vector3f axis = new Vector3f();
+        v1.cross(v2, axis);
+
+        // 计算旋转角度的余弦值
+        float cosTheta = v1.dot(v2);
+
+        // 如果向量已经对齐，直接返回单位矩阵
+        if (cosTheta >= 1.0f - 1e-6f) {
+            return new Matrix4f();
+        }
+
+        // 如果向量是反向的，绕任意垂直轴旋转180度
+        if (cosTheta <= -1.0f + 1e-6f) {
+            Vector3f perpendicularAxis = new Vector3f(1, 0, 0);
+            return new Matrix4f().rotate((float) Math.PI, perpendicularAxis);
+        }
+
+        // 计算旋转矩阵
+        float kx = axis.x;
+        float ky = axis.y;
+        float kz = axis.z;
+        float s = (float) Math.sqrt(1 - cosTheta * cosTheta);
+
+
+        // 构造旋转矩阵
+        Matrix4f rotationMatrix = new Matrix4f();
+
+        rotationMatrix.m00(cosTheta + kx * kx * (1 - cosTheta));
+        rotationMatrix.m01(kx * ky * (1 - cosTheta) - kz * s);
+        rotationMatrix.m02(kx * kz * (1 - cosTheta) + ky * s);
+        rotationMatrix.m03(0);
+
+        rotationMatrix.m10(ky * kx * (1 - cosTheta) + kz * s);
+        rotationMatrix.m11(cosTheta + ky * ky * (1 - cosTheta));
+        rotationMatrix.m12(ky * kz * (1 - cosTheta) - kx * s);
+        rotationMatrix.m13(0);
+
+        rotationMatrix.m20(kz * kx * (1 - cosTheta) - ky * s);
+        rotationMatrix.m21(kz * ky * (1 - cosTheta) + kx * s);
+        rotationMatrix.m22(cosTheta + kz * kz * (1 - cosTheta));
+        rotationMatrix.m23(0);
+
+        rotationMatrix.m30(0);
+        rotationMatrix.m31(0);
+        rotationMatrix.m32(0);
+        rotationMatrix.m33(1);
+
+        return rotationMatrix;
     }
 }

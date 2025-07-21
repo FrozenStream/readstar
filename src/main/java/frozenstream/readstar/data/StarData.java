@@ -98,8 +98,6 @@ public record StarData(
 
         double Z = (sin_w * sin_i) * xp + (cos_w * sin_i) * yp;
 
-        Constants.LOG.info("{} get position {} {} {}", name, X, Y, Z);
-
         return new Vec3(X, Y, Z);
     }
 }

@@ -3,6 +3,9 @@ package frozenstream.readstar.data;
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.toml.TomlParser;
 import frozenstream.readstar.Constants;
+import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,7 +69,7 @@ public class StarLoader {
             Config config = parser.parse(reader);
             var starDataArray = config.get("StarData");
             if (!(starDataArray instanceof List<?>)) {
-                Constants.LOG.info("StarData格式错误：没有[[StarData]]\nStarData Config Format Error: No StarData found.");
+                Constants.LOG.info("StarData格式错误：没有[[StarData]]");
                 throw new RuntimeException("StarData Config Format Error: No [[StarData]] found.");
             }
             for (Object starData : (List<?>) starDataArray) {
@@ -76,7 +79,8 @@ public class StarLoader {
                     String description = starConfig.get("description");
                     String orbiting = starConfig.get("orbiting");
                     double mass = starConfig.get("mass");
-                    ArrayList<Double> axis = starConfig.get("axis");
+                    ArrayList<Double> tmp = starConfig.get("axis");
+                    Vec3 axis = new Vec3(tmp.get(0), tmp.get(1), tmp.get(2));
                     double a = starConfig.get("a");
                     double e = starConfig.get("e");
                     double i = starConfig.get("i");
@@ -84,7 +88,7 @@ public class StarLoader {
                     double o = starConfig.get("o");
                     double M0 = starConfig.get("M0");
 
-                    StarData data = new StarData(name, description, orbiting, mass, axis, a, e, i, w, o, M0);
+                    StarData data = new StarData(name, description, orbiting, (float) mass, axis, a, e, i, w, o, M0);
                     registerStar(data);
                 }
             }

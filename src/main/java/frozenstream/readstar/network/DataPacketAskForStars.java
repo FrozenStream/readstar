@@ -1,15 +1,14 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.PlanetManager;
 import frozenstream.readstar.data.StarData;
-import frozenstream.readstar.data.StarManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,11 +22,11 @@ public record DataPacketAskForStars(List<StarData> data) implements PacketBase {
                     for (StarData star : starDataList) {
                         ByteBufCodecs.STRING_UTF8.encode(buf, star.name());
                         ByteBufCodecs.STRING_UTF8.encode(buf, star.description());
-                        ByteBufCodecs.STRING_UTF8.encode(buf, star.orbiting());
-                        buf.writeDouble(star.mass());
-                        buf.writeDouble(star.axis().get(0));
-                        buf.writeDouble(star.axis().get(1));
-                        buf.writeDouble(star.axis().get(2));
+                        ByteBufCodecs.STRING_UTF8.encode(buf, star.parent());
+                        buf.writeFloat(star.mass());
+                        buf.writeDouble(star.axis().x);
+                        buf.writeDouble(star.axis().y);
+                        buf.writeDouble(star.axis().z);
                         buf.writeDouble(star.a());
                         buf.writeDouble(star.e());
                         buf.writeDouble(star.i());
@@ -43,7 +42,7 @@ public record DataPacketAskForStars(List<StarData> data) implements PacketBase {
                         String name = ByteBufCodecs.STRING_UTF8.decode(buf);
                         String description = ByteBufCodecs.STRING_UTF8.decode(buf);
                         String orbiting = ByteBufCodecs.STRING_UTF8.decode(buf);
-                        double mass = buf.readDouble();
+                        float mass = buf.readFloat();
                         double axis_x = buf.readDouble();
                         double axis_y = buf.readDouble();
                         double axis_z = buf.readDouble();
@@ -54,10 +53,7 @@ public record DataPacketAskForStars(List<StarData> data) implements PacketBase {
                         double o = buf.readDouble();
                         double M0 = buf.readDouble();
 
-                        ArrayList<Double> axis = new ArrayList<>(){};
-                        axis.add(axis_x);
-                        axis.add(axis_y);
-                        axis.add(axis_z);
+                        Vec3 axis = new Vec3(axis_x, axis_y, axis_z);
 
                         dataList.add(new StarData(name, description, orbiting, mass, axis, a, e, i, w, o, M0));
                     }
@@ -74,8 +70,7 @@ public record DataPacketAskForStars(List<StarData> data) implements PacketBase {
     public void handle(Player player) {
         // 客户端收到数据包后更新本地数据
         Constants.LOG.info("客户端接收到数据包，更新本地数据...");
-        StarManager.updateClientData(this.data);
-        StarManager.showData();
+        PlanetManager.init(this.data);
     }
 
     @Override

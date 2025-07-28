@@ -1,27 +1,9 @@
 package frozenstream.readstar.data;
 
-import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
-/**
- * @param name          星体名称
- * @param description   星体描述
- * @param parent      环绕星体 【特殊值】 "Centre":无环绕（居中）  "None":无环绕（天球）
- * @param mass          星体质量
- * @param axis          星体轴向向量，以XY轴旋转量描述
- * @param a             半长轴
- * @param e             偏心率
- * @param i             轨道倾角（单位：弧度）
- * @param w             近心点幅角（单位：弧度）
- * @param o             升交点经度（单位：弧度）
- * @param M0            初始平近点角（单位：弧度）
- * 若轨道为天球，取平近点角M始终为M0
- */
-public record StarData(
-        String name,
-        String description,
-        String parent,
-        float mass,
-        Vec3 axis,
+public record Oribit(
         double a,
         double e,
         double i,
@@ -62,12 +44,12 @@ public record StarData(
 
     /**
      * 计算星体的位置
-     * @param Mass  父星星体质量
-     * @param t     时间（秒）
-     * @return      星体的 XYZ 坐标
+     *
+     * @param Mass 父星星体质量
+     * @param t    时间（秒）
+     * @return 星体的 XYZ 坐标
      */
-    public Vec3 calPosition(double Mass, double t) {
-        if (parent.equals("None")) t = 0;
+    public Vector3fc calPosition(double Mass, double t) {
         double M = M0 + mean_anomaly_angular_velocity(Mass, a) * t;
         M = M % (2 * Math.PI); // 归一化到 [0, 2π)
 
@@ -94,6 +76,6 @@ public record StarData(
 
         double Z = (sin_w * sin_i) * xp + (cos_w * sin_i) * yp;
 
-        return new Vec3(X, Z, Y);
+        return new Vector3f((float) X, (float) Z, (float) Y);
     }
 }

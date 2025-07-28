@@ -17,7 +17,7 @@ public class ClientDataEvent {
         if (++tickCounter >= UPDATE_INTERVAL_TICKS) {
             tickCounter = 0;
             double currentTime = System.currentTimeMillis() / 1000.0; // 时间单位转换为秒
-            StarManager.updateStars(currentTime);
+            PlanetManager.updatePositions(currentTime);
         }
     }
 

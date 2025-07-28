@@ -1,7 +1,7 @@
 #
 # @param name          星体名称
 # @param description   星体描述
-# @param orbiting      环绕星体 【特殊值】 "Centre":无环绕（居中）  "None":无环绕（天球）
+# @param parent      环绕星体 【特殊值】 "Centre":无环绕（居中）  "None":无环绕（天球）
 # @param mass          星体质量
 # @param axis          星体轴向向量，以XY轴旋转量描述
 # 轨道六要素：计算行星在以主星为惯性系中的三维位置，若轨道不存在，则M始终等于M0
@@ -14,12 +14,12 @@
 #
 
 [[StarData]]
-name = "Sun"
-description = "Sun"
-orbiting = "Centre"
-mass = 2e30
+name = "Moon"
+description = "Moon"
+orbiting = "Earth"
+mass = 7e22
 axis = [0.0, 0.0, 0.0]
-a = 0.0
+a = 4e8
 e = 0.0
 i = 0.0
 w = 0.0
@@ -39,26 +39,16 @@ w = 0.0
 o = 0.0
 M0 = 0.0
 
-[[StarData]]
-name = "Moon"
-description = "Moon"
-orbiting = "Earth"
-mass = 7e22
-axis = [0.0, 0.0, 0.0]
-a = 4e8
-e = 0.0
-i = 0.0
-w = 0.0
-o = 0.0
-M0 = 0.0
+
+
 
 [[StarData]]
-name = "Betelgeuse"
-description = "Alpha Orionis"
-orbiting = "None"
-mass = 7e22
+name = "Sun"
+description = "Sun"
+orbiting = "Centre"
+mass = 2e30
 axis = [0.0, 0.0, 0.0]
-a = 4e8
+a = 0.0
 e = 0.0
 i = 0.0
 w = 0.0

@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.PlanetManager;
+import frozenstream.readstar.data.StarManager;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+
+import java.util.ArrayList;
 
 
 public class CustomOverworldEffects extends DimensionSpecialEffects {
@@ -39,6 +43,8 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
         createStars();
         createLightSky();
         createDarkSky();
+
+        StarManager.init(new ArrayList<>());
     }
 
     private void createDarkSky() {
@@ -196,15 +202,22 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
 //                bufferbuilder1.addVertex(matrix4f1, f12, -100.0F, -f12).setUv(f13, f7);
 //                bufferbuilder1.addVertex(matrix4f1, -f12, -100.0F, -f12).setUv(f8, f7);
 //                BufferUploader.drawWithShader(bufferbuilder1.buildOrThrow());
+
+                posestack.popPose();
+                posestack.pushPose();
+                Matrix4f mat = StarManager.observeFrom(PlanetManager.getPlanet("Earth"), level.getDayTime());
+                posestack.mulPose(mat);
                 float f10 = level.getStarBrightness(partialTick) * f11;
                 if (f10 > 0.0F) {
                     RenderSystem.setShaderColor(f10, f10, f10, f10);
                     FogRenderer.setupNoFog();
-                    this.starBuffer.bind();
-                    this.starBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+                    StarManager.starsBuffer.bind();
+                    StarManager.starsBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
                     VertexBuffer.unbind();
                     skyFogSetup.run();
                 }
+                mat.transpose();
+                Vector3f vec1 = mat.transformPosition(camera.getLookVector());
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.disableBlend();

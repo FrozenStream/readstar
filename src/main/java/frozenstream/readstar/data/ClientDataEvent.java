@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientDataEvent {
     private static int tickCounter = 0;
-    private static final int UPDATE_INTERVAL_TICKS = 10; // 每100 ticks更新一次
+    private static final int UPDATE_INTERVAL_TICKS = 1; // 每100 ticks更新一次
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {

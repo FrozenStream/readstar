@@ -37,7 +37,7 @@ public class Events {
 
         Level level = (Level) event.getLevel();
         ResourceKey<Level> dimensionType = level.dimension();
-        if(dimensionType == Level.OVERWORLD) level.setDayTimePerTick(10);
+        if(dimensionType == Level.OVERWORLD) level.setDayTimePerTick(0.1f);
 
     }
 }

@@ -2,13 +2,17 @@ package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.PlanetManager;
+import frozenstream.readstar.data.Star;
 import frozenstream.readstar.data.StarData;
+import frozenstream.readstar.data.StarManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 

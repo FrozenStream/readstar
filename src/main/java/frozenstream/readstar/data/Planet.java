@@ -63,6 +63,19 @@ public class Planet {
         this.parent = planet.parent;
     }
 
+    public void updatePosition(double time){
+        if(parent.mass == 0) {
+            position = new Vector3f(0, 0, 0);
+            pos_updated = true;
+            return;
+        }
+        if(!parent.pos_updated)parent.updatePosition(time);
+        parent.position.add(oribit.calPosition(parent.mass, time), position);
+        pos_updated = true;
+
+        updateNoonSkyVec();
+    }
+
     public void updateNoonSkyVec(){
         noon_sky_vec = new Vector3f();
         Vector3f parent_vec = new Vector3f();
@@ -75,9 +88,9 @@ public class Planet {
     }
 
     public Vector3f updateCurrentSkyVec(long tick){
+        if(noon_sky_vec == null)return new Vector3f(1,0,0);
         current_sky_vec = new Vector3f();
         float theta = (tick - 6000) * PlanetManager.PI / 12000;
-        Constants.LOG.info("theta: {}", theta);
         noon_sky_vec.rotateAxis(theta, axis.x, axis.y, axis.z, current_sky_vec);
         return new Vector3f(current_sky_vec);
     }

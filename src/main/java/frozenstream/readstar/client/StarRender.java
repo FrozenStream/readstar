@@ -72,9 +72,9 @@ public class StarRender {
 
         if(starpos.size() > 1) {
             StarDataInSky star = starpos.get(0);
-            RenderStar(20, 1f, rotateTo(star.x(), star.y(), star.z()), SUN_LOCATION);
-            star = starpos.get(1);
             RenderStar(20, 1f, rotateTo(star.x(), star.y(), star.z()), MOON_LOCATION);
+            star = starpos.get(1);
+            RenderStar(20, 1f, rotateTo(star.x(), star.y(), star.z()), SUN_LOCATION);
         }
 
         RenderSystem.defaultBlendFunc();

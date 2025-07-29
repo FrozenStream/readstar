@@ -2,10 +2,13 @@ package frozenstream.readstar.data;
 
 import frozenstream.readstar.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class PlanetManager {
     public static final float PI = 3.14159265358979f;
@@ -31,6 +34,10 @@ public class PlanetManager {
         checkAndDisplay();
     }
 
+    public static Planet getPlanet(String name) {
+        return name_map.get(name);
+    }
+
     private static void checkAndDisplay() {
         boolean flag = false;
         for (Planet planet : name_map.values())
@@ -44,25 +51,11 @@ public class PlanetManager {
     }
 
 
-    private static void updatePosition(Planet p, double t){
-        if(p.parent.mass == 0) {
-            p.position = new Vector3f(0, 0, 0);
-            p.pos_updated = true;
-            return;
-        }
-        if(!p.parent.pos_updated)updatePosition(p.parent, t);
-        p.parent.position.add(p.oribit.calPosition(p.parent.mass, t), p.position);
-        p.pos_updated = true;
-    }
-
     public static void updatePositions(double t) {
         for (Planet planet : name_map.values()) planet.pos_updated = false;
         for (Planet planet : name_map.values())
-            if (!planet.pos_updated) updatePosition(planet, t);
-        if (size > 0) {
-            for(Planet p : name_map.values())Constants.LOG.info("Planet {} at: {}", p.name, p.position);
-            star_prepared = true;
-        }
+            if (!planet.pos_updated) planet.updatePosition(t);
+        if (size > 0) star_prepared = true;
     }
 
     public static ArrayList<StarDataInSky> getInSky(String name) {
@@ -76,7 +69,6 @@ public class PlanetManager {
         long daytime = 0;
         if (Minecraft.getInstance().level != null) daytime = Minecraft.getInstance().level.getDayTime();
 
-        mainP.updateNoonSkyVec();
         Vector3f cur_vec = mainP.updateCurrentSkyVec(daytime);
 
         // 计算叉积以获得x轴方向

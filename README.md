@@ -2,8 +2,8 @@
 简介 Introduction
 =======
 
-NeoForge Minecraft 1.21.1
-
+NeoForge Minecraft 1.21.1\
+\
 这个模组将更加真实的星体运行逻辑加入到游戏中。\
 This mod add more realistic celestial body operation logic to the game.\
 加入了单体引力的星系模型，星体的位置完全由开普勒定律推导。\

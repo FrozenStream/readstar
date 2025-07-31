@@ -16,9 +16,9 @@ public class PlanetManager {
     private static int size = 0;
     private static final Map<String, Planet> name_map = new TreeMap<>();
 
-    public static void init(List<StarData> starList) {
+    public static void init(List<PlanetPacket> starList) {
         size = starList.size();
-        for(StarData star : starList){
+        for(PlanetPacket star : starList){
             String name = star.name();
             Oribit oribit = new Oribit(star.a(), star.e(), star.i(), star.w(),star.o(), star.M0());
             String parent_name = star.parent();
@@ -51,7 +51,7 @@ public class PlanetManager {
     }
 
 
-    public static void updatePositions(double t) {
+    public static void updatePositions(long t) {
         for (Planet planet : name_map.values()) planet.pos_updated = false;
         for (Planet planet : name_map.values())
             if (!planet.pos_updated) planet.updatePosition(t);

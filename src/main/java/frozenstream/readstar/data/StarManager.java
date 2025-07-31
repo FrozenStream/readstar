@@ -23,9 +23,9 @@ public class StarManager {
     private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
 
 
-    public static void init(List<Star> starList) {
-        for (Star star : starList) {
-            stars[starCount] = star;
+    public static void init(List<StarPacket> starList) {
+        for (StarPacket star : starList) {
+            stars[starCount] = new Star(star.name(), star.description(), star.position().toVector3f());
             starCount++;
         }
         buildStarsBuffer();
@@ -53,7 +53,6 @@ public class StarManager {
     }
 
     public static Matrix4f observeFrom(Planet planet, long t){
-        Constants.LOG.info("Observing from {}", t);
         Matrix4f mat = new Matrix4f();
 
         // 获取行星的轴向和当前天空向量

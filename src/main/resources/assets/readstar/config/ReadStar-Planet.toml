@@ -13,7 +13,7 @@
 # @param M0            初始平近点角（单位：弧度）
 #
 
-[[StarData]]
+[[PlanetData]]
 name = "Moon"
 description = "Moon"
 orbiting = "Earth"
@@ -26,7 +26,7 @@ w = 0.0
 o = 0.0
 M0 = 0.0
 
-[[StarData]]
+[[PlanetData]]
 name = "Earth"
 description = "Earth"
 orbiting = "Sun"
@@ -42,7 +42,7 @@ M0 = 0.0
 
 
 
-[[StarData]]
+[[PlanetData]]
 name = "Sun"
 description = "Sun"
 orbiting = "Centre"

@@ -7,7 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
     @SubscribeEvent
     public static void onRegisterDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {

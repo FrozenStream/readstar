@@ -6,7 +6,7 @@ import org.joml.Vector3f;
 public class Planet {
     public String name;
     public String description;
-    float mass;
+    double mass;
     Vector3f position;
     boolean pos_updated;
     Vector3f axis;
@@ -36,7 +36,7 @@ public class Planet {
         this.parent = VOID;
     }
 
-    public Planet(String name, String description, float mass, Vector3f axis, Oribit oribit, Planet parent) {
+    public Planet(String name, String description, double mass, Vector3f axis, Oribit oribit, Planet parent) {
         this.name = name;
         this.description = description;
         this.mass = mass;

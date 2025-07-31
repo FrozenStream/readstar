@@ -32,6 +32,8 @@ public class Constants {
 //    public static final CarryConfig.Common COMMON_CONFIG = new CarryConfig.Common();
 //    public static final CarryConfig.Client CLIENT_CONFIG = new CarryConfig.Client();
 
-    public static final ResourceLocation PACKET_ID_STAR_ASK =  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "star_ask");
-
+    public static final ResourceLocation PACKET_ID_PLANET_ASK = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "planet_ask");
+    public static final ResourceLocation PACKET_ID_STAR_ASK = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "star_ask");
+    public static final ResourceLocation PACKET_ID_TIME_ASK = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "time_ask");
+    ;
 }

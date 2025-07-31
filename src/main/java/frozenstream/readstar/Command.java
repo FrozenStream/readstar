@@ -3,9 +3,10 @@ package frozenstream.readstar;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import frozenstream.readstar.data.StarData;
-import frozenstream.readstar.data.StarLoader;
-import frozenstream.readstar.network.DataPacketAskForStars;
+import frozenstream.readstar.data.PlanetPacket;
+import frozenstream.readstar.data.Loader;
+import frozenstream.readstar.data.TimeManager;
+import frozenstream.readstar.network.DataPacketAskForPlanets;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -25,17 +26,22 @@ public class Command {
         LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("readstar")
             .then(Commands.literal("reload")
                 .executes(context -> {
-                    StarLoader.loadStarData(context.getSource().getServer().getServerDirectory().toAbsolutePath());
+                    Loader.loadData(context.getSource().getServer().getServerDirectory().toAbsolutePath());
                     ServerPlayer player = context.getSource().getPlayer();
-                    DataPacketAskForStars packet = new DataPacketAskForStars(StarLoader.getStar_data());
-                    Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_STAR_ASK, packet, player);
+                    DataPacketAskForPlanets packet = new DataPacketAskForPlanets(Loader.getPlanet_list());
+                    Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_PLANET_ASK, packet, player);
                     return com.mojang.brigadier.Command.SINGLE_SUCCESS;
                 }))
             .then(Commands.literal("show")
                 .executes(context -> {
-                    for (StarData starData: StarLoader.getStar_data()) {
+                    for (PlanetPacket starData: Loader.getPlanet_list()) {
                         context.getSource().sendSuccess(() -> Component.literal(starData.toString()), false);
                     }
+                    return com.mojang.brigadier.Command.SINGLE_SUCCESS;
+                }))
+            .then(Commands.literal("reset")
+                .executes(context -> {
+                    TimeManager.reset();
                     return com.mojang.brigadier.Command.SINGLE_SUCCESS;
                 }));
 

@@ -217,7 +217,7 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                     skyFogSetup.run();
                 }
                 mat.transpose();
-                Vector3f vec1 = mat.transformPosition(camera.getLookVector());
+                Vector3f realLookVec = mat.transformPosition(camera.getLookVector());
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.disableBlend();

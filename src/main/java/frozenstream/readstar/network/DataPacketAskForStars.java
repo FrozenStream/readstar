@@ -53,7 +53,7 @@ public record DataPacketAskForStars(List<StarPacket> data) implements PacketBase
     @Override
     public void handle(Player player) {
         // 客户端收到数据包后更新本地数据
-        Constants.LOG.info("客户端接收到数据包，更新本地数据...");
+        Constants.LOG.info("客户端接收到 {} Stars 数据包，更新本地数据...", this.data.size());
         StarManager.init(this.data);
     }
 

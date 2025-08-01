@@ -69,7 +69,7 @@ public record DataPacketAskForPlanets(List<PlanetPacket> data) implements Packet
     @Override
     public void handle(Player player) {
         // 客户端收到数据包后更新本地数据
-        Constants.LOG.info("客户端接收到数据包，更新本地数据...");
+        Constants.LOG.info("客户端接收到 {} Planets 数据包，更新本地数据...", this.data.size());
         PlanetManager.init(this.data);
     }
 

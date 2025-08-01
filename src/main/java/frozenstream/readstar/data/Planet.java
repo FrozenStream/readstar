@@ -7,7 +7,7 @@ public class Planet {
     public String name;
     public String description;
     double mass;
-    Vector3f position;
+    public Vector3f position;
     boolean pos_updated;
     Vector3f axis;
     Oribit oribit;
@@ -89,9 +89,9 @@ public class Planet {
 
     public Vector3f updateCurrentSkyVec(long tick){
         if(noon_sky_vec == null)return new Vector3f(1,0,0);
-        current_sky_vec = new Vector3f();
         float theta = (tick - 6000) * PlanetManager.PI / 12000;
-        noon_sky_vec.rotateAxis(theta, axis.x, axis.y, axis.z, current_sky_vec);
+        current_sky_vec = noon_sky_vec.rotateAxis(-theta, axis.x, axis.y, axis.z, new Vector3f());
+
         return new Vector3f(current_sky_vec);
     }
 }

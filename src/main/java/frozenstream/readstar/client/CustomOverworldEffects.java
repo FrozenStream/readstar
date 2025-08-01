@@ -4,8 +4,10 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.Planet;
 import frozenstream.readstar.data.PlanetManager;
 import frozenstream.readstar.data.StarManager;
+import frozenstream.readstar.data.Textures;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -43,8 +45,6 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
         createStars();
         createLightSky();
         createDarkSky();
-
-        StarManager.init(new ArrayList<>());
     }
 
     private void createDarkSky() {
@@ -175,18 +175,14 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                 posestack.pushPose();
                 f11 = 1.0F - level.getRainLevel(partialTick);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
-                posestack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-90.0F));
-                posestack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(level.getTimeOfDay(partialTick) * 360.0F));
-//                Matrix4f matrix4f1 = posestack.last().pose();
-//                f12 = 30.0F;
-//                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//                RenderSystem.setShaderTexture(0, SUN_LOCATION);
-//                BufferBuilder bufferbuilder1 = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-//                bufferbuilder1.addVertex(matrix4f1, -f12, 100.0F, -f12).setUv(0.0F, 0.0F);
-//                bufferbuilder1.addVertex(matrix4f1, f12, 100.0F, -f12).setUv(1.0F, 0.0F);
-//                bufferbuilder1.addVertex(matrix4f1, f12, 100.0F, f12).setUv(1.0F, 1.0F);
-//                bufferbuilder1.addVertex(matrix4f1, -f12, 100.0F, f12).setUv(0.0F, 1.0F);
-//                BufferUploader.drawWithShader(bufferbuilder1.buildOrThrow());
+
+
+                Planet observer = PlanetManager.getPlanet("Earth");
+                Matrix4f mat = StarManager.observeFrom(observer, level.getDayTime());
+                posestack.mulPose(mat);
+
+                PlanetManager.drawStars(tesselator, observer, posestack.last());
+
 //                f12 = 20.0F;
 //                RenderSystem.setShaderTexture(0, MOON_LOCATION);
 //                int k = level.getMoonPhase();
@@ -203,10 +199,7 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
 //                bufferbuilder1.addVertex(matrix4f1, -f12, -100.0F, -f12).setUv(f8, f7);
 //                BufferUploader.drawWithShader(bufferbuilder1.buildOrThrow());
 
-                posestack.popPose();
-                posestack.pushPose();
-                Matrix4f mat = StarManager.observeFrom(PlanetManager.getPlanet("Earth"), level.getDayTime());
-                posestack.mulPose(mat);
+
                 float f10 = level.getStarBrightness(partialTick) * f11;
                 if (f10 > 0.0F) {
                     RenderSystem.setShaderColor(f10, f10, f10, f10);

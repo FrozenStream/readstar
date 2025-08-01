@@ -29,7 +29,6 @@ public class TimeClient {
         time++;
         counter++;
         if (counter >= UPDATE_INTERVAL_TICKS) {
-            Constants.LOG.info("TimeClient update Time: {}", time);
             PlanetManager.updatePositions(time);
             counter = 0;
         }

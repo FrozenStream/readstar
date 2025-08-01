@@ -1,0 +1,33 @@
+package frozenstream.readstar.data;
+
+import net.minecraft.resources.ResourceLocation;
+import org.joml.Vector2f;
+
+
+public class Textures {
+    private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
+    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
+
+
+    public static ResourceLocation getTexture(String name) {
+        String name_lower = name.toLowerCase();
+        if (name_lower.equals("moon")) return MOON_LOCATION;
+        if (name_lower.equals("sun")) return SUN_LOCATION;
+        return ResourceLocation.fromNamespaceAndPath("readstar", "textures/" + name + ".png");
+    }
+
+    public Vector2f[] getp(int num) {
+        Vector2f[] ans = new Vector2f[4];
+        int i = num % 4;
+        int j = num / 4 % 2;
+        float l = i / 4.0F;
+        float t = j / 2.0F;
+        float r = (i + 1) / 4.0F;
+        float b = (j + 1) / 2.0F;
+        ans[0] = new Vector2f(r, b);
+        ans[1] = new Vector2f(l, b);
+        ans[2] = new Vector2f(l, t);
+        ans[3] = new Vector2f(r, t);
+        return ans;
+    }
+}

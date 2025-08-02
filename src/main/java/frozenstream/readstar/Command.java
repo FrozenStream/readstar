@@ -2,6 +2,7 @@ package frozenstream.readstar;
 
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import frozenstream.readstar.data.PlanetPacket;
 import frozenstream.readstar.data.Loader;
@@ -32,18 +33,18 @@ public class Command {
                     Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_PLANET_ASK, packet, player);
                     return com.mojang.brigadier.Command.SINGLE_SUCCESS;
                 }))
-            .then(Commands.literal("show")
-                .executes(context -> {
-                    for (PlanetPacket starData: Loader.getPlanet_list()) {
-                        context.getSource().sendSuccess(() -> Component.literal(starData.toString()), false);
-                    }
-                    return com.mojang.brigadier.Command.SINGLE_SUCCESS;
-                }))
             .then(Commands.literal("reset")
                 .executes(context -> {
                     TimeManager.reset();
                     return com.mojang.brigadier.Command.SINGLE_SUCCESS;
-                }));
+                }))
+            .then(Commands.literal("set")
+                .then(Commands.argument("time", LongArgumentType.longArg(0))
+                    .executes(context -> {
+                        long time = LongArgumentType.getLong(context, "time");
+                        TimeManager.setTime(time);
+                        return com.mojang.brigadier.Command.SINGLE_SUCCESS;
+                    })));
 
         dispatcher.register(cmd);
     }

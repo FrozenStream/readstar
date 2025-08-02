@@ -58,6 +58,11 @@ public class TimeManager {
         counter = 100000;
     }
 
+    public static void setTime(long t) {
+        time = t;
+        counter = 100000;
+    }
+
 
 
     public static class TimeData extends SavedData {

@@ -25,6 +25,7 @@ public record DataPacketAskForStars(List<StarPacket> data) implements PacketBase
                             buf.writeDouble(star.position().x);
                             buf.writeDouble(star.position().y);
                             buf.writeDouble(star.position().z);
+                            buf.writeInt(star.type());
                         }
                     },
                     buf -> {
@@ -36,10 +37,11 @@ public record DataPacketAskForStars(List<StarPacket> data) implements PacketBase
                             double position_x = buf.readDouble();
                             double position_y = buf.readDouble();
                             double position_z = buf.readDouble();
+                            int type = buf.readInt();
 
                             Vec3 position = new Vec3(position_x, position_y, position_z);
 
-                            dataList.add(new StarPacket(name, description, position));
+                            dataList.add(new StarPacket(name, description, position, type));
                         }
                         return dataList;
                     }

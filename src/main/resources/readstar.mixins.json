@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "frozenstream.readstar.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+    "FogRendererModifyVectorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

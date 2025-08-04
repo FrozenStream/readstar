@@ -10,7 +10,7 @@ public class Planet {
     public Vector3f position;
     boolean pos_updated;
     Vector3f axis;
-    Oribit oribit;
+    public Oribit oribit;
     Planet parent;
 
     Vector3f current_sky_vec;

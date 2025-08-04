@@ -7,7 +7,6 @@ import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.Planet;
 import frozenstream.readstar.data.PlanetManager;
 import frozenstream.readstar.data.StarManager;
-import frozenstream.readstar.data.Textures;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -15,7 +14,6 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.material.FogType;
@@ -25,8 +23,6 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-
 
 public class CustomOverworldEffects extends DimensionSpecialEffects {
     private VertexBuffer skyBuffer;
@@ -35,8 +31,7 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
 
     Minecraft minecraft = Minecraft.getInstance();
 
-    private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
-    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
+    private Matrix4f observeFromHere = new Matrix4f();
 
 
     public CustomOverworldEffects() {
@@ -71,7 +66,6 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
 
     private static MeshData buildSkyDisc(Tesselator tesselator, float y) {
         float f = Math.signum(y) * 512.0F;
-        float f1 = 512.0F;
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
         bufferbuilder.addVertex(0.0F, y, 0.0F);
 
@@ -141,7 +135,6 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                 RenderSystem.enableBlend();
                 float[] afloat = level.effects().getSunriseColor(level.getTimeOfDay(partialTick), partialTick);
                 float f11;
-                float f12;
                 float f7;
                 float f8;
                 float f9;
@@ -153,12 +146,9 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                     f11 = Mth.sin(level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
                     posestack.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(f11));
                     posestack.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(90.0F));
-                    float f4 = afloat[0];
-                    f12 = afloat[1];
-                    float f6 = afloat[2];
                     Matrix4f matrix4f = posestack.last().pose();
                     BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-                    bufferbuilder.addVertex(matrix4f, 0.0F, 100.0F, 0.0F).setColor(f4, f12, f6, afloat[3]);
+                    bufferbuilder.addVertex(matrix4f, 0.0F, 100.0F, 0.0F).setColor(afloat[0], afloat[1], afloat[2], afloat[3]);
 
                     for(int j = 0; j <= 16; ++j) {
                         f7 = (float)j * 6.2831855F / 16.0F;
@@ -176,41 +166,28 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                 f11 = 1.0F - level.getRainLevel(partialTick);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
 
+                long time = level.getDayTime() % 24000L;
 
                 Planet observer = PlanetManager.getPlanet("Earth");
-                Matrix4f mat = StarManager.observeFrom(observer, level.getDayTime());
-                posestack.mulPose(mat);
+                observeFromHere = StarManager.observeFrom(observer, time);
+                posestack.mulPose(observeFromHere);
 
-                PlanetManager.drawStars(tesselator, observer, posestack.last());
+                PlanetManager.drawPlanets(tesselator, observer, posestack.last(), time, f11);
 
-//                f12 = 20.0F;
-//                RenderSystem.setShaderTexture(0, MOON_LOCATION);
-//                int k = level.getMoonPhase();
-//                int l = k % 4;
-//                int i1 = k / 4 % 2;
-//                float f13 = (float)(l + 0) / 4.0F;
-//                f7 = (float)(i1 + 0) / 2.0F;
-//                f8 = (float)(l + 1) / 4.0F;
-//                f9 = (float)(i1 + 1) / 2.0F;
-//                bufferbuilder1 = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-//                bufferbuilder1.addVertex(matrix4f1, -f12, -100.0F, f12).setUv(f8, f9);
-//                bufferbuilder1.addVertex(matrix4f1, f12, -100.0F, f12).setUv(f13, f9);
-//                bufferbuilder1.addVertex(matrix4f1, f12, -100.0F, -f12).setUv(f13, f7);
-//                bufferbuilder1.addVertex(matrix4f1, -f12, -100.0F, -f12).setUv(f8, f7);
-//                BufferUploader.drawWithShader(bufferbuilder1.buildOrThrow());
-
-
-                float f10 = level.getStarBrightness(partialTick) * f11;
+                float f10 = Math.min(level.getStarBrightness(partialTick)*2, f11);
                 if (f10 > 0.0F) {
-                    RenderSystem.setShaderColor(f10, f10, f10, f10);
+                    RenderSystem.setShaderColor(1, 1, 1, f10);
+                    RenderSystem.setShaderTexture(0, StarManager.STAR_LOCATION);
                     FogRenderer.setupNoFog();
                     StarManager.starsBuffer.bind();
-                    StarManager.starsBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+                    StarManager.starsBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionTexShader());
                     VertexBuffer.unbind();
                     skyFogSetup.run();
                 }
-                mat.transpose();
-                Vector3f realLookVec = mat.transformPosition(camera.getLookVector());
+                observeFromHere.transpose();
+                Vector3f realLookVec = observeFromHere.transformPosition(camera.getLookVector());
+
+
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.disableBlend();
@@ -243,4 +220,5 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
     public boolean isFoggyAt(int x, int y) {
         return false;
     }
+
 }

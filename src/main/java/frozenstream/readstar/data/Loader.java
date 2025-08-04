@@ -108,7 +108,7 @@ public class Loader {
             Config config = parser.parse(reader);
             var starDataArray = config.get("PlanetData");
             if (!(starDataArray instanceof List<?>)) {
-                Constants.LOG.info("PlanetData格式错误：没有[[PlanetData]]");
+                Constants.LOG.error("PlanetData格式错误：没有[[PlanetData]]");
                 throw new RuntimeException("PlanetData Config Format Error: No [[PlanetData]] found.");
             }
             for (Object starData : (List<?>) starDataArray) {
@@ -147,7 +147,7 @@ public class Loader {
             Config config = parser.parse(reader);
             var starDataArray = config.get("StarData");
             if (!(starDataArray instanceof List<?>)) {
-                Constants.LOG.info("StarData格式错误：没有[[StarData]]");
+                Constants.LOG.error("StarData格式错误：没有[[StarData]]");
                 throw new RuntimeException("StarData Config Format Error: No [[StarData]] found.");
             }
             for (Object starData : (List<?>) starDataArray) {
@@ -157,8 +157,9 @@ public class Loader {
                     String description = starConfig.get("description");
                     ArrayList<Double> tmp = starConfig.get("position");
                     Vec3 position = new Vec3(tmp.get(0), tmp.get(1), tmp.get(2));
+                    int type = starConfig.get("type");
 
-                    StarPacket data = new StarPacket(name, description, position);
+                    StarPacket data = new StarPacket(name, description, position, type);
                     registerStar(data);
                 }
             }

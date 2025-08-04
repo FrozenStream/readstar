@@ -30,11 +30,26 @@ public class Textures {
     public static Vector2f[] getp(int num) {
         Vector2f[] ans = new Vector2f[4];
         int i = num % 4;
-        int j = num / 4 % 2;
+        int j = num / 4;
         float l = i / 4.0F;
         float t = j / 2.0F;
         float r = (i + 1) / 4.0F;
         float b = (j + 1) / 2.0F;
+        ans[0] = new Vector2f(r, b);
+        ans[1] = new Vector2f(l, b);
+        ans[2] = new Vector2f(l, t);
+        ans[3] = new Vector2f(r, t);
+        return ans;
+    }
+
+    public static Vector2f[] getp(int width, int height, int num) {
+        Vector2f[] ans = new Vector2f[4];
+        int i = num % width;
+        int j = num / width;
+        float l = (float) i / width;
+        float t = (float) j / height;
+        float r = (float) (i + 1) / width;
+        float b = (float) (j + 1) / height;
         ans[0] = new Vector2f(r, b);
         ans[1] = new Vector2f(l, b);
         ans[2] = new Vector2f(l, t);

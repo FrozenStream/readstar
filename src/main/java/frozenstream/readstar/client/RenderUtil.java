@@ -4,6 +4,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.client.event.ViewportEvent;
 
 public class RenderUtil {
     public static boolean doesMobEffectBlockSky(Camera camera) {
@@ -15,6 +16,10 @@ public class RenderUtil {
             effected = false;
         }
         return effected;
+    }
+
+    public static void doesMobEffectBlockSky(ViewportEvent.RenderFog event) {
+
     }
 
 

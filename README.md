@@ -13,5 +13,3 @@ With the addition of more realistic planetary rotation and revolution effects, t
 加入了更高级的望远镜，现在它可以缩放并且显示星体信息。\
 Advanced telescopes have been added, which can now zoom in and display celestial body information.\
 \
-没有使用mixin\
-No mixin used

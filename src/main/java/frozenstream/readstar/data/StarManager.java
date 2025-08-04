@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -17,15 +18,15 @@ public class StarManager {
 
     public static final VertexBuffer starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 
+    public static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/star.png");
+
     private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
-
-    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
 
 
     public static void init(List<StarPacket> starList) {
         for (StarPacket star : starList) {
-            stars[starCount] = new Star(star.name(), star.description(), star.position().toVector3f());
+            stars[starCount] = new Star(star.name(), star.description(), star.position().toVector3f(), star.type());
             starCount++;
         }
         buildStarsBuffer();
@@ -40,47 +41,43 @@ public class StarManager {
 
     private static MeshData drawStars(Tesselator tesselator) {
         RandomSource randomsource = RandomSource.create(10842L);
-        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        float f4 = 5;
+        float s = 1f;
+        Vector3f[] v = new Vector3f[4];
 
         for (int i = 0; i < starCount; i++) {
             Vector3f vector3f = stars[i].position().normalize(100.0F, new Vector3f());
-            Constants.LOG.info("vector3f: {}", vector3f);
-            float f6 = randomsource.nextFloat() * PI * 2.0f;
-            Quaternionf quaternionf = (new Quaternionf()).rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), vector3f).rotateZ(f6);
-            bufferbuilder.addVertex(vector3f.add((new Vector3f(f4, -f4, 0.0F)).rotate(quaternionf)));
-            bufferbuilder.addVertex(vector3f.add((new Vector3f(f4, f4, 0.0F)).rotate(quaternionf)));
-            bufferbuilder.addVertex(vector3f.add((new Vector3f(-f4, f4, 0.0F)).rotate(quaternionf)));
-            bufferbuilder.addVertex(vector3f.add((new Vector3f(-f4, -f4, 0.0F)).rotate(quaternionf)));
+            float Rz = randomsource.nextFloat() * PI * 2.0f;
+            Quaternionf quaternionf = (new Quaternionf()).rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), vector3f).rotateZ(Rz);
+            v[0] = (new Vector3f(s, -s, 0.0F)).rotate(quaternionf);
+            v[1] = (new Vector3f(s, s, 0.0F)).rotate(quaternionf);
+            v[2] = (new Vector3f(-s, s, 0.0F)).rotate(quaternionf);
+            v[3] = (new Vector3f(-s, -s, 0.0F)).rotate(quaternionf);
+
+            Vector2f[] uvs = Textures.getp(4, 1, stars[i].type());
+
+            bufferbuilder.addVertex(vector3f.add(v[0], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
+            bufferbuilder.addVertex(vector3f.add(v[1], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
+            bufferbuilder.addVertex(vector3f.add(v[2], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
+            bufferbuilder.addVertex(vector3f.add(v[3], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
+
         }
         return bufferbuilder.buildOrThrow();
     }
 
-    public static Matrix4f observeFrom(Planet planet, long t){
+    public static Matrix4f observeFrom(Planet planet, long t) {
         Matrix4f mat = new Matrix4f();
-
-        // 获取行星的轴向和当前天空向量
         Vector3f axis = planet.axis;
         Vector3f current = planet.updateCurrentSkyVec(t);
 
-        // 创建一个将axis向量旋转到Y轴的四元数
-        Quaternionf rotationToY = new Quaternionf();
-        rotationToY.rotationTo(axis, OriginY);
+        Quaternionf rotationToY = (new Quaternionf()).rotationTo(axis, OriginY);
+        Vector3f rotatedCurrent = rotationToY.transform(current, new Vector3f());
 
-        // 应用第一步旋转到current向量
-        Vector3f rotatedCurrent = new Vector3f(current);
-        rotationToY.transform(rotatedCurrent);
-
-        // 计算将rotatedCurrent旋转到X轴的四元数
-        Quaternionf rotationToX = new Quaternionf();
-        rotationToX.rotationTo(rotatedCurrent, OriginX);
+        Quaternionf rotationToX = (new Quaternionf()).rotationTo(rotatedCurrent, OriginX);
 
         // 创建表示120度绕(1,1,1)轴旋转的四元数
-        Quaternionf rotation = new Quaternionf().rotateAxis(
-                120f/180.0f * PI,
-                1.0f, 1.0f, 1.0f
-        );
+        Quaternionf rotation = new Quaternionf().rotateAxis(120f / 180.0f * PI, 1.0f, 1.0f, 1.0f);
 
         // 组合旋转
         Quaternionf finalRotation = new Quaternionf();
@@ -88,7 +85,9 @@ public class StarManager {
         finalRotation.mul(rotationToX);
         finalRotation.mul(rotationToY);
 
-        // 将四元数转换为矩阵
         return mat.rotation(finalRotation);
     }
+
+
+
 }

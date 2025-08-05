@@ -31,7 +31,7 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
 
     Minecraft minecraft = Minecraft.getInstance();
 
-    private Matrix4f observeFromHere = new Matrix4f();
+    public Matrix4f observeFromHere = new Matrix4f();
 
 
     public CustomOverworldEffects() {
@@ -184,8 +184,6 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                     VertexBuffer.unbind();
                     skyFogSetup.run();
                 }
-                observeFromHere.transpose();
-                Vector3f realLookVec = observeFromHere.transformPosition(camera.getLookVector());
 
 
 

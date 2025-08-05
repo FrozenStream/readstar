@@ -1,79 +1,90 @@
 package frozenstream.readstar.item.vanilla_spyglass;
 
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.client.CustomOverworldEffects;
+import frozenstream.readstar.data.Star;
+import frozenstream.readstar.data.StarManager;
+import frozenstream.readstar.item.superSpyglass.ScopeManager;
+import frozenstream.readstar.item.superSpyglass.ScopeOverlayRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class VanillaSpyglassEvent {
 
-    /**
-     * 接管原版望远镜缩放事件
-     * */
     @SubscribeEvent
-    public static void handeFOVModifier(ViewportEvent.ComputeFov event) {
-        float targetFOV = 70.f, currentFOV = VanillaSpyglassManager.getFOVCurrent();
-
-        Entity entity = event.getCamera().getEntity();
-        if (entity instanceof Player player) {
-            if (!player.isScoping()) targetFOV = VanillaSpyglassManager.getFOVNormal();
-            else targetFOV = VanillaSpyglassManager.getFOVTarget();
-        }
-
-        if(targetFOV != currentFOV) {
-            float next = currentFOV, delta = targetFOV - currentFOV;
-            next += delta * 0.2f;
-            if(Math.abs(delta) < 0.1f) next = targetFOV;
-            VanillaSpyglassManager.updateFOVCurrent(next);
-        }
-
-        event.setFOV(VanillaSpyglassManager.getFOVCurrent()); // 设置新的视野值
-    }
-
-
-    /***
-     * 滚轮修改缩放倍率
-     */
-    @SubscribeEvent
-    public static void handleMouseScroll(InputEvent.MouseScrollingEvent event) {
-        Entity entity = Minecraft.getInstance().getCameraEntity();
-        if (entity instanceof Player player) {
-            if (player.isScoping()) {
-                float scrollDelta = (float) event.getScrollDeltaY() * VanillaSpyglassManager.getFOVScrollSpeed();
-                float currentTarget = VanillaSpyglassManager.getFOVTarget();
-                VanillaSpyglassManager.updateFOVTarget(currentTarget + scrollDelta);
-
-                event.setCanceled(true);
+    public static void onRenderWorld(RenderGuiEvent.Post event) {
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+        if (player.isScoping()) {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.level == null || mc.player == null) {
+                return;
             }
-        }
-    }
 
-    //TODO: 视角移动速度和缩放倍率相关
+            DimensionSpecialEffects effects = mc.level.effects();
+            if(effects instanceof CustomOverworldEffects overworldEffects){
+                Vector3f lookAt = player.getViewVector(1f).toVector3f();
+                overworldEffects.observeFromHere.transpose(new Matrix4f()).transformPosition(lookAt);
+
+                Star starLookAt = StarManager.lookingAt(lookAt, 0.01f);
+
+                if(starLookAt == null) return;
+
+
+                GuiGraphics guiGraphics = event.getGuiGraphics();
+                int screenWidth = mc.getWindow().getGuiScaledWidth();
+                int screenHeight = mc.getWindow().getGuiScaledHeight();
+
+
+                String starName = String.format("name: %s", starLookAt.name());
+                String starDesc = String.format("description: %s",starLookAt.description());
+                // 在屏幕左上角绘制文本
+                guiGraphics.drawString(
+                        mc.font,
+                        Component.literal(starName),
+                        10, 10,
+                        0xFFFFFF,
+                        true
+                );
+
+                guiGraphics.drawString(
+                        mc.font,
+                        Component.literal(starDesc),
+                        10, 25,
+                        0xFFFF00,
+                        true
+                );
+
+                //显示玩家坐标
+                String coords = String.format("X: %.2f, Y: %.2f, Z: %.2f", lookAt.x, lookAt.y, lookAt.z);
+
+                guiGraphics.drawString(
+                        mc.font,
+                        Component.literal(coords),
+                        10, 40,
+                        0xFFFF00,
+                        true
+                );
+
+                // 绘制一个简单的矩形框
+                guiGraphics.fill(8, 8, 200, 55, 0x80000000); // 半透明黑色背景
+            }
 
 
 
-    /**
-     * 在客户端初始化时更新 NormalFOV
-     */
-    @SubscribeEvent
-    public static void onClientInitialized(ClientPlayerNetworkEvent.LoggingIn event) {
-        VanillaSpyglassManager.askFOVNormal();
-    }
-
-    /**
-     * 在设置界面关闭时更新 NormalFOV
-     */
-    @SubscribeEvent
-    public static void onSettingsChanged(ScreenEvent.Closing event) {
-        if (event.getScreen() instanceof OptionsScreen) {
-            VanillaSpyglassManager.askFOVNormal(); // 在设置关闭时更新 NormalFOV
         }
     }
 }

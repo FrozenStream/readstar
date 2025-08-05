@@ -9,6 +9,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StarManager {
@@ -26,7 +27,7 @@ public class StarManager {
 
     public static void init(List<StarPacket> starList) {
         for (StarPacket star : starList) {
-            stars[starCount] = new Star(star.name(), star.description(), star.position().toVector3f(), star.type());
+            stars[starCount] = new Star(star.name(), star.description(), star.position().toVector3f().normalize(), star.type());
             starCount++;
         }
         buildStarsBuffer();
@@ -66,6 +67,10 @@ public class StarManager {
         return bufferbuilder.buildOrThrow();
     }
 
+    public static void RenderStars(Matrix4f projectionMatrix, Matrix4f viewMatrix) {
+
+    }
+
     public static Matrix4f observeFrom(Planet planet, long t) {
         Matrix4f mat = new Matrix4f();
         Vector3f axis = planet.axis;
@@ -87,6 +92,36 @@ public class StarManager {
 
         return mat.rotation(finalRotation);
     }
+
+
+    public static Star lookingAt(Vector3f eye, float nearDistance){
+        float minDistance = nearDistance;
+        Star closestStar = null;
+        for (int i = 0; i < starCount; i++) {
+            Vector3f starPos = stars[i].position();
+            float distance = eye.distance(starPos);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestStar = stars[i];
+            }
+        }
+        return closestStar;
+    }
+
+
+    public static ArrayList<Star> lookingNear(Vector3f eye, float nearDistance){
+        ArrayList<Star> closestStars = new ArrayList<>();
+        for (int i = 0; i < starCount; i++) {
+            Vector3f starPos = stars[i].position();
+            float distance = eye.distance(starPos);
+            if (distance < nearDistance) {
+                closestStars.add(stars[i]);
+            }
+        }
+        return closestStars;
+    }
+
+
 
 
 

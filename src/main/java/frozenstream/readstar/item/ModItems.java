@@ -14,6 +14,9 @@ public class ModItems {
     public static final DeferredItem<Item> SUPER_SPYGLASS = ITEMS.register("super_spyglass",
             () -> new SuperSpyglassItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> ASTRONOMICAL_MANUSCRIPT = ITEMS.register("astronomical_manuscript",
+            () -> new AstronomicalManuscriptItem(new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

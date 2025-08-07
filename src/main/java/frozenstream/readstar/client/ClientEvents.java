@@ -12,7 +12,9 @@ public class ClientEvents {
     public static void onRegisterDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {
         event.register(
                 ResourceLocation.withDefaultNamespace("overworld"),
-                new CustomOverworldEffects()
+                new OverworldEffects()
         );
     }
+
+
 }

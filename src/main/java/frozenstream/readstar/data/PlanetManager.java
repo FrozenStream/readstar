@@ -35,17 +35,18 @@ public class PlanetManager {
             name_map.get(name).copy(planet);
         }
         checkAndDisplay();
+        getSUN();
     }
 
     public static Planet getSUN() {
-        if (SUN == null) {
-            for (Planet planet : name_map.values())
-                if (planet.parent == Planet.VOID) {
-                    SUN = planet;
-                    return SUN;
-                }
-        }
-        return SUN;
+        if (SUN != null) return SUN;
+        for (Planet planet : name_map.values())
+            if (planet.parent == Planet.VOID) {
+                SUN = planet;
+                return SUN;
+            }
+        Constants.LOG.error("未找到太阳！请检查行星树是否完整！");
+        return null;
     }
 
     public static Planet getPlanet(String name) {
@@ -117,24 +118,31 @@ public class PlanetManager {
 
             } else {
                 uvs = Textures.getp(getLightPhase(observer, planet));
+
                 float s = 10;
                 Vector3f[] v = new Vector3f[4];
-                v[0] = (new Vector3f(s, -s, 0.0F)).rotate(quaternion);
-                v[1] = (new Vector3f(s, s, 0.0F)).rotate(quaternion);
-                v[2] = (new Vector3f(-s, s, 0.0F)).rotate(quaternion);
-                v[3] = (new Vector3f(-s, -s, 0.0F)).rotate(quaternion);
 
-                if (planet.position.sub(observer.position, new Vector3f()).z < 0) {
-                    builder.addVertex(pose, vec.add(v[0], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
-                    builder.addVertex(pose, vec.add(v[1], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
-                    builder.addVertex(pose, vec.add(v[2], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
-                    builder.addVertex(pose, vec.add(v[3], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
-                } else {
-                    builder.addVertex(pose, vec.add(v[0], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
-                    builder.addVertex(pose, vec.add(v[1], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
-                    builder.addVertex(pose, vec.add(v[2], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
-                    builder.addVertex(pose, vec.add(v[3], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
-                }
+                Vector3f planet_sun = SUN.position.sub(planet.position, new Vector3f()).normalize();
+                Vector3f vec_n = vec.normalize(new Vector3f());
+                Vector3f project = vec_n.mul(planet_sun.dot(vec_n), new Vector3f());
+                planet_sun.sub(project).normalize();
+
+                Vector3f ano = planet_sun.cross(vec_n, new Vector3f()).normalize();
+
+                v[0] = planet_sun.sub(ano, new Vector3f()).mul(s);
+                v[1] = planet_sun.add(ano, new Vector3f()).mul(s);
+                planet_sun.mul(-1);
+                v[2] = planet_sun.add(ano, new Vector3f()).mul(s);
+                v[3] = planet_sun.sub(ano, new Vector3f()).mul(s);
+
+                Constants.LOG.info("planet_sun {}, ano {}", planet_sun, ano);
+
+
+                builder.addVertex(pose, vec.add(v[0], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
+                builder.addVertex(pose, vec.add(v[1], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
+                builder.addVertex(pose, vec.add(v[2], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
+                builder.addVertex(pose, vec.add(v[3], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
+
             }
             BufferUploader.drawWithShader(builder.buildOrThrow());
         }

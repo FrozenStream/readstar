@@ -1,17 +1,13 @@
 package frozenstream.readstar.item.vanilla_spyglass;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.client.CustomOverworldEffects;
+import frozenstream.readstar.client.OverworldEffects;
 import frozenstream.readstar.data.Star;
 import frozenstream.readstar.data.StarManager;
-import frozenstream.readstar.item.superSpyglass.ScopeManager;
-import frozenstream.readstar.item.superSpyglass.ScopeOverlayRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,7 +31,7 @@ public class VanillaSpyglassEvent {
             }
 
             DimensionSpecialEffects effects = mc.level.effects();
-            if(effects instanceof CustomOverworldEffects overworldEffects){
+            if(effects instanceof OverworldEffects overworldEffects){
                 Vector3f lookAt = player.getViewVector(1f).toVector3f();
                 overworldEffects.observeFromHere.transpose(new Matrix4f()).transformPosition(lookAt);
 

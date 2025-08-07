@@ -3,10 +3,10 @@ package frozenstream.readstar.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.Planet;
 import frozenstream.readstar.data.PlanetManager;
 import frozenstream.readstar.data.StarManager;
+import frozenstream.readstar.events.FovEvent;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 
-public class CustomOverworldEffects extends DimensionSpecialEffects {
+public class OverworldEffects extends DimensionSpecialEffects {
     private VertexBuffer skyBuffer;
     private VertexBuffer starBuffer;
     private VertexBuffer darkBuffer;
@@ -34,7 +35,7 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
     public Matrix4f observeFromHere = new Matrix4f();
 
 
-    public CustomOverworldEffects() {
+    public OverworldEffects() {
         super(192, true, SkyType.NORMAL, false, false);
 
         createStars();
@@ -172,19 +173,22 @@ public class CustomOverworldEffects extends DimensionSpecialEffects {
                 observeFromHere = StarManager.observeFrom(observer, time);
                 posestack.mulPose(observeFromHere);
 
+                // 星体绘制
                 PlanetManager.drawPlanets(tesselator, observer, posestack.last(), time, f11);
 
-                float f10 = Math.min(level.getStarBrightness(partialTick)*2, f11);
-                if (f10 > 0.0F) {
-                    RenderSystem.setShaderColor(1, 1, 1, f10);
-                    RenderSystem.setShaderTexture(0, StarManager.STAR_LOCATION);
-                    FogRenderer.setupNoFog();
-                    StarManager.starsBuffer.bind();
-                    StarManager.starsBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionTexShader());
-                    VertexBuffer.unbind();
-                    skyFogSetup.run();
+                // 星星绘制
+                float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);
+                FogRenderer.setupNoFog();
+                if(camera.getEntity() instanceof Player player){
+                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0) StarManager.RenderStars(projectionMatrix, posestack.last().pose(), starLight);
+                    else {
+                        Vector3f look = player.getViewVector(partialTick).toVector3f();
+                        observeFromHere.transpose(new Matrix4f()).transformPosition(look);
+                        float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());
+                        StarManager.RenderNearStars(posestack.last(), look, 0.1f, scaling);
+                    }
                 }
-
+                skyFogSetup.run();
 
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

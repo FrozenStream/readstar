@@ -87,7 +87,6 @@ public class StarManager {
         ArrayList<Star> near = lookingNear(eye, nearDistance);
         if (near.isEmpty()) return;
 
-        Constants.LOG.info("NearStars {}", near);
         for (Star star : near) {
             Vector3f vector3f = star.position().normalize(100.0f, new Vector3f());
 

@@ -11,7 +11,7 @@ public class Planet {
     boolean pos_updated;
     Vector3f axis;
     public Oribit oribit;
-    Planet parent;
+    public Planet parent;
 
     Vector3f current_sky_vec;
     Vector3f noon_sky_vec;

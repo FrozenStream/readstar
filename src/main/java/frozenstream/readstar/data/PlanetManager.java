@@ -25,12 +25,17 @@ public class PlanetManager {
             String name = star.name();
             Oribit oribit = new Oribit(star.a(), star.e(), star.i(), star.w(),star.o(), star.M0());
             String parent_name = star.parent();
-            if(!name_map.containsKey(name)) name_map.put(name, new Planet());
-            Planet parent = Planet.VOID;
-            if(!name_map.containsKey(parent_name) && !parent_name.equals("Centre")) {
-                name_map.put(parent_name, new Planet());
-                parent = name_map.get(parent_name);
+
+            if(parent_name.equals("Centre")) {
+                Planet planet = new Planet(name, star.description(), star.mass(), star.axis().toVector3f(), oribit, Planet.VOID);
+                if (name_map.containsKey(name)) name_map.get(name).copy(planet);
+                else name_map.put(name, planet);
+                continue;
             }
+
+            if(!name_map.containsKey(name)) name_map.put(name, new Planet());
+            if(!name_map.containsKey(parent_name)) name_map.put(parent_name, new Planet());
+            Planet parent = name_map.get(parent_name);
             Planet planet = new Planet(name, star.description(), star.mass(), star.axis().toVector3f(), oribit, parent);
             name_map.get(name).copy(planet);
         }
@@ -51,6 +56,10 @@ public class PlanetManager {
 
     public static Planet getPlanet(String name) {
         return name_map.get(name);
+    }
+
+    public static Collection<Planet> getPlanets() {
+        return name_map.values();
     }
 
     private static void checkAndDisplay() {
@@ -135,13 +144,11 @@ public class PlanetManager {
                 v[2] = planet_sun.add(ano, new Vector3f()).mul(s);
                 v[3] = planet_sun.sub(ano, new Vector3f()).mul(s);
 
-                Constants.LOG.info("planet_sun {}, ano {}", planet_sun, ano);
 
-
-                builder.addVertex(pose, vec.add(v[0], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
-                builder.addVertex(pose, vec.add(v[1], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
-                builder.addVertex(pose, vec.add(v[2], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
-                builder.addVertex(pose, vec.add(v[3], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
+                builder.addVertex(pose, v[0].add(vec)).setUv(uvs[1].x, uvs[1].y);
+                builder.addVertex(pose, v[1].add(vec)).setUv(uvs[2].x, uvs[2].y);
+                builder.addVertex(pose, v[2].add(vec)).setUv(uvs[3].x, uvs[3].y);
+                builder.addVertex(pose, v[3].add(vec)).setUv(uvs[0].x, uvs[0].y);
 
             }
             BufferUploader.drawWithShader(builder.buildOrThrow());

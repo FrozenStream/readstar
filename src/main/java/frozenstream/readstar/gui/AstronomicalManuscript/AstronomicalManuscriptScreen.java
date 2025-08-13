@@ -23,7 +23,6 @@ public class AstronomicalManuscriptScreen extends Screen {
     private static final int BOOK_HEIGHT = 180;
     private static final int PAGE_WIDTH = 120;
     private static final int PAGE_HEIGHT = 150;
-    private static double SOLAR_WIDTH = 0;
 
     private static Planet MainCentre;
     private static Planet Centre;
@@ -31,11 +30,11 @@ public class AstronomicalManuscriptScreen extends Screen {
     private static double MinDistance = 1e20f;
 
     private static int MinScale = 1;
-    private static int MaxScale = 4;
+    private static int MaxScale = 8;
 
     private static int MaxMinScale = 128;
 
-    private Button scaleUpButton;
+    private TextureButton scaleUpButton;
     private Button scaleDownButton;
 
     private static final int ICON_SIZE = 6;
@@ -43,6 +42,11 @@ public class AstronomicalManuscriptScreen extends Screen {
     private final List<String> pages = new ArrayList<>();
     private int currentPage = 0;
     private int totalPages = 0;
+
+    private static final ResourceLocation Texture_Scale_Down_Button1 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_down1.png");
+    private static final ResourceLocation Texture_Scale_Down_Button2 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_down2.png");
+    private static final ResourceLocation Texture_Scale_Up_Button1 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_up1.png");
+    private static final ResourceLocation Texture_Scale_Up_Button2 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_up2.png");
 
     public AstronomicalManuscriptScreen() {
         super(Component.translatable("screen.readstar.astronomical_manuscript"));
@@ -65,20 +69,21 @@ public class AstronomicalManuscriptScreen extends Screen {
 
         Constants.LOG.info("Astronomical Manuscript Screen Init, MinDistance:{}", MinDistance);
 
-        scaleUpButton = Button.builder(Component.literal("+"), this::onScaleUpButton)
-                .pos((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 25, (this.height - BOOK_HEIGHT) / 2 - 25)
-                .size(20, 20)
-                .build();
-        this.addRenderableWidget(scaleUpButton);
+        scaleUpButton =  new TextureButton((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 40, (this.height - BOOK_HEIGHT) / 2 + 100,
+                8, 8,
+                Texture_Scale_Up_Button1, Texture_Scale_Up_Button2,
+                this::onScaleUpButton);
+        addRenderableWidget(scaleUpButton);
 
-        scaleDownButton = Button.builder(Component.literal("-"), this::onScaleDownButton)
-                .pos((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 25, (this.height - BOOK_HEIGHT) / 2 + 75)
-                .size(20, 20)
-                .build();
-        this.addRenderableWidget(scaleDownButton);
+        scaleDownButton = new TextureButton((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 30, (this.height - BOOK_HEIGHT) / 2 + 100,
+                8,8,
+                Texture_Scale_Down_Button1, Texture_Scale_Down_Button2,
+                this::onScaleDownButton);
+        addRenderableWidget(scaleDownButton);
     }
 
     private void onScaleUpButton(Button button) {
+        Constants.LOG.info("Astronomical Manuscript Screen Scale Up");
         if(MinScale <= MaxMinScale) {
             MinScale *= 4;
             MaxScale *= 4;
@@ -86,6 +91,7 @@ public class AstronomicalManuscriptScreen extends Screen {
     }
 
     private void onScaleDownButton(Button button) {
+        Constants.LOG.info("Astronomical Manuscript Screen Scale Down");
         if(MinScale > 1) {
             MinScale /= 4;
             MaxScale /= 4;
@@ -138,6 +144,11 @@ public class AstronomicalManuscriptScreen extends Screen {
         }
     }
 
+    public void renderPlanetPage(GuiGraphics guiGraphics, Planet planet, int bookX, int bookY) {
+
+
+    }
+
     private ResourceLocation getPlanetIcon(String planetName) {
         // 将行星名称映射到对应的图标文件
         return switch (planetName.toLowerCase()) {
@@ -164,6 +175,8 @@ public class AstronomicalManuscriptScreen extends Screen {
 
         if(currentPage == 0){
             renderTitlePage(guiGraphics, bookX, bookY);
+            scaleUpButton.render(guiGraphics, mouseX, mouseY, partialTick);
+            scaleDownButton.render(guiGraphics, mouseX, mouseY, partialTick);
         }
         else{
             // 绘制左侧页面内容
@@ -179,6 +192,7 @@ public class AstronomicalManuscriptScreen extends Screen {
         // 绘制标题
         guiGraphics.drawCenteredString(font, this.title, width / 2, bookY - 15, 0xFFFFFF);
     }
+
 
     private void renderBookBackground(GuiGraphics guiGraphics, int bookX, int bookY) {
         // 绘制书本整体背景
@@ -248,55 +262,6 @@ public class AstronomicalManuscriptScreen extends Screen {
         }
     }
 
-    @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (super.mouseClicked(mouseX, mouseY, button)) {
-            return true;
-        }
-
-        int bookX = (this.width - BOOK_WIDTH) / 2;
-        int bookY = (this.height - BOOK_HEIGHT) / 2;
-
-        // 检查是否点击了左侧翻页区域
-        if (mouseX >= bookX + 5 && mouseX < bookX + BOOK_WIDTH/2 - 5 &&
-                mouseY >= bookY + 5 && mouseY < bookY + BOOK_HEIGHT - 5) {
-            // 左侧页面点击，向前翻页
-            if (currentPage > 0) {
-                currentPage -= 2;
-            }
-            return true;
-        }
-
-        // 检查是否点击了右侧翻页区域
-        if (mouseX >= bookX + BOOK_WIDTH/2 + 5 && mouseX < bookX + BOOK_WIDTH - 5 &&
-                mouseY >= bookY + 5 && mouseY < bookY + BOOK_HEIGHT - 5) {
-            // 右侧页面点击，向后翻页
-            if (currentPage + 2 < totalPages) {
-                currentPage += 2;
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        // 添加键盘支持
-        if (keyCode == 263) { // 左箭头键
-            if (currentPage > 0) {
-                currentPage -= 2;
-            }
-            return true;
-        } else if (keyCode == 262) { // 右箭头键
-            if (currentPage + 2 < totalPages) {
-                currentPage += 2;
-            }
-            return true;
-        }
-
-        return super.keyPressed(keyCode, scanCode, modifiers);
-    }
 
     @Override
     public boolean isPauseScreen() {

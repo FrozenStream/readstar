@@ -185,7 +185,7 @@ public class OverworldEffects extends DimensionSpecialEffects {
                         Vector3f look = player.getViewVector(partialTick).toVector3f();
                         observeFromHere.transpose(new Matrix4f()).transformPosition(look);
                         float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());
-                        StarManager.RenderNearStars(posestack.last(), look, 0.1f, scaling);
+                        StarManager.RenderNearStars(posestack.last(), look, 0.1f, 1);
                     }
                 }
                 skyFogSetup.run();

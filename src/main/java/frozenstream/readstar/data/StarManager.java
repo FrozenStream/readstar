@@ -21,7 +21,7 @@ public class StarManager {
 
     public static final VertexBuffer starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 
-    public static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/star.png");
+    public static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/star.png");
 
     private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);

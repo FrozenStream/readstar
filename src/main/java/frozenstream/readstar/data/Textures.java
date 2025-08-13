@@ -23,7 +23,7 @@ public class Textures {
             return customTexture;
         } catch (Exception e) {
             Constants.LOG.warn("No texture for {}", name);
-            return SUN_LOCATION;
+            return null;
         }
     }
 

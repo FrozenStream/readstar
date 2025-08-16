@@ -20,7 +20,6 @@
 
 package frozenstream.readstar;
 
-import frozenstream.readstar.network.DataPacketAskForPlanets;
 import frozenstream.readstar.network.DataPacketAskForStars;
 import frozenstream.readstar.network.DataPacketAskForTime;
 import frozenstream.readstar.platform.Services;
@@ -34,14 +33,6 @@ public class Common {
     }
 
     public static void registerClientPackets(Object... args) {
-        Services.PLATFORM.registerClientboundPacket(
-            DataPacketAskForPlanets.TYPE,
-            DataPacketAskForPlanets.class,
-            DataPacketAskForPlanets.CODEC,
-            DataPacketAskForPlanets::handle,
-            args
-        );
-
         Services.PLATFORM.registerClientboundPacket(
             DataPacketAskForStars.TYPE,
             DataPacketAskForStars.class,

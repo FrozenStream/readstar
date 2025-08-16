@@ -1,4 +1,4 @@
-package frozenstream.readstar.client;
+package frozenstream.readstar.world;
 
 import net.minecraft.client.Camera;
 import net.minecraft.world.effect.MobEffects;

@@ -1,7 +1,7 @@
 package frozenstream.readstar.item.vanilla_spyglass;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.client.OverworldEffects;
+import frozenstream.readstar.world.overworld.OverworldEffects;
 import frozenstream.readstar.data.Star;
 import frozenstream.readstar.data.StarManager;
 import net.minecraft.client.Minecraft;
@@ -22,63 +22,57 @@ public class VanillaSpyglassEvent {
 
     @SubscribeEvent
     public static void onRenderWorld(RenderGuiEvent.Post event) {
+        GuiGraphics guiGraphics = event.getGuiGraphics();
+        Minecraft mc = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
-        if (player == null) return;
-        if (player.isScoping()) {
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.level == null || mc.player == null) {
-                return;
-            }
+        if (mc.level == null || player == null) return;
+        if (!player.isScoping()) return;
 
-            DimensionSpecialEffects effects = mc.level.effects();
-            if(effects instanceof OverworldEffects overworldEffects){
-                Vector3f lookAt = player.getViewVector(1f).toVector3f();
-                overworldEffects.observeFromHere.transpose(new Matrix4f()).transformPosition(lookAt);
-
-                Star starLookAt = StarManager.lookingAt(lookAt, 0.01f);
-
-                if(starLookAt == null) return;
+        DimensionSpecialEffects effects = mc.level.effects();
+        if(effects instanceof OverworldEffects overworldEffects){
+            Vector3f lookAt = player.getViewVector(1f).toVector3f();
+            overworldEffects.observeFromHere.transpose(new Matrix4f()).transformPosition(lookAt);
 
 
-                GuiGraphics guiGraphics = event.getGuiGraphics();
-                int screenWidth = mc.getWindow().getGuiScaledWidth();
-                int screenHeight = mc.getWindow().getGuiScaledHeight();
+            String coords = String.format("X: %.2f, Y: %.2f, Z: %.2f", lookAt.x, lookAt.y, lookAt.z);
+            guiGraphics.drawString(
+                    mc.font,
+                    Component.literal(coords),
+                    10, 40,
+                    0xFFFF00,
+                    true
+            );
+
+            // 绘制一个简单的矩形框
+            guiGraphics.fill(8, 8, 200, 55, 0x80000000); // 半透明黑色背景
+
+            Star starLookAt = StarManager.lookingAt(lookAt, 0.01f);
+
+            if(starLookAt == null) return;
 
 
-                String starName = String.format("name: %s", starLookAt.name());
-                String starDesc = String.format("description: %s",starLookAt.description());
-                // 在屏幕左上角绘制文本
-                guiGraphics.drawString(
-                        mc.font,
-                        Component.literal(starName),
-                        10, 10,
-                        0xFFFFFF,
-                        true
-                );
+            int screenWidth = mc.getWindow().getGuiScaledWidth();
+            int screenHeight = mc.getWindow().getGuiScaledHeight();
 
-                guiGraphics.drawString(
-                        mc.font,
-                        Component.literal(starDesc),
-                        10, 25,
-                        0xFFFF00,
-                        true
-                );
 
-                //显示玩家坐标
-                String coords = String.format("X: %.2f, Y: %.2f, Z: %.2f", lookAt.x, lookAt.y, lookAt.z);
+            String starName = String.format("name: %s", starLookAt.name());
+            String starDesc = String.format("description: %s",starLookAt.description());
+            // 在屏幕左上角绘制文本
+            guiGraphics.drawString(
+                    mc.font,
+                    Component.literal(starName),
+                    10, 10,
+                    0xFFFFFF,
+                    true
+            );
 
-                guiGraphics.drawString(
-                        mc.font,
-                        Component.literal(coords),
-                        10, 40,
-                        0xFFFF00,
-                        true
-                );
-
-                // 绘制一个简单的矩形框
-                guiGraphics.fill(8, 8, 200, 55, 0x80000000); // 半透明黑色背景
-            }
-
+            guiGraphics.drawString(
+                    mc.font,
+                    Component.literal(starDesc),
+                    10, 25,
+                    0xFFFF00,
+                    true
+            );
 
 
         }

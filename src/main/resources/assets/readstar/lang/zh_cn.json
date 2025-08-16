@@ -1,0 +1,12 @@
+{
+  "itemGroup.examplemod": "Example Mod Tab",
+  "block.examplemod.example_block": "Example Block",
+  "item.examplemod.example_item": "Example Item",
+  "screen.readstar.astronomical_manuscript": "天文手稿",
+  "planet.readstar.earth": "Earth",
+  "planet.readstar.mars": "Mars",
+  "planet.readstar.moon": "Moon",
+  "planetdesc.readstar.earth": "这里是开始的地方",
+  "planetdesc.readstar.mars": "红色",
+  "planetdesc.readstar.moon": "不是因为它简单，而是因为它难"
+}

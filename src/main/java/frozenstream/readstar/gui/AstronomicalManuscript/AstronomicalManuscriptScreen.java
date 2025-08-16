@@ -60,25 +60,30 @@ public class AstronomicalManuscriptScreen extends Screen {
 
     @Override
     protected void init() {
-        MainCentre = PlanetManager.getSUN();
+        MainCentre = PlanetManager.SUN;
         Centre = MainCentre;
         for (Planet planet : PlanetManager.getPlanets()) {
+            Constants.LOG.info("Planet: {} orbit {} parent {}", planet.name, planet.oribit.a(), planet.parent.name);
             if (planet.oribit.a() <= 0 || planet.parent != MainCentre) continue;
             MinDistance = Math.min(MinDistance, planet.oribit.a());
         }
 
         Constants.LOG.info("Astronomical Manuscript Screen Init, MinDistance:{}", MinDistance);
 
-        scaleUpButton =  new TextureButton((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 40, (this.height - BOOK_HEIGHT) / 2 + 100,
+        scaleUpButton =  new TextureButton(
+                (this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 40, (this.height - BOOK_HEIGHT) / 2 + 100,
                 8, 8,
                 Texture_Scale_Up_Button1, Texture_Scale_Up_Button2,
-                this::onScaleUpButton);
+                this::onScaleUpButton
+        );
         addRenderableWidget(scaleUpButton);
 
-        scaleDownButton = new TextureButton((this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 30, (this.height - BOOK_HEIGHT) / 2 + 100,
+        scaleDownButton = new TextureButton(
+                (this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 30, (this.height - BOOK_HEIGHT) / 2 + 100,
                 8,8,
                 Texture_Scale_Down_Button1, Texture_Scale_Down_Button2,
-                this::onScaleDownButton);
+                this::onScaleDownButton
+        );
         addRenderableWidget(scaleDownButton);
     }
 

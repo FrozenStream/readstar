@@ -1,12 +1,11 @@
-package frozenstream.readstar.client;
+package frozenstream.readstar.world.overworld;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import frozenstream.readstar.data.Planet;
-import frozenstream.readstar.data.PlanetManager;
-import frozenstream.readstar.data.StarManager;
+import frozenstream.readstar.data.*;
 import frozenstream.readstar.events.FovEvent;
+import frozenstream.readstar.world.RenderUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -27,7 +26,6 @@ import org.joml.Vector3f;
 
 public class OverworldEffects extends DimensionSpecialEffects {
     private VertexBuffer skyBuffer;
-    private VertexBuffer starBuffer;
     private VertexBuffer darkBuffer;
 
     Minecraft minecraft = Minecraft.getInstance();
@@ -38,7 +36,6 @@ public class OverworldEffects extends DimensionSpecialEffects {
     public OverworldEffects() {
         super(192, true, SkyType.NORMAL, false, false);
 
-        createStars();
         createLightSky();
         createDarkSky();
     }
@@ -76,41 +73,6 @@ public class OverworldEffects extends DimensionSpecialEffects {
 
         return bufferbuilder.buildOrThrow();
     }
-
-    private void createStars() {
-        if (this.starBuffer != null) {
-            this.starBuffer.close();
-        }
-
-        this.starBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
-        this.starBuffer.bind();
-        this.starBuffer.upload(this.drawStars(Tesselator.getInstance()));
-        VertexBuffer.unbind();
-    }
-
-    private MeshData drawStars(Tesselator tesselator) {
-        RandomSource randomsource = RandomSource.create(10842L);
-        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-
-        for(int j = 0; j < 1500; ++j) {
-            float f1 = randomsource.nextFloat() * 2.0F - 1.0F;
-            float f2 = randomsource.nextFloat() * 2.0F - 1.0F;
-            float f3 = randomsource.nextFloat() * 2.0F - 1.0F;
-            float f4 = 0.15F + randomsource.nextFloat() * 0.1F;
-            float f5 = Mth.lengthSquared(f1, f2, f3);
-            if (!(f5 <= 0.010000001F) && !(f5 >= 1.0F)) {
-                Vector3f vector3f = (new Vector3f(f1, f2, f3)).normalize(100.0F);
-                float f6 = (float)(randomsource.nextDouble() * 3.1415927410125732 * 2.0);
-                Quaternionf quaternionf = (new Quaternionf()).rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), vector3f).rotateZ(f6);
-                bufferbuilder.addVertex(vector3f.add((new Vector3f(f4, -f4, 0.0F)).rotate(quaternionf)));
-                bufferbuilder.addVertex(vector3f.add((new Vector3f(f4, f4, 0.0F)).rotate(quaternionf)));
-                bufferbuilder.addVertex(vector3f.add((new Vector3f(-f4, f4, 0.0F)).rotate(quaternionf)));
-                bufferbuilder.addVertex(vector3f.add((new Vector3f(-f4, -f4, 0.0F)).rotate(quaternionf)));
-            }
-        }
-        return bufferbuilder.buildOrThrow();
-    }
-
 
     @Override
     public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f frustumMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable skyFogSetup) {
@@ -167,29 +129,30 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 f11 = 1.0F - level.getRainLevel(partialTick);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
 
-                long time = level.getDayTime() % 24000L;
 
+                long time = level.getDayTime() % 24000L;
                 Planet observer = PlanetManager.getPlanet("Earth");
                 observeFromHere = StarManager.observeFrom(observer, time);
                 posestack.mulPose(observeFromHere);
 
                 // 星体绘制
-                PlanetManager.drawPlanets(tesselator, observer, posestack.last(), time, f11);
+                PlanetRenderer.drawSun(tesselator, observer, posestack.last(), time, f11);
+                FogRenderer.setupNoFog();
+                PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), time, f11);
 
                 // 星星绘制
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);
-                FogRenderer.setupNoFog();
+
                 if(camera.getEntity() instanceof Player player){
-                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0) StarManager.RenderStars(projectionMatrix, posestack.last().pose(), starLight);
+                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0 | 0==0) StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
                     else {
                         Vector3f look = player.getViewVector(partialTick).toVector3f();
                         observeFromHere.transpose(new Matrix4f()).transformPosition(look);
                         float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());
-                        StarManager.RenderNearStars(posestack.last(), look, 0.1f, 1);
+                        StarRenderer.RenderNearStars(posestack.last(), look, 0.1f, 1);
                     }
                 }
                 skyFogSetup.run();
-
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.disableBlend();

@@ -1,6 +1,7 @@
 package frozenstream.readstar.data;
 
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.util;
 import org.joml.Vector3f;
 
 public class Planet {
@@ -89,7 +90,7 @@ public class Planet {
 
     public Vector3f updateCurrentSkyVec(long tick){
         if(noon_sky_vec == null)return new Vector3f(1,0,0);
-        float theta = (tick - 6000) * PlanetManager.PI / 12000;
+        float theta = (tick - 6000) * util.PI / 12000;
         current_sky_vec = noon_sky_vec.rotateAxis(-theta, axis.x, axis.y, axis.z, new Vector3f());
 
         return new Vector3f(current_sky_vec);

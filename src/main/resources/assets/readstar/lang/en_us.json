@@ -2,5 +2,15 @@
   "itemGroup.examplemod": "Example Mod Tab",
   "block.examplemod.example_block": "Example Block",
   "item.examplemod.example_item": "Example Item",
-  "screen.readstar.astronomical_manuscript": "Astronomical Manuscript"
+  "screen.readstar.astronomical_manuscript": "Astronomical Manuscript",
+
+  "planet.readstar.earth": "Earth",
+  "planet.readstar.mars": "Mars",
+  "planet.readstar.moon": "Moon",
+
+  "planetdesc.readstar.earth": "Earth is the only planet in our solar system where life is possible. It is the only planet where life has been observed by humans. It is the only planet where life has been observed by humans. It is the only planet where life has been observed by humans.",
+  "planetdesc.readstar.mars": "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, being larger than only Mercury. In English, Mars carries the name of the Roman god of war, and is often referred to as the \"Red Planet\" because its reddish appearance contrasts with its natural, blue-green color.",
+  "planetdesc.readstar.moon": "The Moon is Earth's only natural satellite. It is the fifth-largest satellite in the Solar System, and the largest natural satellite in the Solar System relative to the size of its parent planet, with a diameter of 3474.8 km (2147.2 mi). It is the largest satellite in the Solar System to have ever been imaged from space, and the first satellite to be discovered by the telescope. It is named after the Roman god of the moon, Phosphorus, who was a leader of the ancient Greek people."
+
+
 }

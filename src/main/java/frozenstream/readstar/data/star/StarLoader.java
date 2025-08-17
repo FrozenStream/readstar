@@ -1,10 +1,11 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.star;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.planet.PlanetLoader;
 import org.joml.Vector3f;
 
 import java.io.BufferedReader;
@@ -21,7 +22,6 @@ public class StarLoader {
         readStarsJson(defaultStars);
     }
     private static void readStarsJson(String resourcesPath) {
-        // 读取文本文件
         InputStream inputStream = PlanetLoader.class.getClassLoader().getResourceAsStream(resourcesPath);
         if (inputStream == null) return;
 

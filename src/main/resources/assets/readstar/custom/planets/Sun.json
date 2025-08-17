@@ -2,6 +2,7 @@
   "name": "Sun",
   "parent": "Centre",
   "mass": 2e30,
+  "radius": 6.955e8,
   "axis": [0.0, 0.0, 0.0],
   "a": 0.0,
   "e": 0.0,

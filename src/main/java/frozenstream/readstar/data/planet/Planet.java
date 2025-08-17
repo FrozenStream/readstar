@@ -1,16 +1,16 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.planet;
 
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.util;
 import org.joml.Vector3f;
 
 public class Planet {
     public String name;
     public String description;
-    double mass;
+    public double mass;
+    public double radius;
     public Vector3f position;
     boolean pos_updated;
-    Vector3f axis;
+    public Vector3f axis;
     public Oribit oribit;
     public Planet parent;
 
@@ -21,6 +21,7 @@ public class Planet {
             "VOID",
             null,
             0,
+            0,
             null,
             null,
             null);
@@ -30,6 +31,7 @@ public class Planet {
         this.name = "VOID";
         this.description = null;
         this.mass = 0;
+        this.radius = 0;
         this.position = new Vector3f();
         this.pos_updated = false;
         this.axis = null;
@@ -37,10 +39,11 @@ public class Planet {
         this.parent = VOID;
     }
 
-    public Planet(String name, String description, double mass, Vector3f axis, Oribit oribit, Planet parent) {
+    public Planet(String name, String description, double mass, double radius, Vector3f axis, Oribit oribit, Planet parent) {
         this.name = name;
         this.description = description;
         this.mass = mass;
+        this.radius = radius;
         this.position = new Vector3f();
         this.pos_updated = false;
         this.axis = axis;
@@ -57,6 +60,7 @@ public class Planet {
         this.name = planet.name;
         this.description = planet.description;
         this.mass = planet.mass;
+        this.radius = planet.radius;
         this.position = planet.position;
         this.pos_updated = planet.pos_updated;
         this.axis = planet.axis;

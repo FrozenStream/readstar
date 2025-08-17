@@ -28,18 +28,4 @@ public class Events {
 //        // 发送数据包给加入的玩家
 //        Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_STAR_ASK, starPacket, player);
     }
-
-    @SubscribeEvent
-    public static void onClientTick(LevelEvent.Load event) {
-
-        Level level = (Level) event.getLevel();
-        ResourceKey<Level> dimensionType = level.dimension();
-        if(dimensionType == Level.OVERWORLD) level.setDayTimePerTick(0.1f);
-
-    }
-
-
-
-
-
 }

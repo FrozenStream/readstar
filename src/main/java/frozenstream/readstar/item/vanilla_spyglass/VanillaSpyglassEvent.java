@@ -2,8 +2,8 @@ package frozenstream.readstar.item.vanilla_spyglass;
 
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.world.overworld.OverworldEffects;
-import frozenstream.readstar.data.Star;
-import frozenstream.readstar.data.StarManager;
+import frozenstream.readstar.data.star.Star;
+import frozenstream.readstar.data.star.StarManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.DimensionSpecialEffects;

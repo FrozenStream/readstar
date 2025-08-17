@@ -1,7 +1,8 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.planet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import frozenstream.readstar.data.Textures;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
@@ -20,7 +21,7 @@ public class PlanetRenderer {
         RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
         BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        float s = 40;
+        float s = PlanetManager.getApparentSize(observer, planet);
 
         Vector2f[] uvs = new Vector2f[4];
         uvs[0] = new Vector2f(1, 0);
@@ -34,11 +35,11 @@ public class PlanetRenderer {
         v[2] = (new Vector3f(-s, s, 0.0F)).rotate(quaternion);
         v[3] = (new Vector3f(-s, -s, 0.0F)).rotate(quaternion);
 
-        vec.normalize(400.0f);
-        builder.addVertex(pose, vec.add(v[0], new Vector3f())).setUv(uvs[3].x, uvs[3].y);
-        builder.addVertex(pose, vec.add(v[1], new Vector3f())).setUv(uvs[0].x, uvs[0].y);
-        builder.addVertex(pose, vec.add(v[2], new Vector3f())).setUv(uvs[1].x, uvs[1].y);
-        builder.addVertex(pose, vec.add(v[3], new Vector3f())).setUv(uvs[2].x, uvs[2].y);
+        vec.normalize(101.0f);
+        builder.addVertex(pose, v[0].add(vec)).setUv(uvs[3].x, uvs[3].y);
+        builder.addVertex(pose, v[1].add(vec)).setUv(uvs[0].x, uvs[0].y);
+        builder.addVertex(pose, v[2].add(vec)).setUv(uvs[1].x, uvs[1].y);
+        builder.addVertex(pose, v[3].add(vec)).setUv(uvs[2].x, uvs[2].y);
 
         BufferUploader.drawWithShader(builder.buildOrThrow());
     }
@@ -60,7 +61,7 @@ public class PlanetRenderer {
 
             Vector2f[] uvs = Textures.getp(PlanetManager.getLightPhase(observer, planet));
 
-            float s = 10;
+            float s = PlanetManager.getApparentSize(observer, planet);
             Vector3f[] v = new Vector3f[4];
 
             Vector3f planet_sun = PlanetManager.SUN.position.sub(planet.position, new Vector3f()).normalize();

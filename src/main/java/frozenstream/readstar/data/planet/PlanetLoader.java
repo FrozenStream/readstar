@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.planet;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -48,6 +48,7 @@ public class PlanetLoader {
             String name = jsonObject.get("name").getAsString();
             String parent = jsonObject.get("parent").getAsString();
             double mass = jsonObject.get("mass").getAsDouble();
+            double radius = jsonObject.get("radius").getAsDouble();
 
             // 提取axis数组
             JsonArray axisArray = jsonObject.getAsJsonArray("axis");
@@ -69,7 +70,7 @@ public class PlanetLoader {
 
             // 创建Planet
             String descriptionKey = "planetdesc." + Constants.MOD_ID + "." + name.toLowerCase();
-            PlanetManager.register(name, descriptionKey, mass, axis, oribit, parent);
+            PlanetManager.register(name, descriptionKey, mass, radius, axis, oribit, parent);
             Constants.LOG.info("PlanetLoader: Json load success: {}", resourcesPath);
         } catch (Exception e) {
             Constants.LOG.error("PlanetLoader: Json load fail: {}", resourcesPath, e);

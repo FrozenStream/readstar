@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.planet;
 
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.util;
@@ -15,10 +15,10 @@ public class PlanetManager {
     public static Planet SUN = null;
 
 
-    public static void register(String name, String description, double mass, Vector3f axis, Oribit oribit, String parent_name){
+    public static void register(String name, String description, double mass, double radius, Vector3f axis, Oribit oribit, String parent_name) {
         size++;
-        if("Centre".equals(parent_name)) {
-            Planet planet = new Planet(name, description, mass, axis, oribit, Planet.VOID);
+        if ("Centre".equals(parent_name)) {
+            Planet planet = new Planet(name, description, mass, radius, axis, oribit, Planet.VOID);
             if (name_map.containsKey(name)) name_map.get(name).copy(planet);
             else name_map.put(name, planet);
 
@@ -28,12 +28,11 @@ public class PlanetManager {
                 Constants.LOG.error(errorMsg);
                 throw new RuntimeException(errorMsg);
             }
-        }
-        else {
+        } else {
             if (!name_map.containsKey(name)) name_map.put(name, new Planet());
             if (!name_map.containsKey(parent_name)) name_map.put(parent_name, new Planet());
             Planet parent = name_map.get(parent_name);
-            Planet planet = new Planet(name, description, mass, axis, oribit, parent);
+            Planet planet = new Planet(name, description, mass, radius, axis, oribit, parent);
             name_map.get(name).copy(planet);
         }
     }
@@ -81,7 +80,7 @@ public class PlanetManager {
 
     public static int getLightPhase(Planet observer, Planet target){
         Planet sun = SUN;
-        Vector3f sun_vec = sun.position.sub(observer.position, new Vector3f()).normalize();
+        Vector3f sun_vec = sun.position.sub(target.position, new Vector3f()).normalize();
         Vector3f observer_vec = observer.position.sub(target.position, new Vector3f()).normalize();
         float dot = sun_vec.dot(observer_vec);
         double theta = Math.acos(dot) / util.PI;
@@ -92,10 +91,12 @@ public class PlanetManager {
      * 获取目标行星在观察者视野中的大小
      * @param observer 观察者
      * @param target 目标行星
-     * @return 目标行星大小
+     * @return 目标视大小
      */
-    public static int getApparentSize(Planet  observer, Planet target){
-        return 1;
+    public static float getApparentSize(Planet observer, Planet target) {
+        float distance = observer.position.distance(target.position);
+        float k = (float) (target.radius / distance);
+        return k * 2e3f;
     }
 
 

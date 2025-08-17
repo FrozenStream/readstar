@@ -1,47 +1,48 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.StarManager;
-import frozenstream.readstar.data.StarPacket;
+import frozenstream.readstar.data.star.Star;
+import frozenstream.readstar.data.star.StarManager;
+import frozenstream.readstar.data.star.StarPacket;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 import java.util.List;
 
 
-public record DataPacketAskForStars(List<StarPacket> data) implements PacketBase {
+public record DataPacketAskForStars(List<Star> data) implements PacketBase {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketAskForStars> CODEC = StreamCodec.composite(
             // 自定义编解码器用于序列化和反序列化 StarData 列表
             StreamCodec.of(
                     (buf, starDataList) -> {
                         buf.writeInt(starDataList.size());
-                        for (StarPacket star : starDataList) {
+                        for (Star star : starDataList) {
                             ByteBufCodecs.STRING_UTF8.encode(buf, star.name());
                             ByteBufCodecs.STRING_UTF8.encode(buf, star.description());
-                            buf.writeDouble(star.position().x);
-                            buf.writeDouble(star.position().y);
-                            buf.writeDouble(star.position().z);
+                            buf.writeFloat(star.position().x);
+                            buf.writeFloat(star.position().y);
+                            buf.writeFloat(star.position().z);
                             buf.writeInt(star.type());
                         }
                     },
                     buf -> {
                         int size = buf.readInt();
-                        List<StarPacket> dataList = new java.util.ArrayList<>();
+                        List<Star> dataList = new java.util.ArrayList<>();
                         for (int cnt = 0; cnt < size; cnt++) {
                             String name = ByteBufCodecs.STRING_UTF8.decode(buf);
                             String description = ByteBufCodecs.STRING_UTF8.decode(buf);
-                            double position_x = buf.readDouble();
-                            double position_y = buf.readDouble();
-                            double position_z = buf.readDouble();
+                            float position_x = buf.readFloat();
+                            float position_y = buf.readFloat();
+                            float position_z = buf.readFloat();
                             int type = buf.readInt();
+                            Vector3f position = new Vector3f(position_x, position_y, position_z);
 
-                            Vec3 position = new Vec3(position_x, position_y, position_z);
-
-                            dataList.add(new StarPacket(name, description, position, type));
+                            dataList.add(new Star(name, description, position, type));
                         }
                         return dataList;
                     }
@@ -55,7 +56,8 @@ public record DataPacketAskForStars(List<StarPacket> data) implements PacketBase
     @Override
     public void handle(Player player) {
         // 客户端收到数据包后更新本地数据
-        // Constants.LOG.info("客户端接收到 {} Stars 数据包，更新本地数据...", this.data.size());
+        Constants.LOG.info("客户端接收到 {} 来自Server 的 Stars 数据包，更新本地数据...", this.data.size());
+        for(Star star : this.data) StarManager.register(star);
 
     }
 

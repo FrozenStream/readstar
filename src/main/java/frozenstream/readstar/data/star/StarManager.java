@@ -1,6 +1,7 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.star;
 
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.util;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
@@ -21,6 +22,11 @@ public class StarManager {
 
     public static void register(String name, String description, Vector3f position, int type) {
         stars[starCount] = new Star(name, description, position.normalize(), type);
+        starCount++;
+    }
+
+    public static void register(Star star) {
+        stars[starCount] = star;
         starCount++;
     }
 

@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.star;
 
 import net.minecraft.world.phys.Vec3;
 

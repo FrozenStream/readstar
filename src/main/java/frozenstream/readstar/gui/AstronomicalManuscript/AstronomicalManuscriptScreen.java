@@ -2,8 +2,8 @@ package frozenstream.readstar.gui.AstronomicalManuscript;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.Planet;
-import frozenstream.readstar.data.PlanetManager;
+import frozenstream.readstar.data.planet.Planet;
+import frozenstream.readstar.data.planet.PlanetManager;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -13,6 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.joml.Vector2d;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class AstronomicalManuscriptScreen extends Screen {
     private Button scaleDownButton;
 
     private static final int ICON_SIZE = 6;
+    private static final int HALF_ICON = ICON_SIZE / 2;
 
     private final List<String> pages = new ArrayList<>();
     private int currentPage = 0;
@@ -62,33 +65,33 @@ public class AstronomicalManuscriptScreen extends Screen {
     protected void init() {
         MainCentre = PlanetManager.SUN;
         Centre = MainCentre;
-        for (Planet planet : PlanetManager.getPlanets()) {
-            Constants.LOG.info("Planet: {} orbit {} parent {}", planet.name, planet.oribit.a(), planet.parent.name);
-            if (planet.oribit.a() <= 0 || planet.parent != MainCentre) continue;
-            MinDistance = Math.min(MinDistance, planet.oribit.a());
-        }
 
+        calMinDistance();
         Constants.LOG.info("Astronomical Manuscript Screen Init, MinDistance:{}", MinDistance);
 
-        scaleUpButton =  new TextureButton(
+        // 注册缩放按钮
+        scaleUpButton = new TextureButton(
                 (this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 40, (this.height - BOOK_HEIGHT) / 2 + 100,
-                8, 8,
-                Texture_Scale_Up_Button1, Texture_Scale_Up_Button2,
-                this::onScaleUpButton
-        );
-        addRenderableWidget(scaleUpButton);
-
+                8, 8, Texture_Scale_Up_Button1, Texture_Scale_Up_Button2,
+                this::onScaleUpButton);
         scaleDownButton = new TextureButton(
                 (this.width - BOOK_WIDTH) / 2 + BOOK_WIDTH - 30, (this.height - BOOK_HEIGHT) / 2 + 100,
-                8,8,
-                Texture_Scale_Down_Button1, Texture_Scale_Down_Button2,
-                this::onScaleDownButton
-        );
+                8, 8, Texture_Scale_Down_Button1, Texture_Scale_Down_Button2,
+                this::onScaleDownButton);
+        addRenderableWidget(scaleUpButton);
         addRenderableWidget(scaleDownButton);
     }
 
+    private void calMinDistance(){
+        // 计算行星系最小距离
+        for (Planet planet : PlanetManager.getPlanets()) {
+            if (planet.parent != Centre) continue;
+            MinDistance = Math.min(MinDistance, planet.oribit.a());
+        }
+        MinDistance *= 0.5;
+    }
+
     private void onScaleUpButton(Button button) {
-        Constants.LOG.info("Astronomical Manuscript Screen Scale Up");
         if(MinScale <= MaxMinScale) {
             MinScale *= 4;
             MaxScale *= 4;
@@ -96,7 +99,6 @@ public class AstronomicalManuscriptScreen extends Screen {
     }
 
     private void onScaleDownButton(Button button) {
-        Constants.LOG.info("Astronomical Manuscript Screen Scale Down");
         if(MinScale > 1) {
             MinScale /= 4;
             MaxScale /= 4;
@@ -122,31 +124,38 @@ public class AstronomicalManuscriptScreen extends Screen {
     public void renderTitlePage(GuiGraphics guiGraphics, int bookX, int bookY) {
         int centerX = bookX + BOOK_WIDTH / 2;
         int centerY = bookY + BOOK_HEIGHT / 2;
-        int HALF_ICON = ICON_SIZE / 2;
-
         if (!PlanetManager.star_prepared) return;
 
         double Min = MinDistance * MinScale;
         double Max = MinDistance * MaxScale;
 
         for (Planet planet : PlanetManager.getPlanets()) {
-            if (planet != Centre && planet.parent != Centre) continue;
-            if (planet != Centre && (planet.oribit.a() < Min || planet.oribit.a() > Max)) continue;
-
-            float dx = planet.position.x - Centre.position.x;
-            float dz = planet.position.z - Centre.position.z;
-            int planetX = centerX + (int) (dx / Max * BOOK_HEIGHT / 3);
-            int planetY = centerY + (int) (dz / Max * BOOK_HEIGHT / 3);
-
-            // 绘制行星图标
-            ResourceLocation planetTexture = getPlanetIcon(planet.name);
-            guiGraphics.blit(planetTexture, planetX - HALF_ICON, planetY - HALF_ICON,
-                    0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-
-
-            drawSmallString(guiGraphics, font, planet.name, planetX, planetY + HALF_ICON,
-                    0xFF000000, false, 0.4f);
+            if (planet == Centre) renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
+            else if (planet.parent == Centre) renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
         }
+    }
+
+
+    public void renderPlanetInBook(GuiGraphics guiGraphics, Planet planet, double min, double max, int centerX, int centerY) {
+        Vector2d vec2 = new Vector2d(
+                planet.position.x - Centre.position.x,
+                planet.position.z - Centre.position.z
+        );
+
+        double length = vec2.length();
+        if(length < min)vec2.normalize(min);
+        if(length > max)vec2.normalize(max);
+        int planetX = centerX + (int) (vec2.x / max * BOOK_HEIGHT / 3);
+        int planetY = centerY + (int) (vec2.y / max * BOOK_HEIGHT / 3);
+
+        // 绘制行星图标
+        ResourceLocation planetTexture = getPlanetIcon(planet.name);
+        guiGraphics.blit(planetTexture, planetX - HALF_ICON, planetY - HALF_ICON,
+                0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+
+
+        drawSmallString(guiGraphics, font, planet.name, planetX, planetY + HALF_ICON,
+                0xFF000000, false, 0.4f);
     }
 
     public void renderPlanetPage(GuiGraphics guiGraphics, Planet planet, int bookX, int bookY) {

@@ -1,6 +1,7 @@
 package frozenstream.readstar.data;
 
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.planet.PlanetManager;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

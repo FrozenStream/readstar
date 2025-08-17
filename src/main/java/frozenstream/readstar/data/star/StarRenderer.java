@@ -1,7 +1,8 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.data.star;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import frozenstream.readstar.data.Textures;
 import frozenstream.readstar.util;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.RandomSource;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 
 public class StarRenderer {
     public static final VertexBuffer starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+    private static boolean bufferBuilt = false;
 
     public static void buildStarsBuffer() {
         if (StarManager.starCount == 0) return;
         starsBuffer.bind();
         starsBuffer.upload(drawStars(Tesselator.getInstance()));
         VertexBuffer.unbind();
+        bufferBuilt = true;
     }
 
     private static MeshData drawStars(Tesselator tesselator) {
@@ -49,7 +52,7 @@ public class StarRenderer {
     }
 
     public static void RenderStars(Matrix4f viewMatrix, Matrix4f projectionMatrix, float light) {
-        if (light > 0.0F) {
+        if (light > 0.0F && bufferBuilt) {
             RenderSystem.setShaderColor(1, 1, 1, light);
             RenderSystem.setShaderTexture(0, StarManager.STAR_LOCATION);
             starsBuffer.bind();

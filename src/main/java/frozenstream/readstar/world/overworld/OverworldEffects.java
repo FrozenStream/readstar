@@ -3,8 +3,12 @@ package frozenstream.readstar.world.overworld;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import frozenstream.readstar.data.*;
 import frozenstream.readstar.events.FovEvent;
+import frozenstream.readstar.data.planet.Planet;
+import frozenstream.readstar.data.planet.PlanetManager;
+import frozenstream.readstar.data.planet.PlanetRenderer;
+import frozenstream.readstar.data.star.StarManager;
+import frozenstream.readstar.data.star.StarRenderer;
 import frozenstream.readstar.world.RenderUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -14,13 +18,11 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 

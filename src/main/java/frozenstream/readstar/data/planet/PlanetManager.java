@@ -6,6 +6,7 @@ import org.joml.Vector3f;
 
 import java.util.*;
 
+//TODO: 添加星球自转周期
 
 public class PlanetManager {
     public static boolean star_prepared = false;
@@ -93,6 +94,7 @@ public class PlanetManager {
      * @param target 目标行星
      * @return 目标视大小
      */
+    //TODO: 尺寸添加最小值
     public static float getApparentSize(Planet observer, Planet target) {
         float distance = observer.position.distance(target.position);
         float k = (float) (target.radius / distance);

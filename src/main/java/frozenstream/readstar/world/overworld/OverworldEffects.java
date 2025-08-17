@@ -25,6 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+//TODO: 朝霞方向更新
+
 
 public class OverworldEffects extends DimensionSpecialEffects {
     private VertexBuffer skyBuffer;

@@ -29,7 +29,7 @@ public class AstronomicalManuscriptScreen extends Screen {
     private static Planet MainCentre;
     private static Planet Centre;
 
-    private static double MinDistance = 1e20f;
+    private static double MinDistance = 1e20;
 
     private static int MinScale = 1;
     private static int MaxScale = 8;
@@ -84,6 +84,7 @@ public class AstronomicalManuscriptScreen extends Screen {
 
     private void calMinDistance(){
         // 计算行星系最小距离
+        MinDistance = 1e20;
         for (Planet planet : PlanetManager.getPlanets()) {
             if (planet.parent != Centre) continue;
             MinDistance = Math.min(MinDistance, planet.oribit.a());

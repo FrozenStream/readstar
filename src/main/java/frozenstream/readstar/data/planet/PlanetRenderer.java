@@ -2,6 +2,7 @@ package frozenstream.readstar.data.planet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.Textures;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Quaternionf;
@@ -62,6 +63,7 @@ public class PlanetRenderer {
             Vector2f[] uvs = Textures.getp(PlanetManager.getLightPhase(observer, planet));
 
             float s = PlanetManager.getApparentSize(observer, planet);
+            Constants.LOG.info("Planet {} Apparent size: {}", planet.name, s);
             Vector3f[] v = new Vector3f[4];
 
             Vector3f planet_sun = PlanetManager.SUN.position.sub(planet.position, new Vector3f()).normalize();

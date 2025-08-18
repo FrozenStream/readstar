@@ -2,6 +2,7 @@ package frozenstream.readstar.data.planet;
 
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.util;
+import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
 import java.util.*;
@@ -79,6 +80,12 @@ public class PlanetManager {
     }
 
 
+    /**
+     * 获取目标行星在观察者视野中的亮面
+     * @param observer 观察者
+     * @param target 目标行星
+     * @return 亮面类型ID
+     */
     public static int getLightPhase(Planet observer, Planet target){
         Planet sun = SUN;
         Vector3f sun_vec = sun.position.sub(target.position, new Vector3f()).normalize();
@@ -94,24 +101,21 @@ public class PlanetManager {
      * @param target 目标行星
      * @return 目标视大小
      */
-    //TODO: 尺寸添加最小值
     public static float getApparentSize(Planet observer, Planet target) {
         float distance = observer.position.distance(target.position);
         float k = (float) (target.radius / distance);
-        return k * 2e3f;
+        return Math.max(1.024f, k * 2e3f);
     }
 
-
-//    private static final float SUNRISE_START = 23500;
-//    private static final float SUNRISE_END = 500;
-//    private static final float SUNSET_START = 11500;
-//    private static final float SUNSET_END = 12500;
-//    private static final float DAYTIME = 24000;
-//    private static float getAlpha(long t) {
-//        if (t >= 0 && t < SUNRISE_END) return 0.5f - t / SUNRISE_END * 0.5f;
-//        if (t >= SUNRISE_END && t < SUNSET_START) return 0f;
-//        if (t >= SUNSET_START && t < SUNSET_END) return (t - SUNSET_START) / (SUNSET_END - SUNSET_START);
-//        if (t >= SUNSET_END && t < SUNRISE_START) return 1f;
-//        return 1f - (t - SUNRISE_START) / (DAYTIME - SUNRISE_START) * 0.5f;
-//    }
+    /**
+     * 获取目标行星在观察者视野中被太阳光遮蔽的程度
+     * @param observer 观察者
+     * @param target 目标行星
+     * @return 目标被遮蔽导致的不透明度值
+     */
+    public static float getCoveredBySun(Planet observer, Planet target) {
+        Vector3f sun_vec = SUN.position.sub(observer.position, new Vector3f()).normalize();
+        Vector3f target_vec = target.position.sub(observer.position, new Vector3f()).normalize();
+        return Mth.clamp(1 - sun_vec.dot(target_vec),0.5f, 1f);
+    }
 }

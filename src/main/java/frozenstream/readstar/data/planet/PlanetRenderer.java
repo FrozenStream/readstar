@@ -11,15 +11,17 @@ import org.joml.Vector3f;
 
 public class PlanetRenderer {
 
-    public static void drawSun(Tesselator tesselator, Planet observer, PoseStack.Pose pose, long t, float rain) {
+    public static void drawSun(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain) {
         if (!PlanetManager.star_prepared) return;
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         Planet planet = PlanetManager.SUN;
+
+        // 设置透明度，下雨则关闭
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
 
         Vector3f vec = planet.position.sub(observer.position, new Vector3f()).normalize(100.0f);
         Quaternionf quaternion = (new Quaternionf()).rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), vec);
-        RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
         BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
         float s = PlanetManager.getApparentSize(observer, planet);
@@ -46,13 +48,18 @@ public class PlanetRenderer {
     }
 
 
-    public static void drawPlanets(Tesselator tesselator, Planet observer, PoseStack.Pose pose, long t, float rain) {
+    public static void drawPlanets(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain) {
         if (!PlanetManager.star_prepared) return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         for (Planet planet : PlanetManager.getPlanets()) {
             if (planet == observer) continue;
+
+            // 设置透明度，下雨或离太阳过近
+            float covered = PlanetManager.getCoveredBySun(observer, planet);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, Math.min(rain, covered));
+
 
             Vector3f vec = planet.position.sub(observer.position, new Vector3f()).normalize(100.0f);
             RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
@@ -63,7 +70,6 @@ public class PlanetRenderer {
             Vector2f[] uvs = Textures.getp(PlanetManager.getLightPhase(observer, planet));
 
             float s = PlanetManager.getApparentSize(observer, planet);
-            Constants.LOG.info("Planet {} Apparent size: {}", planet.name, s);
             Vector3f[] v = new Vector3f[4];
 
             Vector3f planet_sun = PlanetManager.SUN.position.sub(planet.position, new Vector3f()).normalize();

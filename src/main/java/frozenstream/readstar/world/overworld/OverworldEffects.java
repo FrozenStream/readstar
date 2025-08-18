@@ -131,18 +131,18 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
                 posestack.pushPose();
                 f11 = 1.0F - level.getRainLevel(partialTick);
+
+                // 如果下雨就不画
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
 
-
-                long time = level.getDayTime() % 24000L;
                 Planet observer = PlanetManager.getPlanet("Earth");
-                observeFromHere = StarManager.observeFrom(observer, time);
+                observeFromHere = StarManager.observeFrom(observer, level.getDayTime() % 24000L);
                 posestack.mulPose(observeFromHere);
 
                 // 星体绘制
-                PlanetRenderer.drawSun(tesselator, observer, posestack.last(), time, f11);
+                PlanetRenderer.drawSun(tesselator, observer, posestack.last(), f11);
                 FogRenderer.setupNoFog();
-                PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), time, f11);
+                PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), f11);
 
                 // 星星绘制
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);

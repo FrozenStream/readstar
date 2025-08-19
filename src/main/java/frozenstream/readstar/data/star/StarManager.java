@@ -14,8 +14,6 @@ public class StarManager {
     public static final Star[] stars = new Star[32768];
     public static int starCount = 0;
 
-    public static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/star.png");
-
     private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
 
@@ -33,7 +31,7 @@ public class StarManager {
 
     public static void Init_Display() {
         for(int i = 0; i < starCount; i++){
-            Constants.LOG.info("StarManager: Load {}", stars[i].name());
+            Constants.LOG.info("StarManager: Load {} TYPE:{}", stars[i].name(), stars[i].type());
         }
         StarRenderer.buildStarsBuffer();
     }

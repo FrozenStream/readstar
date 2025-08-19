@@ -132,9 +132,6 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 posestack.pushPose();
                 f11 = 1.0F - level.getRainLevel(partialTick);
 
-                // 如果下雨就不画
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
-
                 Planet observer = PlanetManager.getPlanet("Earth");
                 observeFromHere = StarManager.observeFrom(observer, level.getDayTime() % 24000L);
                 posestack.mulPose(observeFromHere);
@@ -148,12 +145,12 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);
 
                 if(camera.getEntity() instanceof Player player){
-                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0 | 0==0) StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
+                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0) StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
                     else {
                         Vector3f look = player.getViewVector(partialTick).toVector3f();
                         observeFromHere.transpose(new Matrix4f()).transformPosition(look);
                         float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());
-                        StarRenderer.RenderNearStars(posestack.last(), look, 0.1f, 1);
+                        StarRenderer.RenderNearStars(posestack.last(), look, 0.1f, scaling, starLight);
                     }
                 }
                 skyFogSetup.run();

@@ -1,5 +1,6 @@
 package frozenstream.readstar;
 
+import frozenstream.readstar.item.ModCreativeTabs;
 import frozenstream.readstar.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
@@ -17,17 +18,12 @@ public class ReadStarNeoForge {
     public ReadStarNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
-        modEventBus.addListener(this::addCreative);
+
         modEventBus.addListener(this::registerPackets);
         ModItems.register(modEventBus);
+        ModCreativeTabs.register(modEventBus);
     }
 
-
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-//        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-//            event.accept(ModItems.SUPER_SPYGLASS);
-//        }
-    }
 
     public void registerPackets(RegisterPayloadHandlersEvent event) {
 

@@ -23,11 +23,12 @@ public class StarRenderer {
     private static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/stars.png");
 
     private static final Vector3f OriVec = new Vector3f(0.0F, 0.0F, -1.0F);
+    private static final float defaultSize = 0.486f;
 
     private static final Quaternionf quaternionf = new Quaternionf();
     private static final Vector3f positionVec = new Vector3f();
     private static float Rz;
-    private static float s = 1.024f;
+    private static float s;
 
     private static final Vector2f[] uvs = new Vector2f[4];
     private static final Vector3f[] v = new Vector3f[4];
@@ -56,7 +57,7 @@ public class StarRenderer {
         RandomSource randomsource = RandomSource.create(10842L);
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        s = 1.024f;
+        s = defaultSize;
         for (int i = 0; i < StarManager.starCount; i++) {
             StarManager.stars[i].position().normalize(100.0F, positionVec);
             // 顶点到星星位置并附加随机旋转
@@ -99,7 +100,7 @@ public class StarRenderer {
         ArrayList<Star> near = StarManager.lookingNear(eye, nearDistance);
         if (near.isEmpty()) return;
 
-        s = 2.048f * scaling;
+        s = defaultSize * 2.0f * scaling;
         for (Star star : near) {
             star.position().normalize(100.0f, positionVec);
 

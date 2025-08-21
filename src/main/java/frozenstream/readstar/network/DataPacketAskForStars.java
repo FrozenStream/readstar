@@ -21,7 +21,6 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
                         buf.writeInt(starDataList.size());
                         for (Star star : starDataList) {
                             ByteBufCodecs.STRING_UTF8.encode(buf, star.name());
-                            ByteBufCodecs.STRING_UTF8.encode(buf, star.description());
                             buf.writeFloat(star.position().x);
                             buf.writeFloat(star.position().y);
                             buf.writeFloat(star.position().z);
@@ -33,14 +32,13 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
                         List<Star> dataList = new java.util.ArrayList<>();
                         for (int cnt = 0; cnt < size; cnt++) {
                             String name = ByteBufCodecs.STRING_UTF8.decode(buf);
-                            String description = ByteBufCodecs.STRING_UTF8.decode(buf);
                             float position_x = buf.readFloat();
                             float position_y = buf.readFloat();
                             float position_z = buf.readFloat();
                             int type = buf.readInt();
                             Vector3f position = new Vector3f(position_x, position_y, position_z);
 
-                            dataList.add(new Star(name, description, position, type));
+                            dataList.add(new Star(name, position, type));
                         }
                         return dataList;
                     }
@@ -56,7 +54,7 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
         // 客户端收到数据包后更新本地数据
         Constants.LOG.info("客户端接收到 {} 来自Server 的 Stars 数据包，更新本地数据...", this.data.size());
         for(Star star : this.data) StarManager.register(star);
-
+        StarManager.Init_Display();
     }
 
     @Override

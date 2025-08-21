@@ -17,8 +17,5 @@ public class Events {
     public static void onServerStarting(ClientPlayerNetworkEvent.LoggingIn event) {
         PlanetLoader.loadPlanets();
         PlanetManager.Check_Display();
-
-        StarLoader.loadStars();
-        StarManager.Init_Display();
     }
 }

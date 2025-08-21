@@ -38,13 +38,13 @@ public class VanillaSpyglassEvent {
             guiGraphics.drawString(
                     mc.font,
                     Component.literal(coords),
-                    10, 40,
+                    10, 25,
                     0xFFFF00,
                     true
             );
 
             // 绘制一个简单的矩形框
-            guiGraphics.fill(8, 8, 200, 55, 0x80000000); // 半透明黑色背景
+            guiGraphics.fill(8, 8, 200, 40, 0x80000000); // 半透明黑色背景
 
             Star starLookAt = StarManager.lookingAt(lookAt, 0.01f);
 
@@ -56,7 +56,6 @@ public class VanillaSpyglassEvent {
 
 
             String starName = String.format("name: %s", starLookAt.name());
-            String starDesc = String.format("description: %s",starLookAt.description());
             // 在屏幕左上角绘制文本
             guiGraphics.drawString(
                     mc.font,
@@ -65,16 +64,6 @@ public class VanillaSpyglassEvent {
                     0xFFFFFF,
                     true
             );
-
-            guiGraphics.drawString(
-                    mc.font,
-                    Component.literal(starDesc),
-                    10, 25,
-                    0xFFFF00,
-                    true
-            );
-
-
         }
     }
 }

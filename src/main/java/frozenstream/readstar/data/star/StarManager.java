@@ -18,8 +18,8 @@ public class StarManager {
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
 
 
-    public static void register(String name, String description, Vector3f position, int type) {
-        stars[starCount] = new Star(name, description, position.normalize(), type);
+    public static void register(String name, Vector3f position, int type) {
+        stars[starCount] = new Star(name, position.normalize(), type);
         starCount++;
     }
 

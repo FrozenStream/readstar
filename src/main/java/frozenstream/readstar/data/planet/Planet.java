@@ -9,11 +9,11 @@ public class Planet {
     public double mass;
     public double radius;
     public Vector3f position;
-    boolean pos_updated;
     public Vector3f axis;
     public Oribit oribit;
     public Planet parent;
 
+    boolean pos_updated;
     Vector3f current_sky_vec;
     Vector3f noon_sky_vec;
 

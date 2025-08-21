@@ -1,114 +1,3608 @@
 {
   "Stars": [
     {
-      "name": "Betelgeuse",
-      "description": "Alpha Orionis",
+
+  ]
+}
+
+      "name": "HIP H|",
       "position": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "type": 1
-    },
-    {
-      "name": "Sirius",
-      "description": "Alpha Canis Majoris",
-      "position": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "type": 2
-    },
-    {
-      "name": "Canopus",
-      "description": "Alpha Carinae",
-      "position": [
-        0.0,
-        0.0,
-        1.0
+        99.982,
+        0.024,
+        1.901
       ],
       "type": 3
     },
     {
-      "name": "Rigil Kentaurus",
-      "description": "Alpha Kentaurus",
+      "name": "HIP H|",
       "position": [
-        0.4,
-        0.2,
-        0.7
+        94.265,
+        0.094,
+        -33.379
       ],
-      "type": 0
+      "type": 5
     },
     {
-      "name": "Arcturus",
-      "description": "Alpha Bootes",
+      "name": "HIP H|",
       "position": [
-        0.5,
-        0.5,
-        0.5
+        77.869,
+        0.102,
+        62.741
       ],
-      "type": 0
+      "type": 1
     },
     {
-      "name": "Vega",
-      "description": "Alpha Lyrae",
+      "name": "HIP H|",
       "position": [
-        0.6,
-        0.3,
-        0.8
+        61.712,
+        0.135,
+        -78.687
       ],
       "type": 3
     },
     {
-      "name": "Capella",
-      "description": "Alpha Aquilae",
+      "name": "HIP H|",
       "position": [
-        0.7,
-        0.4,
-        0.9
+        75.937,
+        0.198,
+        -65.066
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.762,
+        0.474,
+        6.882
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.946,
+        0.555,
+        34.262
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.964,
+        0.643,
+        43.659
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        80.293,
+        0.743,
+        59.603
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        63.109,
+        0.599,
+        -77.568
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.273,
+        0.667,
+        73.064
       ],
       "type": 2
     },
     {
-      "name": "Aldebaran",
-      "description": "Alpha Tauri",
+      "name": "HIP H|",
       "position": [
-        -0.8,
-        0.5,
-        0.1
+        80.938,
+        0.867,
+        -58.722
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.319,
+        1.007,
+        -38.421
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.99,
+        1.264,
+        -0.629
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        63.209,
+        0.833,
+        77.485
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.381,
+        1.022,
+        -64.536
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        57.475,
+        0.774,
+        -81.829
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.74,
+        1.388,
+        -7.069
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.466,
+        1.095,
+        61.984
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.673,
+        1.511,
+        39.922
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.01,
+        1.717,
+        13.93
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.13,
+        1.196,
+        -75.873
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.295,
+        1.896,
+        23.026
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.721,
+        1.826,
+        -39.799
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        71.566,
+        1.487,
+        -69.829
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.257,
+        2.148,
+        -23.163
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.11,
+        1.681,
+        -65.997
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        72.684,
+        1.661,
+        -68.66
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.445,
+        1.579,
+        -75.594
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.126,
+        1.866,
+        67.096
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.858,
+        2.565,
+        4.668
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        61.629,
+        1.591,
+        78.736
       ],
       "type": 1
     },
     {
-      "name": "Deneb",
-      "description": "Alpha Scorpii",
+      "name": "HIP H|",
       "position": [
-        0.9,
-        0.6,
-        0.2
+        98.304,
+        2.553,
+        -18.159
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.135,
+        2.322,
+        45.272
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.784,
+        2.599,
+        -25.022
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.681,
+        2.642,
+        21.247
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        67.944,
+        1.874,
+        -73.349
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        18.967,
+        0.552,
+        -98.183
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.743,
+        2.805,
+        -28.731
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        58.324,
+        1.78,
+        81.211
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        38.705,
+        1.236,
+        92.198
       ],
       "type": 1
     },
     {
-      "name": "Rukbat",
-      "description": "Alpha Geminorum",
+      "name": "HIP H|",
       "position": [
-        0.1,
-        -0.7,
-        0.3
+        89.949,
+        2.954,
+        43.593
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        50.635,
+        1.712,
+        86.216
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.773,
+        3.468,
+        -5.767
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        30.546,
+        1.074,
+        -95.214
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        90.111,
+        3.175,
+        -43.244
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        54.671,
+        1.936,
+        -83.71
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.777,
+        2.684,
+        -65.197
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.734,
+        3.498,
+        28.684
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.003,
+        2.245,
+        -79.966
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.912,
+        3.752,
+        1.861
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        22.444,
+        0.862,
+        -97.445
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        87.173,
+        3.365,
+        -48.883
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.047,
+        3.776,
+        30.85
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.548,
+        1.635,
+        -91.833
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.908,
+        4.262,
+        0.389
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        34.699,
+        1.53,
+        -93.774
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        46.627,
+        2.123,
+        88.439
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        56.261,
+        2.571,
+        82.632
       ],
       "type": 1
     },
     {
-      "name": "Alphard",
-      "description": "Alpha Pegasi",
+      "name": "HIP H|",
       "position": [
-        0.2,
-        -0.8,
-        -0.4
+        43.059,
+        1.979,
+        -90.233
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        58.967,
+        2.721,
+        80.719
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.109,
+        3.306,
+        -71.23
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.318,
+        3.348,
+        71.023
       ],
       "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.267,
+        4.269,
+        -46.805
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        57.53,
+        2.833,
+        -81.745
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        30.336,
+        1.499,
+        -95.276
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.555,
+        4.777,
+        39.936
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.504,
+        5.021,
+        29.219
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.135,
+        4.545,
+        50.597
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.984,
+        4.251,
+        59.871
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.976,
+        4.34,
+        59.875
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.343,
+        5.599,
+        -22.204
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.252,
+        2.268,
+        91.946
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.018,
+        4.711,
+        58.429
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        63.571,
+        3.718,
+        -77.103
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.882,
+        5.018,
+        54.208
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.389,
+        5.22,
+        -50.097
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.001,
+        5.785,
+        30.682
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.442,
+        5.032,
+        57.81
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.682,
+        6.192,
+        -20.49
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.427,
+        6.356,
+        -8.598
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.977,
+        6.371,
+        -18.971
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        61.326,
+        3.989,
+        78.888
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.196,
+        5.823,
+        46.772
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        90.637,
+        6.084,
+        -41.809
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        34.771,
+        2.374,
+        93.73
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.249,
+        6.806,
+        -10.166
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.693,
+        4.637,
+        -75.253
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        59.791,
+        4.346,
+        80.039
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.246,
+        5.452,
+        -66.767
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.207,
+        7.3,
+        -10.235
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.27,
+        7.11,
+        -35.357
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.707,
+        7.643,
+        -0.133
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.847,
+        6.485,
+        -54.107
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.522,
+        7.728,
+        -20.73
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.731,
+        7.738,
+        24.149
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.266,
+        4.857,
+        -79.651
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.802,
+        7.483,
+        -36.494
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        49.293,
+        4.087,
+        86.911
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.8,
+        7.789,
+        33.777
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        66.945,
+        5.617,
+        -74.073
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.647,
+        6.277,
+        -66.245
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        36.728,
+        3.105,
+        -92.959
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        84.587,
+        7.253,
+        -52.843
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        32.554,
+        2.801,
+        94.511
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        64.063,
+        5.551,
+        76.584
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        63.583,
+        5.571,
+        -76.982
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        33.865,
+        2.992,
+        -94.044
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.89,
+        8.998,
+        11.826
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.718,
+        7.023,
+        63.757
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.283,
+        7.541,
+        56.326
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.24,
+        8.925,
+        -29.15
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.292,
+        6.269,
+        75.483
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.547,
+        8.35,
+        51.108
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        45.302,
+        4.433,
+        -89.04
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.705,
+        8.154,
+        -55.619
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        29.746,
+        2.972,
+        -95.427
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.144,
+        9.964,
+        -16.384
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.739,
+        7.252,
+        70.309
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        69.907,
+        7.273,
+        -71.135
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        87.472,
+        9.112,
+        47.599
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        22.262,
+        2.336,
+        -97.463
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        30.341,
+        3.191,
+        95.232
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        47.871,
+        5.085,
+        87.65
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.91,
+        8.18,
+        -63.388
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.203,
+        10.334,
+        25.261
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.309,
+        7.073,
+        -75.397
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        28.049,
+        3.05,
+        95.937
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.972,
+        10.811,
+        9.363
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.477,
+        9.397,
+        -51.043
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        46.636,
+        5.148,
+        88.31
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.759,
+        9.07,
+        -56.861
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.968,
+        8.455,
+        -64.477
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.362,
+        11.105,
+        -1.989
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.376,
+        11.149,
+        -0.38
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        90.6,
+        10.21,
+        41.077
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        73.411,
+        8.352,
+        67.388
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.239,
+        10.949,
+        -28.455
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        37.997,
+        4.45,
+        92.393
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        37.029,
+        4.409,
+        -92.787
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.974,
+        9.538,
+        59.272
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.902,
+        4.762,
+        91.57
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        23.725,
+        2.84,
+        97.103
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.406,
+        11.064,
+        36.589
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        99.15,
+        11.893,
+        -5.281
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.392,
+        10.727,
+        -43.519
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.648,
+        11.36,
+        35.88
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.17,
+        11.234,
+        43.846
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.594,
+        12.046,
+        26.772
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.993,
+        9.987,
+        -60.501
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        87.479,
+        11.155,
+        -47.149
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.787,
+        12.344,
+        21.908
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.163,
+        9.459,
+        -66.411
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.633,
+        12.722,
+        -10.477
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.556,
+        8.864,
+        72.26
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        44.463,
+        5.817,
+        89.382
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.733,
+        13.007,
+        -9.088
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.23,
+        10.309,
+        -61.431
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.992,
+        13.318,
+        -4.826
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        35.081,
+        4.728,
+        -93.525
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.452,
+        11.129,
+        55.479
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.204,
+        11.926,
+        45.583
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.211,
+        11.608,
+        -51.032
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        49.63,
+        6.78,
+        86.55
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.648,
+        12.548,
+        -37.99
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        54.659,
+        7.51,
+        -83.403
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.774,
+        10.677,
+        63.18
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.906,
+        13.905,
+        -4.92
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        36.644,
+        5.167,
+        -92.9
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.514,
+        13.109,
+        -35.628
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.145,
+        12.549,
+        45.53
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        38.028,
+        5.441,
+        92.327
+      ],
+      "type": 0
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        66.762,
+        9.673,
+        73.819
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        49.531,
+        7.202,
+        86.572
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        63.91,
+        9.308,
+        76.347
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.665,
+        10.309,
+        70.002
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.777,
+        14.296,
+        -20.73
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.012,
+        13.18,
+        -45.609
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.198,
+        14.433,
+        -23.188
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.62,
+        14.7,
+        -15.945
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        48.382,
+        7.323,
+        87.21
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.055,
+        9.208,
+        79.427
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.836,
+        13.203,
+        -49.577
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.993,
+        15.096,
+        19.092
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.063,
+        15.117,
+        18.714
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.562,
+        15.471,
+        15.569
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.208,
+        15.61,
+        -10.556
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.156,
+        15.612,
+        11.031
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        57.853,
+        9.245,
+        81.04
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.004,
+        15.509,
+        18.698
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.54,
+        11.082,
+        -71.969
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.629,
+        15.983,
+        14.598
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.457,
+        12.554,
+        -63.22
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.589,
+        16.085,
+        14.756
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        66.752,
+        11.034,
+        73.637
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.969,
+        10.099,
+        78.618
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        73.128,
+        12.218,
+        67.105
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.12,
+        15.901,
+        26.447
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.678,
+        15.887,
+        27.994
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.766,
+        13.73,
+        -55.909
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.407,
+        15.781,
+        32.034
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        57.18,
+        9.698,
+        81.464
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.85,
+        16.1,
+        -27.281
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.973,
+        12.101,
+        -69.4
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.171,
+        16.755,
+        -9.04
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.291,
+        15.951,
+        32.286
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        37.502,
+        6.443,
+        -92.477
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.93,
+        6.865,
+        91.425
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.91,
+        6.967,
+        91.426
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.422,
+        17.059,
+        -14.76
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        77.672,
+        13.623,
+        -61.494
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.083,
+        15.104,
+        -48.596
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        61.342,
+        10.82,
+        78.231
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.502,
+        15.311,
+        47.781
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        12.043,
+        2.149,
+        99.249
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        25.419,
+        4.536,
+        96.609
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        72.083,
+        12.91,
+        68.099
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        52.688,
+        9.476,
+        -84.464
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.827,
+        17.872,
+        10.513
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.764,
+        14.605,
+        58.518
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        16.602,
+        3.047,
+        98.565
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.246,
+        13.65,
+        -65.584
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.12,
+        18.086,
+        6.733
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.275,
+        18.119,
+        3.717
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.957,
+        17.601,
+        -25.95
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.151,
+        16.531,
+        -42.175
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        16.586,
+        3.093,
+        98.566
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.57,
+        16.283,
+        47.335
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        66.695,
+        12.613,
+        73.435
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        84.797,
+        16.077,
+        50.508
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        50.904,
+        9.758,
+        -85.52
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        84.897,
+        16.427,
+        -50.226
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        31.379,
+        6.088,
+        94.754
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        33.19,
+        6.454,
+        94.111
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        31.357,
+        6.122,
+        94.759
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        98.128,
+        19.194,
+        -1.56
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.693,
+        14.832,
+        -63.645
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.188,
+        18.068,
+        -34.278
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.942,
+        19.3,
+        5.899
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.68,
+        19.067,
+        17.013
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.824,
+        19.311,
+        15.882
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        80.583,
+        16.076,
+        -56.991
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        48.002,
+        9.592,
+        -87.2
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.103,
+        15.12,
+        64.272
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.098,
+        19.673,
+        -13.598
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        53.761,
+        10.894,
+        83.613
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.981,
+        19.701,
+        14.369
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.978,
+        19.706,
+        14.385
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.186,
+        17.095,
+        52.8
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        59.677,
+        12.266,
+        79.298
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.58,
+        18.233,
+        -42.674
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.241,
+        17.643,
+        49.221
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.343,
+        18.565,
+        -40.905
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        71.891,
+        14.98,
+        67.877
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.972,
+        18.778,
+        -41.609
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        56.79,
+        12.018,
+        81.428
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.642,
+        17.848,
+        -51.821
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.233,
+        19.953,
+        30.158
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        64.508,
+        13.816,
+        75.152
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        55.483,
+        12.053,
+        -82.319
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.52,
+        19.531,
+        -40.059
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.058,
+        18.022,
+        54.238
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.326,
+        21.467,
+        8.171
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        76.682,
+        16.974,
+        61.901
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.504,
+        21.226,
+        -20.698
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        42.062,
+        9.349,
+        -90.241
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        97.362,
+        21.64,
+        -7.229
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        50.143,
+        11.233,
+        85.787
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.436,
+        20.042,
+        39.995
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        28.232,
+        6.389,
+        95.719
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.929,
+        17.92,
+        -58.729
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        87.322,
+        19.892,
+        -44.487
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        66.701,
+        15.219,
+        -72.934
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        43.287,
+        9.88,
+        89.603
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.266,
+        19.474,
+        -48.482
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.215,
+        20.839,
+        35.292
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.611,
+        17.989,
+        -59.133
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        55.129,
+        12.674,
+        82.463
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        45.214,
+        10.402,
+        88.586
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        58.215,
+        13.434,
+        80.191
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        55.772,
+        13.022,
+        81.975
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.861,
+        21.455,
+        33.186
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.119,
+        22.235,
+        21.4
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        39.871,
+        9.333,
+        -91.232
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.156,
+        18.581,
+        -58.215
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        19.046,
+        4.474,
+        98.068
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.741,
+        22.373,
+        -22.881
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        71.91,
+        17.04,
+        67.369
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.111,
+        14.471,
+        -78.595
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.244,
+        20.08,
+        -51.644
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.496,
+        20.633,
+        -47.589
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        32.75,
+        7.942,
+        94.151
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        52.672,
+        12.877,
+        -84.023
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        96.905,
+        23.726,
+        6.814
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        73.192,
+        17.951,
+        -65.732
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.418,
+        21.03,
+        -47.556
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        64.411,
+        15.9,
+        74.823
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.441,
+        23.379,
+        23.116
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        43.141,
+        10.761,
+        -89.572
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.613,
+        23.131,
+        -29.797
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        72.073,
+        18.001,
+        66.944
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        38.28,
+        9.883,
+        91.853
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        52.183,
+        13.532,
+        84.225
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.557,
+        23.239,
+        37.939
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.137,
+        22.146,
+        -47.553
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        51.519,
+        13.44,
+        -84.648
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        71.248,
+        18.686,
+        -67.636
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.674,
+        24.668,
+        24.833
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.023,
+        17.958,
+        -71.066
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.485,
+        18.638,
+        -68.444
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        77.239,
+        20.427,
+        60.14
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        46.71,
+        12.38,
+        87.55
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        64.516,
+        17.126,
+        -74.461
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        90.257,
+        23.975,
+        35.762
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        31.02,
+        8.244,
+        -94.709
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.424,
+        25.327,
+        21.04
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        16.114,
+        4.329,
+        -98.598
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        75.443,
+        20.42,
+        -62.381
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        44.966,
+        12.249,
+        88.476
+      ],
+      "type": 0
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.234,
+        25.265,
+        -29.233
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.694,
+        24.026,
+        -43.668
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        52.587,
+        14.611,
+        83.792
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.873,
+        25.717,
+        29.965
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        62.065,
+        17.377,
+        76.459
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.705,
+        20.934,
+        63.095
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.427,
+        26.494,
+        19.534
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.917,
+        26.947,
+        -8.587
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.24,
+        23.465,
+        -50.204
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.732,
+        26.754,
+        -17.608
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        44.734,
+        12.704,
+        88.529
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        85.731,
+        24.409,
+        -45.325
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        79.336,
+        22.618,
+        -56.518
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.74,
+        26.212,
+        -29.945
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        47.848,
+        13.682,
+        86.738
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.242,
+        26.72,
+        24.33
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        40.392,
+        11.581,
+        90.743
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        86.456,
+        24.805,
+        -43.704
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        38.56,
+        11.064,
+        91.601
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        49.047,
+        14.092,
+        -85.999
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        69.124,
+        19.961,
+        -69.451
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        88.245,
+        25.575,
+        -39.481
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        89.915,
+        26.097,
+        -35.133
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.045,
+        26.803,
+        -28.45
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        73.424,
+        21.408,
+        64.426
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.741,
+        24.438,
+        -48.891
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        56.534,
+        16.55,
+        -80.809
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        56.034,
+        16.418,
+        81.182
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        93.521,
+        27.404,
+        22.422
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        83.579,
+        24.648,
+        -49.062
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        51.77,
+        15.325,
+        -84.173
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        65.295,
+        19.39,
+        -73.216
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        50.672,
+        15.156,
+        84.868
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.25,
+        20.431,
+        -70.175
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        59.147,
+        17.914,
+        78.617
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.085,
+        28.554,
+        -18.24
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.982,
+        28.832,
+        -12.127
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        28.137,
+        8.553,
+        -95.578
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        22.563,
+        6.937,
+        -97.174
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        21.699,
+        6.702,
+        -97.387
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        29.572,
+        9.144,
+        95.089
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        30.0,
+        9.296,
+        -94.94
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        90.054,
+        27.979,
+        -33.278
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        69.206,
+        21.523,
+        68.9
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.838,
+        28.57,
+        -27.378
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.699,
+        25.426,
+        -51.756
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        70.854,
+        22.051,
+        67.033
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        14.364,
+        4.483,
+        -98.861
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.329,
+        29.767,
+        5.124
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.877,
+        25.946,
+        49.58
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        59.297,
+        18.572,
+        -78.351
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        61.29,
+        19.213,
+        -76.645
+      ],
+      "type": 6
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        31.989,
+        10.076,
+        -94.208
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.406,
+        29.747,
+        -14.237
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.817,
+        24.859,
+        56.302
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.809,
+        24.863,
+        56.312
+      ],
+      "type": 7
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.716,
+        29.997,
+        11.359
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        30.348,
+        9.614,
+        -94.797
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        92.097,
+        29.177,
+        25.823
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        36.986,
+        11.743,
+        92.164
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        91.085,
+        29.015,
+        29.354
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        59.235,
+        18.993,
+        78.298
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        80.416,
+        25.853,
+        -53.525
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.195,
+        30.624,
+        0.099
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        95.129,
+        30.713,
+        2.682
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.797,
+        24.198,
+        61.805
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        35.325,
+        11.518,
+        92.841
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        74.082,
+        24.245,
+        62.642
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        94.427,
+        30.962,
+        11.176
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.584,
+        27.113,
+        -49.444
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        60.772,
+        19.953,
+        76.867
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        68.377,
+        22.454,
+        69.429
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        82.176,
+        27.094,
+        50.13
+      ],
+      "type": 3
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        58.484,
+        19.312,
+        78.782
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        78.083,
+        25.863,
+        56.87
+      ],
+      "type": 4
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        81.994,
+        27.168,
+        -50.387
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        80.487,
+        26.726,
+        -52.987
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        58.1,
+        19.304,
+        79.068
+      ],
+      "type": 2
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        49.523,
+        16.508,
+        85.293
+      ],
+      "type": 1
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        84.761,
+        28.353,
+        44.852
+      ],
+      "type": 5
+    },
+    {
+      "name": "HIP H|",
+      "position": [
+        87.116,
+        29.157,
+        39.506
+      ],
+      "type": 4
     }
   ]
 }

@@ -72,6 +72,10 @@ public class PlanetManager {
 
 
 
+    /**
+     * 递归更新所有行星位置
+     * @param t 世界时间
+     */
     public static void updatePositions(long t) {
         for (Planet planet : name_map.values()) planet.pos_updated = false;
         for (Planet planet : name_map.values())

@@ -16,6 +16,13 @@ public class PlanetManager {
 
     public static Planet SUN = null;
 
+    public static void init() {
+        star_prepared = false;
+        size = 0;
+        name_map.clear();
+        SUN = null;
+    }
+
 
     public static void register(String name, String description, double mass, double radius, Vector3f axis, Oribit oribit, String parent_name) {
         size++;

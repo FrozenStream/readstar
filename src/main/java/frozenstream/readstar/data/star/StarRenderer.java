@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class StarRenderer {
     private static boolean bufferBuilt = false;
-    private static final VertexBuffer starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+    private static VertexBuffer starsBuffer = null;
 
     private static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/stars.png");
 
@@ -43,6 +43,12 @@ public class StarRenderer {
         v[1] = new Vector3f();
         v[2] = new Vector3f();
         v[3] = new Vector3f();
+    }
+
+    public static void init() {
+        bufferBuilt = false;
+        if(starsBuffer != null) starsBuffer.close();
+        starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
     }
 
 

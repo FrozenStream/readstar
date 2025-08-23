@@ -1,10 +1,9 @@
 package frozenstream.readstar.gui.AstronomicalManuscript;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.data.planet.PlanetManager;
-import net.minecraft.client.gui.Font;
+import frozenstream.readstar.gui.RenderUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,14 +27,14 @@ public class AstronomicalManuscriptScreen extends Screen {
     private static int BOOK_Y;
 
     private static Planet Centre;
-
     private static final ArrayList<Planet> MainPlanet = new ArrayList<>();
-
     private static final Map<String, Double> MinDistanceMap = new HashMap<>();
+
+    private int currentPage = 0;
+    private int totalPages = 1;
 
     private static int MinScale = 1;
     private static int MaxScale = 8;
-
     private static final int MaxMinScale = 128;
 
     private TextureButton scaleUpButton;
@@ -46,9 +45,6 @@ public class AstronomicalManuscriptScreen extends Screen {
 
     private static final int ICON_SIZE = 10;
     private static final int HALF_ICON = ICON_SIZE / 2;
-
-    private int currentPage = 0;
-    private int totalPages = 1;
 
     private static final ResourceLocation Texture_Scale_Down_Button1 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_down1.png");
     private static final ResourceLocation Texture_Scale_Down_Button2 = ResourceLocation.fromNamespaceAndPath("readstar", "textures/gui/astronomical_manuscript/scale_down2.png");
@@ -163,20 +159,6 @@ public class AstronomicalManuscriptScreen extends Screen {
         if(currentPage == totalPages - 1) button.visible = false;
     }
 
-    public void drawCenteredString(GuiGraphics guiGraphics, Font font, String text, int x, int y, int color, boolean dropShadow) {
-        guiGraphics.drawString(font, text, x - font.width(text) / 2, y, color, dropShadow);
-    }
-
-    public void drawSmallString(GuiGraphics guiGraphics, Font font, String text, int x, int y, int color, boolean dropShadow, float scale) {
-        PoseStack poseStack = guiGraphics.pose();
-        poseStack.pushPose();
-        poseStack.translate(x - font.width(text) * scale / 2f, y, 0); // 将原点移动到绘制位置
-        poseStack.scale(scale, scale, scale);
-        // 在缩放后的坐标系中绘制文本（注意坐标需要相应调整）
-        guiGraphics.drawString(font, text, 0, 0, color, dropShadow);
-        poseStack.popPose(); // 恢复原始变换
-    }
-
 
 
     public void renderPage(GuiGraphics guiGraphics) {
@@ -185,14 +167,15 @@ public class AstronomicalManuscriptScreen extends Screen {
         double MinDistance = calMinDistance(Centre);
 
         // 简介
-        Component planetName = Component.translatable("planet.readstar." + Centre.name.toLowerCase());
-        drawCenteredString(guiGraphics, font, planetName.getString(), BOOK_X + BOOK_WIDTH / 2, BOOK_Y + 15, 0xFF000000, false);
+        Component planetName = Component.translatable("planet.readstar." + Centre.name.toLowerCase())
+                .withStyle(style -> style.withBold(true));
+        RenderUtil.drawCenteredString(guiGraphics, font, planetName, BOOK_X + BOOK_WIDTH / 2, BOOK_Y + 15, 0xFF000000, false);
 
         Component planetDesc = Component.translatable("planetdesc.readstar." + Centre.name.toLowerCase());
         String descText = planetDesc.getString();
         int maxWidth = BOOK_WIDTH - 90;
         int startX = BOOK_X + 45;
-        int startY = BOOK_Y + 35;
+        int startY = BOOK_Y + 30;
 
         List<FormattedCharSequence> wrappedLines = font.split(Component.literal(descText), maxWidth);
         for (int i = 0; i < wrappedLines.size(); i++) {
@@ -232,7 +215,7 @@ public class AstronomicalManuscriptScreen extends Screen {
         // 绘制行星图标
         ResourceLocation planetTexture = getPlanetIcon(planet.name);
         guiGraphics.blit(planetTexture, planetX - HALF_ICON, planetY - HALF_ICON, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-        drawSmallString(guiGraphics, font, planet.name, planetX, planetY + HALF_ICON, 0xFF000000, false, 0.8f);
+        RenderUtil.drawSmallString(guiGraphics, font, planet.name, planetX, planetY + HALF_ICON, 0xFF000000, false, 0.8f);
     }
 
     private ResourceLocation getPlanetIcon(String planetName) {
@@ -243,7 +226,7 @@ public class AstronomicalManuscriptScreen extends Screen {
             case "mars" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/mars.png");
             case "venus" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/venus.png");
             case "moon" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/moon.png");
-            default -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/sun.png");
+            default -> null;
         };
     }
 
@@ -274,7 +257,7 @@ public class AstronomicalManuscriptScreen extends Screen {
 
     private void renderPageNumbers(GuiGraphics guiGraphics) {
         String PageStr = (currentPage+1) + " / " + totalPages;
-        drawCenteredString(guiGraphics, font, PageStr, BOOK_X + BOOK_WIDTH / 2, BOOK_Y + BOOK_HEIGHT - 30, 0xFF000000, false);
+        RenderUtil.drawCenteredString(guiGraphics, font, PageStr, BOOK_X + BOOK_WIDTH / 2, BOOK_Y + BOOK_HEIGHT - 30, 0xFF000000, false);
     }
 
 

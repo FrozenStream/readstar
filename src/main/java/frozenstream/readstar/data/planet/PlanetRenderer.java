@@ -2,10 +2,8 @@ package frozenstream.readstar.data.planet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.Textures;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;

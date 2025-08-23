@@ -16,6 +16,11 @@ public class StarManager {
     private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
 
+    public static void init() {
+        starCount = 0;
+        StarRenderer.init();
+    }
+
 
     public static void register(String name, Vector3f position, int type) {
         stars[starCount] = new Star(name, position.normalize(), type);

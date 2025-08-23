@@ -53,8 +53,9 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
     public void handle(Player player) {
         // 客户端收到数据包后更新本地数据
         Constants.LOG.info("客户端接收到 {} 来自Server 的 Stars 数据包，更新本地数据...", this.data.size());
+        StarManager.init();
         for(Star star : this.data) StarManager.register(star);
-        StarManager.Display_Build();
+        if(!this.data.isEmpty()) StarManager.Display_Build();
     }
 
     @Override

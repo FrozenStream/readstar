@@ -29,6 +29,7 @@ public class PlanetLoader {
 
 
     public static void loadPlanets() {
+        PlanetManager.init();
         readPlanetJson(earth);
         readPlanetJson(sun);
         readPlanetJson(mars);

@@ -19,6 +19,10 @@ public class CommonConfig
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+    private static final ModConfigSpec.BooleanValue LOAD_DEFAULT_STARS = BUILDER
+            .comment("Whether to load default stars from the mod's resources")
+            .define("loadDefaultStars", true);
+
     private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
             .comment("Whether to log the dirt block on common setup")
             .define("logDirtBlock", true);
@@ -38,6 +42,7 @@ public class CommonConfig
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
+    public static boolean loadDefaultStars;
     public static boolean logDirtBlock;
     public static int magicNumber;
     public static String magicNumberIntroduction;
@@ -51,6 +56,7 @@ public class CommonConfig
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
+        loadDefaultStars = LOAD_DEFAULT_STARS.get();
         logDirtBlock = LOG_DIRT_BLOCK.get();
         magicNumber = MAGIC_NUMBER.get();
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();

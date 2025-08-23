@@ -3,7 +3,6 @@ package frozenstream.readstar.data.star;
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.util;
-import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -29,7 +28,7 @@ public class StarManager {
     }
 
 
-    public static void Init_Display() {
+    public static void Display_Build() {
         for(int i = 0; i < starCount; i++){
             Constants.LOG.info("StarManager: Load {} TYPE:{}", stars[i].name(), stars[i].type());
         }

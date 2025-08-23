@@ -113,8 +113,9 @@ public class StarLoader {
                     positionArray.get(2).getAsFloat()
             );
             int type = star.get("type").getAsInt();
+            float Vmag = star.get("Vmag").getAsFloat();
 
-            stars.add(new Star(name, position.normalize(), type));
+            stars.add(new Star(name, position.normalize(), type, Vmag));
         }
         return stars;
     }

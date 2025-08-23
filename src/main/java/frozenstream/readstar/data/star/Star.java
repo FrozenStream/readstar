@@ -5,7 +5,8 @@ import org.joml.Vector3f;
 public record Star (
     String name,
     Vector3f position,
-    int type
+    int type,
+    float Vmag
 ){
 
 }

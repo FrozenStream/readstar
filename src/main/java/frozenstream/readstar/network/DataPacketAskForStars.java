@@ -25,6 +25,7 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
                             buf.writeFloat(star.position().y);
                             buf.writeFloat(star.position().z);
                             buf.writeInt(star.type());
+                            buf.writeFloat(star.Vmag());
                         }
                     },
                     buf -> {
@@ -36,9 +37,10 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
                             float position_y = buf.readFloat();
                             float position_z = buf.readFloat();
                             int type = buf.readInt();
+                            float Vmag = buf.readFloat();
                             Vector3f position = new Vector3f(position_x, position_y, position_z);
 
-                            dataList.add(new Star(name, position, type));
+                            dataList.add(new Star(name, position, type, Vmag));
                         }
                         return dataList;
                     }

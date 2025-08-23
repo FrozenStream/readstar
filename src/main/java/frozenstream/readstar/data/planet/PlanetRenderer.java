@@ -69,7 +69,7 @@ public class PlanetRenderer {
     }
 
 
-    public static void drawPlanets(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain) {
+    public static void drawPlanets(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain, float starLight) {
         if (!PlanetManager.star_prepared) return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -78,8 +78,11 @@ public class PlanetRenderer {
             if (planet == observer) continue;
 
             // 设置透明度，下雨或离太阳过近
+            float min = starLight+0.3f;
+            min = Math.min(min, rain);
             float covered = PlanetManager.getCoveredBySun(observer, planet);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, Math.min(rain, covered));
+            min = Math.min(min, covered);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, min);
 
             planet.position.sub(observer.position, positionVec).normalize(100.0f);
             RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));

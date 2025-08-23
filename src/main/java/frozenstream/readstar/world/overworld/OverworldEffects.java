@@ -139,11 +139,11 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 // 星体绘制
                 PlanetRenderer.drawSun(tesselator, observer, posestack.last(), f11);
                 FogRenderer.setupNoFog();
-                PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), f11);
+                PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), f11, RenderUtil.getStarBrightness(level, partialTick));
 
-                // 星星绘制
+                // 星光强度
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);
-
+                // 星星绘制
                 if(camera.getEntity() instanceof Player player){
                     if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0) StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
                     else {

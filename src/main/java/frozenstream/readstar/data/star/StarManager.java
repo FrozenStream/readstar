@@ -37,7 +37,7 @@ public class StarManager {
         for(int i = 0; i < starCount; i++){
             Constants.LOG.info("StarManager: Load {} TYPE:{}", stars[i].name(), stars[i].type());
         }
-        StarRenderer.buildStarsBuffer();
+        if(starCount > 0) StarRenderer.buildStarsBuffer();
     }
 
 

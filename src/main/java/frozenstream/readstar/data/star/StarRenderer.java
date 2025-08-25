@@ -18,8 +18,10 @@ import java.util.Arrays;
 
 public class StarRenderer {
     private static boolean bufferBuilt = false;
-    private static VertexBuffer starsBuffer = null;
-    private static VertexBuffer starlightBuffer = null;
+    private static final VertexBuffer starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+    private static final VertexBuffer starlightBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+
+    private static final VertexBuffer TempBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 
     private static final ResourceLocation STAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/stars.png");
     private static final ResourceLocation STARLIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/starlight.png");
@@ -37,7 +39,10 @@ public class StarRenderer {
     private static final Vector2f[] uvs = new Vector2f[4];
     private static final Vector3f[] v = new Vector3f[4];
 
-    static  {
+    private static final Star[] BrightStars = new Star[1024];
+    private static int brightStarCount;
+
+    static {
         uvs[0] = new Vector2f();
         uvs[1] = new Vector2f();
         uvs[2] = new Vector2f();
@@ -51,12 +56,6 @@ public class StarRenderer {
 
     public static void init() {
         bufferBuilt = false;
-        if(starsBuffer != null) {
-            starsBuffer.close();
-            starlightBuffer.close();
-        }
-        starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
-        starlightBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
     }
 
 
@@ -71,61 +70,48 @@ public class StarRenderer {
         bufferBuilt = true;
     }
 
-    private static MeshData drawStars(Tesselator tesselator) {
+    private static MeshData buildMash(BufferBuilder bufferbuilder, Star[] stars, int count, float size, int uvWidth, int uvHeight, int VmagOffset) {
         RandomSource randomsource = RandomSource.create(10842L);
-        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-
-        s = defaultSize;
-        for (int i = 0; i < StarManager.starCount; i++) {
-            StarManager.stars[i].position().normalize(100.0F, positionVec);
+        for (int i = 0; i < count; i++) {
+            stars[i].position().normalize(100.0F, positionVec);
             // 顶点到星星位置并附加随机旋转
             Rz = randomsource.nextFloat() * util.PI * 2.0f;
             quaternionf.identity().rotateTo(OriVec, positionVec).rotateZ(Rz);
-            v[0].set(s, -s, 0.0F).rotate(quaternionf);
-            v[1].set(s, s, 0.0F).rotate(quaternionf);
-            v[2].set(-s, s, 0.0F).rotate(quaternionf);
-            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
+            v[0].set(size, -size, 0.0F).rotate(quaternionf);
+            v[1].set(size, size, 0.0F).rotate(quaternionf);
+            v[2].set(-size, size, 0.0F).rotate(quaternionf);
+            v[3].set(-size, -size, 0.0F).rotate(quaternionf);
 
-            Textures.getp(4, 3, StarManager.stars[i].type(), uvs);
+            Textures.getp(uvWidth, uvHeight, stars[i].type(), uvs);
 
-            Vmag = StarManager.getAlphaFromVmag(StarManager.stars[i].Vmag());
+            Vmag = StarManager.getAlphaFromVmag(stars[i].Vmag() + VmagOffset);
 
-            bufferbuilder.addVertex(v[0].add(positionVec)).setUv(uvs[0].x, uvs[0].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[1].add(positionVec)).setUv(uvs[1].x, uvs[1].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[2].add(positionVec)).setUv(uvs[2].x, uvs[2].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[3].add(positionVec)).setUv(uvs[3].x, uvs[3].y).setColor(1,1,1,Vmag);
+            bufferbuilder.addVertex(v[0].add(positionVec)).setUv(uvs[0].x, uvs[0].y).setColor(1, 1, 1, Vmag);
+            bufferbuilder.addVertex(v[1].add(positionVec)).setUv(uvs[1].x, uvs[1].y).setColor(1, 1, 1, Vmag);
+            bufferbuilder.addVertex(v[2].add(positionVec)).setUv(uvs[2].x, uvs[2].y).setColor(1, 1, 1, Vmag);
+            bufferbuilder.addVertex(v[3].add(positionVec)).setUv(uvs[3].x, uvs[3].y).setColor(1, 1, 1, Vmag);
 
         }
         return bufferbuilder.buildOrThrow();
+
+    }
+
+    private static MeshData drawStars(Tesselator tesselator) {
+        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        return buildMash(bufferbuilder, StarManager.stars, StarManager.starCount,
+                defaultSize, 4, 3, 0);
     }
 
     private static MeshData drawStarlight(Tesselator tesselator) {
-        RandomSource randomsource = RandomSource.create(10842L);
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-
-        s = defaultSize * 5;
+        brightStarCount = 0;
         for (int i = 0; i < StarManager.starCount; i++) {
-            if(StarManager.stars[i].Vmag() > 1) continue;
-            StarManager.stars[i].position().normalize(100.0F, positionVec);
-            // 顶点到星星位置并附加随机旋转
-            Rz = randomsource.nextFloat() * util.PI * 2.0f;
-            quaternionf.identity().rotateTo(OriVec, positionVec).rotateZ(Rz);
-            v[0].set(s, -s, 0.0F).rotate(quaternionf);
-            v[1].set(s, s, 0.0F).rotate(quaternionf);
-            v[2].set(-s, s, 0.0F).rotate(quaternionf);
-            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
-
-            Textures.getp(4, 3, StarManager.stars[i].type(), uvs);
-
-            Vmag = StarManager.getAlphaFromVmag(StarManager.stars[i].Vmag() + 5);
-
-            bufferbuilder.addVertex(v[0].add(positionVec)).setUv(uvs[0].x, uvs[0].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[1].add(positionVec)).setUv(uvs[1].x, uvs[1].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[2].add(positionVec)).setUv(uvs[2].x, uvs[2].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(v[3].add(positionVec)).setUv(uvs[3].x, uvs[3].y).setColor(1,1,1,Vmag);
-
+            if (StarManager.stars[i].Vmag() > 1) continue;
+            BrightStars[brightStarCount] = StarManager.stars[i];
+            brightStarCount++;
         }
-        return bufferbuilder.buildOrThrow();
+        return buildMash(bufferbuilder, BrightStars, brightStarCount,
+                defaultSize * 5, 4, 3, 4);
     }
 
     public static void RenderStars(Matrix4f viewMatrix, Matrix4f projectionMatrix, float light) {
@@ -143,65 +129,40 @@ public class StarRenderer {
         }
     }
 
-    public static void RenderNearStars(PoseStack.Pose pose, Vector3f eye, float nearDistance, float scaling, float light) {
-        RandomSource randomsource = RandomSource.create(10842L);
-
+    public static void RenderNearStars(Matrix4f viewMatrix, Matrix4f projectionMatrix, Vector3f eye, float nearDistance, float scaling, float light) {
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderColor(1, 1, 1, light);
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bufferbuilder;
+        MeshData meshData;
 
         ArrayList<Star> near = StarManager.lookingNear(eye, nearDistance);
         if (near.isEmpty()) return;
 
-        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         RenderSystem.setShaderTexture(0, STAR_LOCATION);
-        s = defaultSize * 1.5f * scaling;
-        for (Star star : near) {
-            star.position().normalize(100.0f, positionVec);
+        meshData = buildMash(bufferbuilder, near.toArray(new Star[0]), near.size(),
+                defaultSize * 1.5f * scaling, 4, 3, 0);
+        TempBuffer.bind();
+        TempBuffer.upload(meshData);
+        TempBuffer.drawWithShader(viewMatrix, projectionMatrix, GameRenderer.getPositionTexColorShader());
+        VertexBuffer.unbind();
 
-            Rz = randomsource.nextFloat() * util.PI * 2.0f;
-            quaternionf.identity().rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), positionVec).rotateZ(Rz);
-            v[0].set(s, -s, 0.0F).rotate(quaternionf);
-            v[1].set(s, s, 0.0F).rotate(quaternionf);
-            v[2].set(-s, s, 0.0F).rotate(quaternionf);
-            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
+        brightStarCount = 0;
+        for (Star star : near)
+            if (star.Vmag() < 1) {
+                BrightStars[brightStarCount] = star;
+                brightStarCount++;
+            }
+        if (brightStarCount == 0) return;
 
-            Textures.getp(4, 3, star.type(), uvs);
-
-            Vmag = StarManager.getAlphaFromVmag(star.Vmag());
-
-            bufferbuilder.addVertex(pose, v[0].add(positionVec)).setUv(uvs[0].x, uvs[0].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(pose, v[1].add(positionVec)).setUv(uvs[1].x, uvs[1].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(pose, v[2].add(positionVec)).setUv(uvs[2].x, uvs[2].y).setColor(1,1,1,Vmag);
-            bufferbuilder.addVertex(pose, v[3].add(positionVec)).setUv(uvs[3].x, uvs[3].y).setColor(1,1,1,Vmag);
-        }
-        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-
-        ArrayList<Star> bright = new ArrayList<>();
-        for (Star star : near) if(star.Vmag() < 1) bright.add(star);
-        if (bright.isEmpty()) return;
-
-        BufferBuilder bufferbuilder2 = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         RenderSystem.setShaderTexture(0, STARLIGHT_LOCATION);
-        s = defaultSize * 1.5f * scaling * 5;
-        for (Star star : bright) {
-            star.position().normalize(100.0f, positionVec);
-
-            Rz = randomsource.nextFloat() * util.PI * 2.0f;
-            quaternionf.identity().rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), positionVec).rotateZ(Rz);
-            v[0].set(s, -s, 0.0F).rotate(quaternionf);
-            v[1].set(s, s, 0.0F).rotate(quaternionf);
-            v[2].set(-s, s, 0.0F).rotate(quaternionf);
-            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
-
-            Textures.getp(4, 3, star.type(), uvs);
-
-            Vmag = StarManager.getAlphaFromVmag(star.Vmag() + 3);
-
-            bufferbuilder2.addVertex(pose, v[0].add(positionVec)).setUv(uvs[0].x, uvs[0].y).setColor(1,1,1,Vmag);
-            bufferbuilder2.addVertex(pose, v[1].add(positionVec)).setUv(uvs[1].x, uvs[1].y).setColor(1,1,1,Vmag);
-            bufferbuilder2.addVertex(pose, v[2].add(positionVec)).setUv(uvs[2].x, uvs[2].y).setColor(1,1,1,Vmag);
-            bufferbuilder2.addVertex(pose, v[3].add(positionVec)).setUv(uvs[3].x, uvs[3].y).setColor(1,1,1,Vmag);
-        }
-        BufferUploader.drawWithShader(bufferbuilder2.buildOrThrow());
+        meshData = buildMash(bufferbuilder, BrightStars, brightStarCount,
+                defaultSize * 1.5f * scaling * 5, 4, 3, 4);
+        TempBuffer.bind();
+        TempBuffer.upload(meshData);
+        TempBuffer.drawWithShader(viewMatrix, projectionMatrix, GameRenderer.getPositionTexColorShader());
+        VertexBuffer.unbind();
     }
 }

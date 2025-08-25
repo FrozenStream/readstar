@@ -124,6 +124,8 @@ public class StarLoader {
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
         Path serverPath = event.getServer().getServerDirectory().toAbsolutePath();
+
+        ServerStars.clear();
         loadConfigStars(serverPath);
         loadStars();
         Constants.LOG.info("StarLoader: Loaded {} stars", ServerStars.size());

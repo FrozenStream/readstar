@@ -20,9 +20,9 @@
 
 package frozenstream.readstar.platform;
 
-import frozenstream.readstar.CommonClient;
 import frozenstream.readstar.network.PacketBase;
 import frozenstream.readstar.platform.services.IPlatformHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -78,11 +78,15 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 
         IPayloadHandler<T> clientHandler = (packet, ctx) -> {
             ctx.enqueueWork(() -> {
-                handler.accept(packet, CommonClient.getPlayer());
+                handler.accept(packet, getPlayer());
             });
         };
 
         registrar.playToClient(type, (StreamCodec<RegistryFriendlyByteBuf, T>)codec, clientHandler);
+    }
+
+    public static Player getPlayer() {
+        return Minecraft.getInstance().player;
     }
 
 

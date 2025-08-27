@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import frozenstream.readstar.CommonConfig;
+import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.network.DataPacketAskForStars;
 import frozenstream.readstar.platform.Services;
@@ -33,7 +33,7 @@ public class StarLoader {
     public static ArrayList<Star> ServerStars = new ArrayList<>();
 
     public static void loadStars() {
-        if (CommonConfig.loadDefaultStars) {
+        if (Config.loadDefaultStars) {
             loadResourceStar(defaultStars);
         } else {
             Constants.LOG.info("Skipping default stars loading as per configuration");

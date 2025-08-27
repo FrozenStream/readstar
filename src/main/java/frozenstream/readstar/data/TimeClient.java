@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 public class TimeClient {
     private static long time = 0;
     private static long counter = 0;
-    private static final int UPDATE_INTERVAL_TICKS = 1; // 每100 ticks更新一次
+    private static final int UPDATE_INTERVAL_TICKS = 10; // 每100 ticks更新一次
     private static final Minecraft mc = Minecraft.getInstance();
 
     public static void updateTime(long time)

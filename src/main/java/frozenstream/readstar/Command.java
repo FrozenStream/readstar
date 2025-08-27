@@ -19,19 +19,13 @@ public class Command {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("readstar")
-            .then(Commands.literal("reset")
-                .executes(context -> {
-                    TimeManager.reset();
-                    return com.mojang.brigadier.Command.SINGLE_SUCCESS;
-                }))
-            .then(Commands.literal("set")
-                .then(Commands.argument("time", LongArgumentType.longArg(0))
-                    .executes(context -> {
-                        long time = LongArgumentType.getLong(context, "time");
-                        TimeManager.setTime(time);
-                        return com.mojang.brigadier.Command.SINGLE_SUCCESS;
-                    })));
-
+                .then(Commands.literal("set")
+                        .then(Commands.argument("time", LongArgumentType.longArg(0))
+                                .executes(context -> {
+                                    long time = LongArgumentType.getLong(context, "time");
+                                    TimeManager.setTimeOffset(time);
+                                    return com.mojang.brigadier.Command.SINGLE_SUCCESS;
+                                })));
         dispatcher.register(cmd);
     }
 

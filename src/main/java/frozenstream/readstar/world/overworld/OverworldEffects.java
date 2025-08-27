@@ -3,6 +3,7 @@ package frozenstream.readstar.world.overworld;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import frozenstream.readstar.Constants;
 import frozenstream.readstar.events.FovEvent;
 import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.data.planet.PlanetManager;
@@ -145,13 +146,14 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);
                 // 星星绘制
                 if(camera.getEntity() instanceof Player player){
-                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) <= 8.0) StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
-                    else {
+                    // 如果在使用原版望远镜 且FOV存在差值
+                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) > 8.0 && player.isScoping()){
                         Vector3f look = player.getViewVector(partialTick).toVector3f();
                         observeFromHere.transpose(new Matrix4f()).transformPosition(look);
                         float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());
                         StarRenderer.RenderNearStars(posestack.last().pose(), projectionMatrix, look, 0.1f, scaling, starLight);
                     }
+                    else StarRenderer.RenderStars(posestack.last().pose(), projectionMatrix, starLight);
                 }
                 skyFogSetup.run();
 

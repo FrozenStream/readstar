@@ -20,8 +20,9 @@
 
 package frozenstream.readstar;
 
-import frozenstream.readstar.network.DataPacketAskForStars;
-import frozenstream.readstar.network.DataPacketAskForTime;
+import frozenstream.readstar.network.DataPacketSendMeteor;
+import frozenstream.readstar.network.DataPacketSendStars;
+import frozenstream.readstar.network.DataPacketSendTime;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.core.RegistrySetBuilder;
 
@@ -34,21 +35,30 @@ public class Common {
 
     public static void registerClientPackets(Object... args) {
         Services.PLATFORM.registerClientboundPacket(
-            DataPacketAskForStars.TYPE,
-            DataPacketAskForStars.class,
-            DataPacketAskForStars.CODEC,
-            DataPacketAskForStars::handle,
-            args
+                DataPacketSendStars.TYPE,
+                DataPacketSendStars.class,
+                DataPacketSendStars.CODEC,
+                DataPacketSendStars::handle,
+                args
         );
 
         Services.PLATFORM.registerClientboundPacket(
-            DataPacketAskForTime.TYPE,
-            DataPacketAskForTime.class,
-            DataPacketAskForTime.CODEC,
-            DataPacketAskForTime::handle,
-            args
+                DataPacketSendTime.TYPE,
+                DataPacketSendTime.class,
+                DataPacketSendTime.CODEC,
+                DataPacketSendTime::handle,
+                args
+        );
+
+        Services.PLATFORM.registerClientboundPacket(
+                DataPacketSendMeteor.TYPE,
+                DataPacketSendMeteor.class,
+                DataPacketSendMeteor.CODEC,
+                DataPacketSendMeteor::handle,
+                args
         );
     }
+
 //
 //    public static void registerConfig()
 //    {

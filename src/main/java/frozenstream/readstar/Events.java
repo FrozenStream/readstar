@@ -1,10 +1,7 @@
-package frozenstream.readstar.client;
+package frozenstream.readstar;
 
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.planet.PlanetLoader;
 import frozenstream.readstar.data.planet.PlanetManager;
-import frozenstream.readstar.data.star.StarLoader;
-import frozenstream.readstar.data.star.StarManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;

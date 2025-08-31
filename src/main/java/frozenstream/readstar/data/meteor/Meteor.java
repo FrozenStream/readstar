@@ -2,13 +2,13 @@ package frozenstream.readstar.data.meteor;
 
 import org.joml.Vector3f;
 
-class Meteor {
-    Vector3f startPosition;
-    Vector3f direction;
-    Vector3f color;
-    float pathLength;
-    float currentLength;
-    float speed;
+public class Meteor {
+    public Vector3f startPosition;
+    public Vector3f direction;
+    public Vector3f color;
+    public float pathLength;
+    public float currentLength;
+    public float speed;
 
     public boolean step(){
         currentLength += speed* 0.05f;

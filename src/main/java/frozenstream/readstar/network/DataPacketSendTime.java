@@ -9,15 +9,15 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public record DataPacketAskForTime(long data) implements PacketBase {
+public record DataPacketSendTime(long data) implements PacketBase {
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketAskForTime> CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketSendTime> CODEC = StreamCodec.composite(
             StreamCodec.of(FriendlyByteBuf::writeLong, FriendlyByteBuf::readLong),
-            DataPacketAskForTime::data,
-            DataPacketAskForTime::new
+            DataPacketSendTime::data,
+            DataPacketSendTime::new
     );
 
-    public static final Type<DataPacketAskForTime> TYPE = new Type<>(Constants.PACKET_ID_TIME_ASK);
+    public static final Type<DataPacketSendTime> TYPE = new Type<>(Constants.PACKET_ID_TIME_SEND);
 
     @Override
     public void handle(Player player) {
@@ -25,7 +25,7 @@ public record DataPacketAskForTime(long data) implements PacketBase {
     }
 
     @Override
-    public @NotNull Type<DataPacketAskForTime> type() {
+    public @NotNull Type<DataPacketSendTime> type() {
         return TYPE;
     }
 }

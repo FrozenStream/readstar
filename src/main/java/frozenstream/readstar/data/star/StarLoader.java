@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.network.DataPacketAskForStars;
+import frozenstream.readstar.network.DataPacketSendStars;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -134,7 +134,7 @@ public class StarLoader {
     @SubscribeEvent
     public static void onPlayerJoin(OnDatapackSyncEvent event) {
         ServerPlayer player = event.getPlayer();
-        DataPacketAskForStars starPacket = new DataPacketAskForStars(ServerStars);
-        Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_STAR_ASK, starPacket, player);
+        DataPacketSendStars starPacket = new DataPacketSendStars(ServerStars);
+        Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_STAR_SEND, starPacket, player);
     }
 }

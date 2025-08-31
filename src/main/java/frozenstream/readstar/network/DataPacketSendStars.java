@@ -12,9 +12,9 @@ import org.joml.Vector3f;
 import java.util.List;
 
 
-public record DataPacketAskForStars(List<Star> data) implements PacketBase {
+public record DataPacketSendStars(List<Star> data) implements PacketBase {
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketAskForStars> CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketSendStars> CODEC = StreamCodec.composite(
             // 自定义编解码器用于序列化和反序列化 StarData 列表
             StreamCodec.of(
                     (buf, starDataList) -> {
@@ -45,11 +45,11 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
                         return dataList;
                     }
             ),
-            DataPacketAskForStars::data,
-            DataPacketAskForStars::new
+            DataPacketSendStars::data,
+            DataPacketSendStars::new
     );
 
-    public static final Type<DataPacketAskForStars> TYPE = new Type<>(Constants.PACKET_ID_STAR_ASK);
+    public static final Type<DataPacketSendStars> TYPE = new Type<>(Constants.PACKET_ID_STAR_SEND);
 
     @Override
     public void handle(Player player) {
@@ -61,7 +61,7 @@ public record DataPacketAskForStars(List<Star> data) implements PacketBase {
     }
 
     @Override
-    public Type<DataPacketAskForStars> type() {
+    public Type<DataPacketSendStars> type() {
         return TYPE;
     }
 }

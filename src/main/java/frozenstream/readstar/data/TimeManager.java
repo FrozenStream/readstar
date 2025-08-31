@@ -3,7 +3,7 @@ package frozenstream.readstar.data;
 
 import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.network.DataPacketAskForTime;
+import frozenstream.readstar.network.DataPacketSendTime;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.server.players.PlayerList;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -23,10 +23,10 @@ public class TimeManager {
         counter++;
         if (counter > UPDATE_INTERVAL_TICKS) {
             time = timeOffset + System.currentTimeMillis() / 1000L * Config.timeAcceleration;
-            DataPacketAskForTime timePacket = new DataPacketAskForTime(time);
+            DataPacketSendTime timePacket = new DataPacketSendTime(time);
             PlayerList players = event.getServer().getPlayerList();
             for(var player : players.getPlayers()){
-                Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_TIME_ASK, timePacket, player);
+                Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_TIME_SEND, timePacket, player);
             }
             counter = 0;
             Constants.LOG.info("TimeManager: update time：{}", time);

@@ -14,7 +14,6 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class StarRenderer {
     private static boolean bufferBuilt = false;
@@ -32,7 +31,6 @@ public class StarRenderer {
     private static final Quaternionf quaternionf = new Quaternionf();
     private static final Vector3f positionVec = new Vector3f();
     private static float Rz;
-    private static float s;
 
     private static float Vmag;
 
@@ -82,7 +80,7 @@ public class StarRenderer {
             v[2].set(-size, size, 0.0F).rotate(quaternionf);
             v[3].set(-size, -size, 0.0F).rotate(quaternionf);
 
-            Textures.getp(uvWidth, uvHeight, stars[i].type(), uvs);
+            Textures.getUV(uvWidth, uvHeight, stars[i].type(), uvs);
 
             Vmag = StarManager.getAlphaFromVmag(stars[i].Vmag() + VmagOffset);
 

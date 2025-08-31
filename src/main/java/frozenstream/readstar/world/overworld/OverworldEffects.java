@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import frozenstream.readstar.Constants;
+import frozenstream.readstar.data.meteor.MeteorManager;
+import frozenstream.readstar.data.meteor.MeteorRenderer;
 import frozenstream.readstar.events.FovEvent;
 import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.data.planet.PlanetManager;
@@ -41,6 +43,7 @@ public class OverworldEffects extends DimensionSpecialEffects {
     public OverworldEffects() {
         super(192, true, SkyType.NORMAL, false, false);
 
+        MeteorManager.init();
         createLightSky();
         createDarkSky();
     }
@@ -141,6 +144,8 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 PlanetRenderer.drawSun(tesselator, observer, posestack.last(), f11);
                 FogRenderer.setupNoFog();
                 PlanetRenderer.drawPlanets(tesselator, observer, posestack.last(), f11, RenderUtil.getStarBrightness(level, partialTick));
+
+                MeteorRenderer.renderMeteors(tesselator, posestack.last());
 
                 // 星光强度
                 float starLight = Math.min(level.getStarBrightness(partialTick) * 2, f11);

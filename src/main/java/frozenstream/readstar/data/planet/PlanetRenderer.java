@@ -76,6 +76,7 @@ public class PlanetRenderer {
 
         for (Planet planet : PlanetManager.getPlanets()) {
             if (planet == observer) continue;
+            if (planet == PlanetManager.SUN) continue;
 
             // 设置透明度，下雨或离太阳过近
             float min = starLight+0.3f;
@@ -88,9 +89,7 @@ public class PlanetRenderer {
             RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
             BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-            if (planet == PlanetManager.SUN) continue;
-
-            Textures.getp(PlanetManager.getLightPhase(observer, planet), uvs);
+            Textures.getUV(PlanetManager.getLightPhase(observer, planet), uvs);
 
             s = PlanetManager.getApparentSize(observer, planet);
 

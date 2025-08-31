@@ -3,14 +3,8 @@ package frozenstream.readstar.data;
 import frozenstream.readstar.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.joml.Vector2f;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 
 public class Textures {
@@ -34,7 +28,7 @@ public class Textures {
         }
     }
 
-    public static void getp(int num, Vector2f[] in) {
+    public static void getUV(int num, Vector2f[] in) {
         int i = num % 4;
         int j = num / 4;
         float l = i / 4.0F;
@@ -47,7 +41,7 @@ public class Textures {
         in[3].set(r, t);
     }
 
-    public static void getp(int width, int height, int num, Vector2f[] in) {
+    public static void getUV(int width, int height, int num, Vector2f[] in) {
         float i = num % width;
         float j = num / width;
         float l = i / width;

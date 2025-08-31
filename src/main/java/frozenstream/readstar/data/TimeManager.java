@@ -12,12 +12,11 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class TimeManager {
-    private static long counter = 1000;
-    private static final int UPDATE_INTERVAL_TICKS = 100;
+    private static long counter = 100000000;
+    private static final int UPDATE_INTERVAL_TICKS = 8000;
 
     private static long timeOffset = 0;
     private static long time;
-    private static long acceleration = 0;
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {

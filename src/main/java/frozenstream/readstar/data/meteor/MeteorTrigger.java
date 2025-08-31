@@ -16,7 +16,7 @@ import org.joml.Vector3f;
 public class MeteorTrigger {
     private static final RandomSource random = RandomSource.create(10842L);
 
-    private static final float MeteorProbability = 0.12f;
+    private static final float MeteorProbability = 0.6f;
 
     public static void init(PlayerList playerList) {
         Vector3f startPosition = new Vector3f(

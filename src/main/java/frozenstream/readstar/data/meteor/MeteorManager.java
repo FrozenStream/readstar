@@ -17,7 +17,6 @@ public class MeteorManager {
 
     public static void addMeteor(Vector3f startPosition, Vector3f direction, Vector3f color, float pathLength, float speed) {
         if(meteors.size() >= 100) return;
-        Constants.LOG.info("Generated a random meteor. List SIZE: {}", meteors.size());
         Meteor meteor = new Meteor();
         meteor.startPosition = startPosition;
         meteor.direction = direction;

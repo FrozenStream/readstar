@@ -40,6 +40,8 @@ public class StarRenderer {
     private static final Star[] BrightStars = new Star[1024];
     private static int brightStarCount;
 
+    private static int uvWidth, uvHeight;
+
     static {
         uvs[0] = new Vector2f();
         uvs[1] = new Vector2f();
@@ -53,6 +55,8 @@ public class StarRenderer {
     }
 
     public static void init() {
+        uvWidth = 4;
+        uvHeight = 3;
         bufferBuilt = false;
     }
 
@@ -68,7 +72,7 @@ public class StarRenderer {
         bufferBuilt = true;
     }
 
-    private static MeshData buildMash(BufferBuilder bufferbuilder, Star[] stars, int count, float size, int uvWidth, int uvHeight, int VmagOffset) {
+    private static MeshData buildMash(BufferBuilder bufferbuilder, Star[] stars, int count, float size, int VmagOffset) {
         RandomSource randomsource = RandomSource.create(10842L);
         for (int i = 0; i < count; i++) {
             stars[i].position().normalize(100.0F, positionVec);
@@ -97,7 +101,7 @@ public class StarRenderer {
     private static MeshData drawStars(Tesselator tesselator) {
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         return buildMash(bufferbuilder, StarManager.stars, StarManager.starCount,
-                defaultSize, 4, 3, 0);
+                defaultSize, 0);
     }
 
     private static MeshData drawStarlight(Tesselator tesselator) {
@@ -109,7 +113,7 @@ public class StarRenderer {
             brightStarCount++;
         }
         return buildMash(bufferbuilder, BrightStars, brightStarCount,
-                defaultSize * 5, 4, 3, 4);
+                defaultSize * 5, 4);
     }
 
     public static void RenderStars(Matrix4f viewMatrix, Matrix4f projectionMatrix, float light) {
@@ -140,7 +144,7 @@ public class StarRenderer {
         bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         RenderSystem.setShaderTexture(0, STAR_LOCATION);
         meshData = buildMash(bufferbuilder, near.toArray(new Star[0]), near.size(),
-                defaultSize * 1.5f * scaling, 4, 3, 0);
+                defaultSize * 1.5f * scaling, 0);
         TempBuffer.bind();
         TempBuffer.upload(meshData);
         TempBuffer.drawWithShader(viewMatrix, projectionMatrix, GameRenderer.getPositionTexColorShader());
@@ -157,7 +161,7 @@ public class StarRenderer {
         bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         RenderSystem.setShaderTexture(0, STARLIGHT_LOCATION);
         meshData = buildMash(bufferbuilder, BrightStars, brightStarCount,
-                defaultSize * 1.5f * scaling * 5, 4, 3, 4);
+                defaultSize * 1.5f * scaling * 5, 4);
         TempBuffer.bind();
         TempBuffer.upload(meshData);
         TempBuffer.drawWithShader(viewMatrix, projectionMatrix, GameRenderer.getPositionTexColorShader());

@@ -1,6 +1,5 @@
 package frozenstream.readstar.data.star;
 
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.planet.Planet;
 import frozenstream.readstar.util;
 import org.joml.Matrix4f;
@@ -10,36 +9,18 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 
 public class StarManager {
-    public static final Star[] stars = new Star[32768];
+    public static Star[] stars = new Star[32768];
     public static int starCount = 0;
 
     private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
     private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
 
     public static void init() {
-        starCount = 0;
+        stars = StarResourceReader.getStars().toArray(new Star[0]);
+        starCount = StarResourceReader.getStars().size();
         StarRenderer.init();
+        if (starCount > 0) StarRenderer.buildStarsBuffer();
     }
-
-
-    public static void register(String name, Vector3f position, int type, float Vmag) {
-        stars[starCount] = new Star(name, position.normalize(), type, Vmag);
-        starCount++;
-    }
-
-    public static void register(Star star) {
-        stars[starCount] = star;
-        starCount++;
-    }
-
-
-    public static void Display_Build() {
-        for(int i = 0; i < starCount; i++){
-            Constants.LOG.info("StarManager: Load {} TYPE:{}", stars[i].name(), stars[i].type());
-        }
-        if(starCount > 0) StarRenderer.buildStarsBuffer();
-    }
-
 
 
     public static Matrix4f observeFrom(Planet planet, long t) {

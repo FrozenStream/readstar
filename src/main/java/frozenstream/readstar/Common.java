@@ -21,7 +21,6 @@
 package frozenstream.readstar;
 
 import frozenstream.readstar.network.DataPacketSendMeteor;
-import frozenstream.readstar.network.DataPacketSendStars;
 import frozenstream.readstar.network.DataPacketSendTime;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.core.RegistrySetBuilder;
@@ -34,13 +33,6 @@ public class Common {
     }
 
     public static void registerClientPackets(Object... args) {
-        Services.PLATFORM.registerClientboundPacket(
-                DataPacketSendStars.TYPE,
-                DataPacketSendStars.class,
-                DataPacketSendStars.CODEC,
-                DataPacketSendStars::handle,
-                args
-        );
 
         Services.PLATFORM.registerClientboundPacket(
                 DataPacketSendTime.TYPE,

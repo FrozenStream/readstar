@@ -136,7 +136,7 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 posestack.pushPose();
                 f11 = 1.0F - level.getRainLevel(partialTick);
 
-                Planet observer = PlanetManager.getPlanet("Earth");
+                Planet observer = PlanetManager.getPlanet("earth");
                 observeFromHere = StarManager.observeFrom(observer, level.getDayTime() % 24000L);
                 posestack.mulPose(observeFromHere);
 

@@ -1,6 +1,8 @@
 package frozenstream.readstar.data.star;
 
+import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.planet.Planet;
+import frozenstream.readstar.data.planet.PlanetManager;
 import frozenstream.readstar.util;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
@@ -20,13 +22,14 @@ public class StarManager {
         starCount = StarResourceReader.getStars().size();
         StarRenderer.init();
         if (starCount > 0) StarRenderer.buildStarsBuffer();
+        Constants.LOG.info("Star Manager: INIT!");
     }
 
 
     public static Matrix4f observeFrom(Planet planet, long t) {
         Matrix4f mat = new Matrix4f();
         Vector3f axis = planet.axis;
-        Vector3f current = planet.updateCurrentSkyVec(t);
+        Vector3f current = PlanetManager.updateCurrentSkyVec(planet, t);
 
         Quaternionf rotationToY = (new Quaternionf()).rotationTo(axis, OriginY);
         Vector3f rotatedCurrent = rotationToY.transform(current, new Vector3f());

@@ -1,6 +1,4 @@
 {
-  "name": "Mars",
-  "parent": "Sun",
   "mass": 6.4171e23,
   "radius": 3.3895e6,
   "axis": [0.0, 0.0, 0.0],

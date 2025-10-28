@@ -1,9 +1,8 @@
 {
-  "SUN": {
-    "Venus": {},
+  "Sun": {
     "Earth": {
       "Moon": {}
     },
-    "Mar": {}
+    "Mars": {}
   }
 }

@@ -62,9 +62,9 @@ public class AstronomicalManuscriptScreen extends Screen {
 
         // 按照距离升序排序主要行星
         MainPlanet.clear();
-        MainPlanet.add(PlanetManager.SUN);
+        MainPlanet.add(PlanetManager.Root.children.getFirst());
         for (Planet planet : PlanetManager.getPlanets()) {
-            if (planet.parent != PlanetManager.SUN) continue;
+            if (planet.parent != PlanetManager.Root.children.getFirst()) continue;
             MainPlanet.add(planet);
             totalPages++;
         }
@@ -185,7 +185,6 @@ public class AstronomicalManuscriptScreen extends Screen {
         // 绘制行星运行
         int centerX = BOOK_X + BOOK_WIDTH / 2;
         int centerY = BOOK_Y + BOOK_HEIGHT / 2;
-        if (!PlanetManager.star_prepared) return;
 
         double Min = MinDistance * MinScale;
         double Max = MinDistance * MaxScale;
@@ -193,7 +192,7 @@ public class AstronomicalManuscriptScreen extends Screen {
         for (Planet planet : PlanetManager.getPlanets()) {
             if (planet == Centre) {
                 renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
-                if (planet.parent != Planet.VOID)
+                if (planet.parent != PlanetManager.Root)
                     renderPlanetInBook(guiGraphics, planet.parent, Min, Min, centerX, centerY);
             } else if (planet.parent == Centre) renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
         }

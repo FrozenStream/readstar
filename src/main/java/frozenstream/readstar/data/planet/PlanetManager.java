@@ -10,71 +10,29 @@ import java.util.*;
 //TODO: 添加星球自转周期
 
 public class PlanetManager {
-    public static boolean star_prepared = false;
-    private static int size = 0;
-    private static final Map<String, Planet> name_map = new TreeMap<>();
+    private static final Map<String, Planet> planets = new TreeMap<>();
+    private static final ArrayList<Planet> planets_list = new ArrayList<>();
 
-    public static Planet SUN = null;
+    public static Planet Root = null;
 
-    public static void init() {
-        star_prepared = false;
-        size = 0;
-        name_map.clear();
-        SUN = null;
-    }
-
-
-    public static void register(String name, String description, double mass, double radius, Vector3f axis, Oribit oribit, String parent_name) {
-        size++;
-        if ("Centre".equals(parent_name)) {
-            Planet planet = new Planet(name, description, mass, radius, axis, oribit, Planet.VOID);
-            if (name_map.containsKey(name)) name_map.get(name).copy(planet);
-            else name_map.put(name, planet);
-
-            if (SUN == null) SUN = name_map.get(name);
-            else {
-                String errorMsg = String.format("Planets ERROR!! More than one Centre Planet %s and %s was found.", SUN, planet);
-                Constants.LOG.error(errorMsg);
-                throw new RuntimeException(errorMsg);
-            }
-        } else {
-            if (!name_map.containsKey(name)) name_map.put(name, new Planet());
-            if (!name_map.containsKey(parent_name)) name_map.put(parent_name, new Planet());
-            Planet parent = name_map.get(parent_name);
-            Planet planet = new Planet(name, description, mass, radius, axis, oribit, parent);
-            name_map.get(name).copy(planet);
+    public static void init(ArrayList<Planet> in) {
+        planets_list.addAll(in);        //复制行星列表
+        for (Planet planet : in) {
+            planets.put(planet.name, planet);   // 添加 name -> planet 映射
+            if(planet.parent == null) Root = planet;    // 设置根节点
         }
-    }
-
-
-    public static void Check_Display() {
-        if (SUN == null) {
-            String errorMsg = "Planets ERROR!! No Centre Planets was found.";
-            Constants.LOG.error(errorMsg);
-            throw new RuntimeException(errorMsg);
-        }
-        Planet flag = null;
-        for (Planet planet : name_map.values()) {
-            Constants.LOG.info("PlanetManager: {} have parent {}", planet.name, planet.parent.name);
-            if (planet.mass == 0) {
-                flag = planet;
-                break;
-            }
-        }
-        if (flag != null) {
-            String errorMsg = String.format("Planets ERROR!! found planet %s that have not been fully defined", flag.name);
-            Constants.LOG.error(errorMsg);
-            throw new RuntimeException(errorMsg);
-        }
+        updatePositions(0);
+        Constants.LOG.info("PlanetManager: INIT! have {} planets:", planets_list.size());
+        planets_list.forEach(planet -> Constants.LOG.info("PlanetManager: {}", planet.name));
     }
 
 
     public static Planet getPlanet(String name) {
-        return name_map.get(name);
+        return planets.get(name);
     }
 
     public static Collection<Planet> getPlanets() {
-        return name_map.values();
+        return planets.values();
     }
 
 
@@ -84,10 +42,75 @@ public class PlanetManager {
      * @param t 世界时间
      */
     public static void updatePositions(long t) {
-        for (Planet planet : name_map.values()) planet.pos_updated = false;
-        for (Planet planet : name_map.values())
-            if (!planet.pos_updated) planet.updatePosition(t);
-        if (size > 0) star_prepared = true;
+        if(Root.position == null)Root.position = new Vector3f(0,0,0);
+        Root.children.forEach(child -> updatePositions(child, t));
+    }
+
+    private static void updatePositions(Planet planet, long t) {
+        Constants.LOG.info("PlanetManager: update position {}", planet.name);
+        if(planet.position == null)planet.position = new Vector3f();
+        if(planet.mass == 0) planet.position.set(0, 0, 0);
+
+        planet.position.set(planet.parent.position).add(planet.oribit.calPosition(planet.parent.mass, t));
+        planet.children.forEach(child -> updatePositions(child, t));
+
+        updateNoonVec(planet);
+    }
+
+    public static int getPlanetsLevel(String name) {
+        return getPlanetsLevel(planets.get(name));
+    }
+
+    public static int getPlanetsLevel(Planet planet) {
+        if (planet == Root) return 0;
+        if (planet.level == -1)
+            return planet.level = getPlanetsLevel(planet.parent) + 1;
+        else return planet.level;
+    }
+
+    public static boolean isSunOrRoot(Planet planet) {
+        return getPlanetsLevel(planet) <= 1;
+    }
+
+    public static Planet whichIsYourSun(Planet planet) {
+        if (planet == Root) throw new RuntimeException("PlanetManager: Root have no sun.");
+        if(getPlanetsLevel(planet) == 1) return planet;
+        if(planet.mySun ==  null)
+            return planet.mySun = whichIsYourSun(planet.parent);
+        return planet.mySun;
+    }
+
+
+    /**
+     * 更新行星正午朝向向量
+     * @param planet 行星
+     */
+    public static void updateNoonVec(Planet planet) {
+        if (planet == Root) return;
+        if (planet.Vec_noon == null) planet.Vec_noon = new Vector3f();   //若为空，则创建向量
+        Vector3f parent_vec = (new Vector3f()).set(planet.parent.position).sub(planet.position);    //获得父级向量
+        Vector3f tmp = (new Vector3f()).set(planet.axis);   //构建 @parent_vec 平行于 @planet.axis 的向量分量
+        float n = planet.axis.dot(parent_vec);
+        tmp.mul(n);
+        planet.Vec_noon.set(parent_vec).sub(tmp);   //减去平行于 @planet.axis 的分量，获得垂直于 @planet.axis 向量分量
+        if (planet.Vec_noon.lengthSquared() < 0.01f) planet.Vec_noon.set(0, 1, 0);
+        planet.Vec_noon.normalize();
+        Constants.LOG.info("PlanetManager: planet {} updateNoonVec: {}",planet.name, planet.Vec_noon);
+    }
+
+
+    /**
+     * 更新星星当前朝向向量
+     * @param planet 行星
+     * @return 当前朝向向量
+     * */
+    public static Vector3f updateCurrentSkyVec(Planet planet, long tick) {
+        if (planet.Vec_current == null) planet.Vec_current = new Vector3f();
+        float theta = (tick - 6000) * util.PI / 12000;
+        Vector3f axis = planet.axis;
+        planet.Vec_current.set(planet.Vec_noon).rotateAxis(-theta, axis.x, axis.y, axis.z);
+
+        return new Vector3f(planet.Vec_current);
     }
 
 
@@ -98,10 +121,10 @@ public class PlanetManager {
      * @return 亮面类型ID
      */
     public static int getLightPhase(Planet observer, Planet target){
-        Planet sun = SUN;
-        Vector3f sun_vec = sun.position.sub(target.position, new Vector3f()).normalize();
-        Vector3f observer_vec = observer.position.sub(target.position, new Vector3f()).normalize();
-        float dot = sun_vec.dot(observer_vec);
+        Planet sun = whichIsYourSun(observer);
+        Vector3f tar_sun = (new Vector3f()).set(sun.position).sub(target.position).normalize();
+        Vector3f tar_obs = (new Vector3f()).set(observer.position).sub(target.position).normalize();
+        float dot = tar_sun.dot(tar_obs);
         double theta = Math.acos(dot) / util.PI;
         return (int) (theta * 5);
     }
@@ -119,14 +142,15 @@ public class PlanetManager {
     }
 
     /**
-     * 获取目标行星在观察者视野中被太阳光遮蔽的程度
+     * 获取目标行星在观察者视野中被太阳光掩盖的程度
      * @param observer 观察者
      * @param target 目标行星
      * @return 目标被遮蔽导致的不透明度值
      */
     public static float getCoveredBySun(Planet observer, Planet target) {
-        Vector3f sun_vec = SUN.position.sub(observer.position, new Vector3f()).normalize();
-        Vector3f target_vec = target.position.sub(observer.position, new Vector3f()).normalize();
-        return Mth.clamp(1 - sun_vec.dot(target_vec),0.5f, 1f);
+        Planet sun = whichIsYourSun(target);
+        Vector3f obs_sun = (new Vector3f()).set(sun.position).sub(observer.position).normalize();
+        Vector3f obs_tar = (new Vector3f()).set(target.position).sub(observer.position).normalize();
+        return Mth.clamp(1 - obs_sun.dot(obs_tar),0.5f, 1f);
     }
 }

@@ -11,7 +11,6 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
@@ -29,20 +28,21 @@ public class StarResourceReader extends SimplePreparableReloadListener<ArrayList
     protected ArrayList<Star> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         // 在后台线程执行
         profilerFiller.push("star prepare");
+        ArrayList<Star> stars = new ArrayList<>();
         ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, starsJson);
         try {
             Optional<Resource> resourceOpt = resourceManager.getResource(loc);
             if (resourceOpt.isPresent()) {
                 Resource resource = resourceOpt.get();
-                Constants.LOG.info("StarLoader: Reading Json stars.json.");
+                Constants.LOG.info("StarLoader: Reading stars json.");
                 BufferedReader reader = resource.openAsReader();
-                Stars.addAll(readStarsJson(reader));
-            } else Constants.LOG.info("StarLoader: read stars.json failed.");
+                stars.addAll(readStarsJson(reader));
+            } else Constants.LOG.info("StarLoader: read stars json failed.");
         } catch (Exception e) {
             Constants.LOG.error("Error reading custom.json: {}", e.getMessage());
         }
         profilerFiller.pop();
-        return Stars;
+        return stars;
     }
 
     @Override

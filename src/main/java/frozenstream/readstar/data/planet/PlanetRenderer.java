@@ -2,6 +2,7 @@ package frozenstream.readstar.data.planet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.Textures;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Quaternionf;
@@ -36,48 +37,51 @@ public class PlanetRenderer {
     }
 
     public static void drawSun(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain) {
-        if (!PlanetManager.star_prepared) return;
-        Planet planet = PlanetManager.SUN;
 
-        // 设置透明度，下雨则关闭
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
+        for(Planet planet : PlanetManager.getPlanets()) {
+            if(PlanetManager.getPlanetsLevel(planet) != 1)continue;
 
-        planet.position.sub(observer.position, positionVec).normalize(101.0f);
-        quaternionf.identity().rotateTo(OriVec, positionVec);
-        BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            Constants.LOG.info("Rendering {}", planet.name);
 
-        s = PlanetManager.getApparentSize(observer, planet);
+            // 设置透明度，下雨则关闭
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
 
-        uvs[0].set(1, 0);
-        uvs[1].set(1, 1);
-        uvs[2].set(0, 1);
-        uvs[3].set(0, 0);
+            planet.position.sub(observer.position, positionVec).normalize(101.0f);
+            quaternionf.identity().rotateTo(OriVec, positionVec);
+            BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        v[0].set(s, -s, 0.0F).rotate(quaternionf);
-        v[1].set(s, s, 0.0F).rotate(quaternionf);
-        v[2].set(-s, s, 0.0F).rotate(quaternionf);
-        v[3].set(-s, -s, 0.0F).rotate(quaternionf);
+            s = PlanetManager.getApparentSize(observer, planet);
 
-        builder.addVertex(pose, v[0].add(positionVec)).setUv(uvs[3].x, uvs[3].y);
-        builder.addVertex(pose, v[1].add(positionVec)).setUv(uvs[0].x, uvs[0].y);
-        builder.addVertex(pose, v[2].add(positionVec)).setUv(uvs[1].x, uvs[1].y);
-        builder.addVertex(pose, v[3].add(positionVec)).setUv(uvs[2].x, uvs[2].y);
+            uvs[0].set(1, 0);
+            uvs[1].set(1, 1);
+            uvs[2].set(0, 1);
+            uvs[3].set(0, 0);
 
-        BufferUploader.drawWithShader(builder.buildOrThrow());
+            v[0].set(s, -s, 0.0F).rotate(quaternionf);
+            v[1].set(s, s, 0.0F).rotate(quaternionf);
+            v[2].set(-s, s, 0.0F).rotate(quaternionf);
+            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
+
+            builder.addVertex(pose, v[0].add(positionVec)).setUv(uvs[3].x, uvs[3].y);
+            builder.addVertex(pose, v[1].add(positionVec)).setUv(uvs[0].x, uvs[0].y);
+            builder.addVertex(pose, v[2].add(positionVec)).setUv(uvs[1].x, uvs[1].y);
+            builder.addVertex(pose, v[3].add(positionVec)).setUv(uvs[2].x, uvs[2].y);
+
+            BufferUploader.drawWithShader(builder.buildOrThrow());
+        }
     }
 
 
     public static void drawPlanets(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain, float starLight) {
-        if (!PlanetManager.star_prepared) return;
-
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         for (Planet planet : PlanetManager.getPlanets()) {
             if (planet == observer) continue;
-            if (planet == PlanetManager.SUN) continue;
+            if (PlanetManager.isSunOrRoot(planet)) continue;
 
+            Planet sun = PlanetManager.whichIsYourSun(planet);
             // 设置透明度，下雨或离太阳过近
             float min = starLight+0.3f;
             min = Math.min(min, rain);
@@ -93,7 +97,7 @@ public class PlanetRenderer {
 
             s = PlanetManager.getApparentSize(observer, planet);
 
-            PlanetManager.SUN.position.sub(planet.position, p2s).normalize();
+            sun.position.sub(planet.position, p2s).normalize();
             positionVec.normalize(o2p);
             o2p.mul(p2s.dot(o2p), project);
             p2s.sub(project).normalize();

@@ -1,6 +1,4 @@
 {
-  "name": "Moon",
-  "parent": "Earth",
   "mass": 7e22,
   "radius": 1.737e6,
   "axis": [0.0, 0.0, 0.0],

@@ -1,5 +1,7 @@
 package frozenstream.readstar.data.planet;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -13,19 +15,41 @@ public record Oribit(
 ) {
     private static final double G = 6.67430e-11;
 
+    public static final StreamCodec<RegistryFriendlyByteBuf, Oribit> ORBIT_CODEC =
+            StreamCodec.of(
+                    (buf, orbit) -> {
+                        buf.writeDouble(orbit.a());
+                        buf.writeDouble(orbit.e());
+                        buf.writeDouble(orbit.i());
+                        buf.writeDouble(orbit.w());
+                        buf.writeDouble(orbit.o());
+                        buf.writeDouble(orbit.M0());
+                    },
+                    buf -> new Oribit(
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            buf.readDouble(),
+                            buf.readDouble()
+                    )
+            );
+
     /**
      * 获取 平近点角的角速度
-     * @param Mass  环绕星体的质量
-     * @param a     轨道半长轴
+     *
+     * @param Mass 环绕星体的质量
+     * @param a    轨道半长轴
      */
-    private static double mean_anomaly_angular_velocity(double Mass, double a){
-        return Math.sqrt(G *  Mass / Math.pow(a, 3));
+    private static double mean_anomaly_angular_velocity(double Mass, double a) {
+        return Math.sqrt(G * Mass / Math.pow(a, 3));
     }
 
     /**
      * 使用牛顿迭代法解 Kepler 方程：M = E - e * sin(E)
-     * @param M     平近点角
-     * @param e     轨道偏心率
+     *
+     * @param M 平近点角
+     * @param e 轨道偏心率
      */
     public static double solveKepler(double M, double e) {
         double E;
@@ -50,6 +74,8 @@ public record Oribit(
      * @return 星体的 XYZ 坐标
      */
     public Vector3fc calPosition(double Mass, double t) {
+        if (a == 0) return new Vector3f(0, 0, 0);
+
         double M = M0 + mean_anomaly_angular_velocity(Mass, a) * t;
         M = M % (2 * Math.PI); // 归一化到 [0, 2π)
 

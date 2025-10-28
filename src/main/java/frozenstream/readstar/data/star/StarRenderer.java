@@ -26,7 +26,7 @@ public class StarRenderer {
     private static final ResourceLocation STARLIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/environment/starlight.png");
 
     private static final Vector3f OriVec = new Vector3f(0.0F, 0.0F, -1.0F);
-    private static final float defaultSize = 0.749f;
+    private static final float defaultSize = 0.768f;
 
     private static final Quaternionf quaternionf = new Quaternionf();
     private static final Vector3f positionVec = new Vector3f();
@@ -62,6 +62,7 @@ public class StarRenderer {
 
 
     public static void buildStarsBuffer() {
+        Constants.LOG.info("StarRenderer: Using star size {}", defaultSize);
         starsBuffer.bind();
         starsBuffer.upload(drawStars(Tesselator.getInstance()));
         VertexBuffer.unbind();

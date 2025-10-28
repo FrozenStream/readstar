@@ -31,8 +31,8 @@ public class PlanetManager {
         return planets.get(name);
     }
 
-    public static Collection<Planet> getPlanets() {
-        return planets.values();
+    public static ArrayList<Planet> getPlanets() {
+        return planets_list;
     }
 
 
@@ -47,14 +47,12 @@ public class PlanetManager {
     }
 
     private static void updatePositions(Planet planet, long t) {
-        Constants.LOG.info("PlanetManager: update position {}", planet.name);
         if(planet.position == null)planet.position = new Vector3f();
         if(planet.mass == 0) planet.position.set(0, 0, 0);
 
         planet.position.set(planet.parent.position).add(planet.oribit.calPosition(planet.parent.mass, t));
-        planet.children.forEach(child -> updatePositions(child, t));
-
         updateNoonVec(planet);
+        planet.children.forEach(child -> updatePositions(child, t));
     }
 
     public static int getPlanetsLevel(String name) {
@@ -88,14 +86,14 @@ public class PlanetManager {
     public static void updateNoonVec(Planet planet) {
         if (planet == Root) return;
         if (planet.Vec_noon == null) planet.Vec_noon = new Vector3f();   //若为空，则创建向量
-        Vector3f parent_vec = (new Vector3f()).set(planet.parent.position).sub(planet.position);    //获得父级向量
-        Vector3f tmp = (new Vector3f()).set(planet.axis);   //构建 @parent_vec 平行于 @planet.axis 的向量分量
-        float n = planet.axis.dot(parent_vec);
+        Planet parent = whichIsYourSun(planet);
+        Vector3f parent_vec = (new Vector3f()).set(parent.position).sub(planet.position);    //获得父级向量
+        Vector3f tmp = (new Vector3f()).set(planet.getAxis());   //构建 @parent_vec 平行于 @planet.axis 的向量分量
+        float n = planet.getAxis().dot(parent_vec);
         tmp.mul(n);
         planet.Vec_noon.set(parent_vec).sub(tmp);   //减去平行于 @planet.axis 的分量，获得垂直于 @planet.axis 向量分量
         if (planet.Vec_noon.lengthSquared() < 0.01f) planet.Vec_noon.set(0, 1, 0);
         planet.Vec_noon.normalize();
-        Constants.LOG.info("PlanetManager: planet {} updateNoonVec: {}",planet.name, planet.Vec_noon);
     }
 
 
@@ -107,7 +105,7 @@ public class PlanetManager {
     public static Vector3f updateCurrentSkyVec(Planet planet, long tick) {
         if (planet.Vec_current == null) planet.Vec_current = new Vector3f();
         float theta = (tick - 6000) * util.PI / 12000;
-        Vector3f axis = planet.axis;
+        Vector3f axis = planet.getAxis();
         planet.Vec_current.set(planet.Vec_noon).rotateAxis(-theta, axis.x, axis.y, axis.z);
 
         return new Vector3f(planet.Vec_current);

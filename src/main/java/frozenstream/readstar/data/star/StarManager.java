@@ -28,7 +28,7 @@ public class StarManager {
 
     public static Matrix4f observeFrom(Planet planet, long t) {
         Matrix4f mat = new Matrix4f();
-        Vector3f axis = planet.axis;
+        Vector3f axis = planet.getAxis();
         Vector3f current = PlanetManager.updateCurrentSkyVec(planet, t);
 
         Quaternionf rotationToY = (new Quaternionf()).rotationTo(axis, OriginY);

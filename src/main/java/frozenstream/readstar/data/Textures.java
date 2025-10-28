@@ -8,25 +8,7 @@ import org.joml.Vector2f;
 
 
 public class Textures {
-    private static final ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 
-    private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
-    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
-
-    public static ResourceLocation getTexture(String name) {
-        String name_lower = name.toLowerCase();
-        if (name_lower.equals("moon")) return MOON_LOCATION;
-        if (name_lower.equals("sun")) return SUN_LOCATION;
-        String texture_path = "textures/environment/" + name_lower + ".png";
-        ResourceLocation customTexture = ResourceLocation.fromNamespaceAndPath("readstar", texture_path);
-        try {
-            resourceManager.getResource(customTexture);
-            return customTexture;
-        } catch (Exception e) {
-            Constants.LOG.warn("No texture for {}", name);
-            return null;
-        }
-    }
 
     public static void getUV(int num, Vector2f[] in) {
         int i = num % 4;

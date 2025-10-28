@@ -14,7 +14,7 @@ public class PlanetRenderer {
 
     private static final Quaternionf quaternionf = new Quaternionf();
     private static final Vector3f positionVec = new Vector3f();
-    private static float s = 1.024f;
+    private static float s = 0.768f;
 
     private static final Vector2f[] uvs = new Vector2f[4];
     private static final Vector3f[] v = new Vector3f[4];
@@ -41,12 +41,10 @@ public class PlanetRenderer {
         for(Planet planet : PlanetManager.getPlanets()) {
             if(PlanetManager.getPlanetsLevel(planet) != 1)continue;
 
-            Constants.LOG.info("Rendering {}", planet.name);
-
             // 设置透明度，下雨则关闭
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
+            RenderSystem.setShaderTexture(0, planet.getTexture());
 
             planet.position.sub(observer.position, positionVec).normalize(101.0f);
             quaternionf.identity().rotateTo(OriVec, positionVec);
@@ -90,7 +88,7 @@ public class PlanetRenderer {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, min);
 
             planet.position.sub(observer.position, positionVec).normalize(100.0f);
-            RenderSystem.setShaderTexture(0, Textures.getTexture(planet.name));
+            RenderSystem.setShaderTexture(0, planet.getTexture());
             BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
             Textures.getUV(PlanetManager.getLightPhase(observer, planet), uvs);

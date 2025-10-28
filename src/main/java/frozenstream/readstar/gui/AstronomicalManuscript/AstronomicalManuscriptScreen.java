@@ -27,11 +27,11 @@ public class AstronomicalManuscriptScreen extends Screen {
     private static int BOOK_Y;
 
     private static Planet Centre;
-    private static final ArrayList<Planet> MainPlanet = new ArrayList<>();
+    private static final ArrayList<Planet> MainPlanets = new ArrayList<>();
     private static final Map<String, Double> MinDistanceMap = new HashMap<>();
 
     private int currentPage = 0;
-    private int totalPages = 1;
+    private int totalPages = 0;
 
     private static int MinScale = 1;
     private static int MaxScale = 8;
@@ -61,15 +61,15 @@ public class AstronomicalManuscriptScreen extends Screen {
         super(Component.translatable("screen.readstar.astronomical_manuscript"));
 
         // 按照距离升序排序主要行星
-        MainPlanet.clear();
-        MainPlanet.add(PlanetManager.Root.children.getFirst());
+        MainPlanets.clear();
         for (Planet planet : PlanetManager.getPlanets()) {
-            if (planet.parent != PlanetManager.Root.children.getFirst()) continue;
-            MainPlanet.add(planet);
+            int level = PlanetManager.getPlanetsLevel(planet);
+            if (level == 0 || level > 2) continue;
+            MainPlanets.add(planet);
             totalPages++;
         }
-        MainPlanet.sort(Comparator.comparingDouble(p -> p.oribit != null ? p.oribit.a() : 0));
-        for (Planet planet : MainPlanet) Constants.LOG.info("Astronomical Manuscript have planet:{}", planet.name);
+        for (Planet planet : MainPlanets)
+            Constants.LOG.info("Astronomical Manuscript have planet {}", planet.name);
     }
 
     @Override
@@ -95,12 +95,12 @@ public class AstronomicalManuscriptScreen extends Screen {
 
         // 注册翻页按钮
         pageBackwardButton = new TextureButton(
-                BOOK_X + BOOK_WIDTH - 80, BOOK_Y + BOOK_HEIGHT - 40,
+                BOOK_X + BOOK_WIDTH - 100, BOOK_Y + BOOK_HEIGHT - 40,
                 20, 10, PAGE_BACKWARD1, PAGE_BACKWARD2,
                 this::onPageBackwardButton
         );
         pageForwardButton = new TextureButton(
-                BOOK_X + BOOK_WIDTH - 60, BOOK_Y + BOOK_HEIGHT - 40,
+                BOOK_X + BOOK_WIDTH - 80, BOOK_Y + BOOK_HEIGHT - 40,
                 20, 10, PAGE_FORWARD1, PAGE_FORWARD2,
                 this::onPageForwardButton
         );
@@ -114,10 +114,9 @@ public class AstronomicalManuscriptScreen extends Screen {
         if (!MinDistanceMap.containsKey(centre.name)) {
             // 计算行星系最小距离
             double MinDistance = 1e20;
-            for (Planet planet : PlanetManager.getPlanets()) {
-                if (planet.parent != centre) continue;
-                MinDistance = Math.min(MinDistance, planet.oribit.a());
-            }
+            for (Planet planet : centre.children) MinDistance = Math.min(MinDistance, planet.oribit.a());
+            if (centre.oribit.a() != 0) MinDistance = Math.min(MinDistance, centre.oribit.a());
+
             MinDistance *= 0.5;
             MinDistanceMap.put(centre.name, MinDistance);
             Constants.LOG.info("Astronomical Manuscript Planet: {} have MinDistance:{}", centre.name, MinDistance);
@@ -126,48 +125,45 @@ public class AstronomicalManuscriptScreen extends Screen {
     }
 
     private void onScaleUpButton(Button button) {
-        if(MinScale <= MaxMinScale) {
+        if (MinScale <= MaxMinScale) {
             MinScale *= 4;
             MaxScale *= 4;
         }
     }
 
     private void onScaleDownButton(Button button) {
-        if(MinScale > 1) {
+        if (MinScale > 1) {
             MinScale /= 4;
             MaxScale /= 4;
         }
     }
 
     private void onPageBackwardButton(Button button) {
-        if(currentPage > 0) {
-            currentPage--;
-            MinScale = 1;
-            MaxScale = 8;
-            pageForwardButton.visible = true;
-        }
-        if(currentPage == 0) button.visible = false;
+        currentPage--;
+        MinScale = 1;
+        MaxScale = 8;
+        pageForwardButton.visible = true;
+
+        if (currentPage == 0) button.visible = false;
     }
 
     private void onPageForwardButton(Button button) {
-        if(currentPage < totalPages - 1) {
-            currentPage++;
-            MinScale = 1;
-            MaxScale = 8;
-            pageBackwardButton.visible = true;
-        }
-        if(currentPage == totalPages - 1) button.visible = false;
-    }
+        currentPage++;
+        MinScale = 1;
+        MaxScale = 8;
+        pageBackwardButton.visible = true;
 
+        if (currentPage == totalPages - 1) button.visible = false;
+    }
 
 
     public void renderPage(GuiGraphics guiGraphics) {
         // 指定当前中心
-        Centre = MainPlanet.get(currentPage);
+        Centre = MainPlanets.get(currentPage);
         double MinDistance = calMinDistance(Centre);
 
         // 简介
-        Component planetName = Component.translatable("planet.readstar." + Centre.name.toLowerCase())
+        Component planetName = Component.translatable("planet.readstar." + Centre.name)
                 .withStyle(style -> style.withBold(true));
         RenderUtil.drawCenteredString(guiGraphics, font, planetName, BOOK_X + BOOK_WIDTH / 2, BOOK_Y + 15, 0xFF000000, false);
 
@@ -206,27 +202,15 @@ public class AstronomicalManuscriptScreen extends Screen {
         );
 
         double length = vec2.length();
-        if(length < min)vec2.normalize(min);
-        if(length > max)vec2.normalize(max);
+        if (length < min) vec2.normalize(min);
+        if (length > max) vec2.normalize(max);
         int planetX = centerX + (int) (vec2.x / max * BOOK_HEIGHT / 4);
         int planetY = centerY + (int) (vec2.y / max * BOOK_HEIGHT / 4);
 
         // 绘制行星图标
-        ResourceLocation planetTexture = getPlanetIcon(planet.name);
+        ResourceLocation planetTexture = planet.getIcon();
         guiGraphics.blit(planetTexture, planetX - HALF_ICON, planetY - HALF_ICON, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
         RenderUtil.drawSmallString(guiGraphics, font, planet.name, planetX, planetY + HALF_ICON, 0xFF000000, false, 0.8f);
-    }
-
-    private ResourceLocation getPlanetIcon(String planetName) {
-        // 将行星名称映射到对应的图标文件
-        return switch (planetName.toLowerCase()) {
-            case "sun" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/sun.png");
-            case "earth" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/earth.png");
-            case "mars" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/mars.png");
-            case "venus" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/venus.png");
-            case "moon" -> ResourceLocation.fromNamespaceAndPath("readstar", "textures/icons/moon.png");
-            default -> null;
-        };
     }
 
     @Override
@@ -250,15 +234,14 @@ public class AstronomicalManuscriptScreen extends Screen {
         // 绘制书本整体背景
         guiGraphics.blit(BOOK_BACKGROUND, BOOK_X, BOOK_Y, 0, 0,
                 BOOK_WIDTH, BOOK_HEIGHT,
-                (int)(BOOK_WIDTH * 1.4), (int)(BOOK_HEIGHT * 1.36));
+                (int) (BOOK_WIDTH * 1.4), (int) (BOOK_HEIGHT * 1.36));
     }
 
 
     private void renderPageNumbers(GuiGraphics guiGraphics) {
-        String PageStr = (currentPage+1) + " / " + totalPages;
+        String PageStr = (currentPage + 1) + " / " + totalPages;
         RenderUtil.drawCenteredString(guiGraphics, font, PageStr, BOOK_X + BOOK_WIDTH / 2, BOOK_Y + BOOK_HEIGHT - 30, 0xFF000000, false);
     }
-
 
 
     @Override

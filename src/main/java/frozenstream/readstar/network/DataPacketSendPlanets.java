@@ -23,7 +23,6 @@ public record DataPacketSendPlanets(ArrayList<Planet> planets) implements Packet
                         int index = 0;
                         for (Planet planet : packet.planets) {
                             map.put(planet, index++);
-                            Constants.LOG.info("NetWorkSend: Planet {} get ID {}", planet.name, index-1);
                         }
 
 

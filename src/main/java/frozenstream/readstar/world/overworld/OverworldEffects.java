@@ -152,7 +152,7 @@ public class OverworldEffects extends DimensionSpecialEffects {
                 // 星星绘制
                 if(camera.getEntity() instanceof Player player){
                     // 如果在使用原版望远镜 且FOV存在差值
-                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) > 8.0 && player.isScoping()){
+                    if(Math.abs(FovEvent.fov - minecraft.options.fov().get()) > 32 && player.isScoping()){
                         Vector3f look = player.getViewVector(partialTick).toVector3f();
                         observeFromHere.transpose(new Matrix4f()).transformPosition(look);
                         float scaling = (float) (FovEvent.fov/minecraft.options.fov().get());

@@ -22,6 +22,7 @@ import java.util.Optional;
 public class PlanetResourceReader extends SimplePreparableReloadListener<ArrayList<Planet>> {
     private static final String systemRoot = "custom/planets/";
     public static final ArrayList<Planet> PLANETS = new ArrayList<>();
+    static Boolean readFailed = false;
 
 
     @Override
@@ -51,6 +52,7 @@ public class PlanetResourceReader extends SimplePreparableReloadListener<ArrayLi
 
     @Override
     protected void apply(ArrayList<Planet> planets, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+        if(readFailed) throw new RuntimeException("PlanetLoader: read planet json failed, not exist!");
         PLANETS.addAll(planets);
     }
 
@@ -62,12 +64,13 @@ public class PlanetResourceReader extends SimplePreparableReloadListener<ArrayLi
             Planet single = new Planet(name, root);             // 创建行星对象
             ResourceLocation detailFile = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, systemRoot + name + ".json");
             Optional<Resource> resourceOpt = resourceManager.getResource(detailFile);   // 获取JSON子节点的资源
-            if (resourceOpt.isEmpty()) {          // 判断资源是否存在
-                String errMsg = "PlanetLoader: " + name + ".json not found";
-                Constants.LOG.error(errMsg);
-                throw new RuntimeException(errMsg);
+
+            if (resourceOpt.isEmpty()) {                        // 判断资源是否存在
+                Constants.LOG.error("PlanetLoader: {}.json not found", name);
+                readFailed = true;
+
             }
-            getPlanetsDetails(resourceOpt.get(), single);       // 获取JSON子节点的资源
+            else getPlanetsDetails(resourceOpt.get(), single);       // 获取JSON子节点的资源
 
             root.children.add(single);
             in.add(single);     // 在总列表中添加行星对象

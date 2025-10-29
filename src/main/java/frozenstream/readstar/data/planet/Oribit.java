@@ -87,6 +87,7 @@ public record Oribit(
         double yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
 
         // 步骤5：构造旋转矩阵并计算 XYZ
+        // i 是轨道倾角，w 是近心点俯角， o 是升交点经度
         double cos_Omega = Math.cos(o);
         double sin_Omega = Math.sin(o);
         double cos_i = Math.cos(i);

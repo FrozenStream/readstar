@@ -185,13 +185,11 @@ public class AstronomicalManuscriptScreen extends Screen {
         double Min = MinDistance * MinScale;
         double Max = MinDistance * MaxScale;
 
-        for (Planet planet : PlanetManager.getPlanets()) {
-            if (planet == Centre) {
-                renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
-                if (planet.parent != PlanetManager.Root)
-                    renderPlanetInBook(guiGraphics, planet.parent, Min, Min, centerX, centerY);
-            } else if (planet.parent == Centre) renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
-        }
+        renderPlanetInBook(guiGraphics, Centre, Min, Max, centerX, centerY);
+        for (Planet planet : Centre.children)
+            renderPlanetInBook(guiGraphics, planet, Min, Max, centerX, centerY);
+        if (PlanetManager.getPlanetsLevel(Centre.parent) != 0)
+            renderPlanetInBook(guiGraphics, Centre.parent, Min, Min, centerX, centerY);
     }
 
 

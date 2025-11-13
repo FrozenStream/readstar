@@ -23,7 +23,7 @@ public class Command {
                         .then(Commands.argument("time", LongArgumentType.longArg(0))
                                 .executes(context -> {
                                     long time = LongArgumentType.getLong(context, "time");
-                                    TimeManager.setTimeOffset(time);
+                                    TimeManager.setTime(time);
                                     return com.mojang.brigadier.Command.SINGLE_SUCCESS;
                                 })));
         dispatcher.register(cmd);

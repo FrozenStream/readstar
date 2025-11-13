@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Events {
 
     @SubscribeEvent
-    public static void onServerStarting(PlayerEvent.PlayerLoggedInEvent event) {
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         //发送Planets
         ServerPlayer player = (ServerPlayer) event.getEntity();
         ArrayList<Planet> data = PlanetResourceReader.PLANETS;

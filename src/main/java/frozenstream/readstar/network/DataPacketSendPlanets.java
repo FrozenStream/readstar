@@ -24,9 +24,6 @@ public record DataPacketSendPlanets(ArrayList<Planet> planets) implements Packet
                         for (Planet planet : packet.planets) {
                             map.put(planet, index++);
                         }
-
-
-
                         // 编码每个行星
                         for (Planet planet : packet.planets) {
                             if(planet == packet.planets.getFirst()) continue;   // 跳过PlanetRoot

@@ -28,7 +28,8 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-//TODO: 朝霞方向更新
+//TODO: 朝霞方向
+//TODO: 取消行星白昼时眩光
 
 
 public class OverworldEffects extends DimensionSpecialEffects {

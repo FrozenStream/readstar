@@ -106,7 +106,7 @@ public class StarManager {
      * @return 透明度值，范围0-1
      */
     public static float getAlphaFromVmag(float Vmag) {
-        return getAlphaFromVmag(Vmag, 7.0f);
+        return getAlphaFromVmag(Vmag, 7.0f) * 0.8f;
     }
 
 

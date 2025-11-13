@@ -14,6 +14,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -25,7 +26,7 @@ public class StarResourceReader extends SimplePreparableReloadListener<ArrayList
     private static final String starsJson = "custom/stars/stars.json";
     private static final ArrayList<Star> Stars = new ArrayList<>();
     @Override
-    protected ArrayList<Star> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+    protected @NotNull ArrayList<Star> prepare(@NotNull ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         // 在后台线程执行
         profilerFiller.push("star prepare");
         ArrayList<Star> stars = new ArrayList<>();
@@ -46,9 +47,10 @@ public class StarResourceReader extends SimplePreparableReloadListener<ArrayList
     }
 
     @Override
-    protected void apply(ArrayList<Star> stars, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+    protected void apply(@NotNull ArrayList<Star> stars, @NotNull ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         // 在主线程执行
         profilerFiller.push("star apply");
+        Stars.clear();
         Stars.addAll(stars);
         Constants.LOG.info("StarLoader: {}", Stars.size());
         StarManager.init();

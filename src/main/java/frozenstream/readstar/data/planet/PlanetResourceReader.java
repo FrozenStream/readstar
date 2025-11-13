@@ -53,6 +53,7 @@ public class PlanetResourceReader extends SimplePreparableReloadListener<ArrayLi
     @Override
     protected void apply(ArrayList<Planet> planets, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         if(readFailed) throw new RuntimeException("PlanetLoader: read planet json failed, not exist!");
+        PLANETS.clear();
         PLANETS.addAll(planets);
     }
 

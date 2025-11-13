@@ -16,6 +16,10 @@ public class PlanetManager {
     public static Planet Root = null;
 
     public static void init(ArrayList<Planet> in) {
+        // 清空数据
+        planets.clear();
+        planets_list.clear();
+
         planets_list.addAll(in);        //复制行星列表
         for (Planet planet : in) {
             planets.put(planet.name, planet);   // 添加 name -> planet 映射

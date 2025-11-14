@@ -13,21 +13,22 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 public class TimeClient {
     private static long time = 0;
     private static long counter = 0;
+    private static long timeAcceleration = 1;
     private static final int UPDATE_INTERVAL_TICKS = 10; // 每100 ticks更新一次
     private static final Minecraft mc = Minecraft.getInstance();
 
-    public static void updateTime(long time)
-    {
-        Constants.LOG.info("更新时间：{}", time);
+    public static void update(long time, long timeAcceleration) {
+        Constants.LOG.info("TimeClient：update time: {}, update timeAcceleration {}", time, timeAcceleration);
         TimeClient.time = time - 1;
+        TimeClient.timeAcceleration = timeAcceleration;
         PlanetManager.updatePositions(TimeClient.time);
         counter = 10000;
     }
 
     @SubscribeEvent
-    public static void onServerTick(ClientTickEvent.Post event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         if (mc.level == null || mc.player == null || mc.isPaused()) return;
-        time++;
+        time += timeAcceleration;
         counter++;
         if (counter >= UPDATE_INTERVAL_TICKS) {
             PlanetManager.updatePositions(time);

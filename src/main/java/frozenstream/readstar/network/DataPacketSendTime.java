@@ -9,11 +9,13 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public record DataPacketSendTime(long data) implements PacketBase {
+public record DataPacketSendTime(long time, long timeAcceleration) implements PacketBase {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, DataPacketSendTime> CODEC = StreamCodec.composite(
             StreamCodec.of(FriendlyByteBuf::writeLong, FriendlyByteBuf::readLong),
-            DataPacketSendTime::data,
+            DataPacketSendTime::time,
+            StreamCodec.of(FriendlyByteBuf::writeLong, FriendlyByteBuf::readLong),
+            DataPacketSendTime::timeAcceleration,
             DataPacketSendTime::new
     );
 
@@ -21,7 +23,8 @@ public record DataPacketSendTime(long data) implements PacketBase {
 
     @Override
     public void handle(Player player) {
-        TimeClient.updateTime(this.data);
+        TimeClient.update(this.time, this.timeAcceleration);
+        // TODO: Handle timeAcceleration as needed
     }
 
     @Override

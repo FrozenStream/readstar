@@ -12,13 +12,14 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.BooleanValue LOAD_DEFAULT_STARS = BUILDER
-            .comment("Whether to load default stars from the mod's resources")
-            .define("loadDefaultStars", true);
-
     private static final ModConfigSpec.LongValue TIME_ACCELERATION = BUILDER
-            .comment("Time acceleration factor. 1.0 = real time, 2.0 = twice as fast, 0.5 = half speed")
+            .comment("Time acceleration factor.")
             .defineInRange("timeAcceleration", 1L, 1L, 1000L);
+
+
+    private static final ModConfigSpec.DoubleValue METEOR_PROBABILITY = BUILDER
+            .comment("Meteor occurred probability.")
+            .defineInRange("MeteorProbability", 0.2, 0.0, 0.7);
 
 
     public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
@@ -28,16 +29,16 @@ public class Config {
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static boolean loadDefaultStars;
     public static long timeAcceleration;
+    public static double meteorProbability;
 
     public static String magicNumberIntroduction;
 
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
-        loadDefaultStars = LOAD_DEFAULT_STARS.get();
         timeAcceleration = TIME_ACCELERATION.get();
+        meteorProbability = METEOR_PROBABILITY.get();
 
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
     }

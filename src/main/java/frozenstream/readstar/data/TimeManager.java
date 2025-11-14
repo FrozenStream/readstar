@@ -34,7 +34,7 @@ public class TimeManager {
         time += Config.timeAcceleration;
         setTime(time);
         if (counter > UPDATE_INTERVAL_TICKS) {
-            DataPacketSendTime timePacket = new DataPacketSendTime(time);
+            DataPacketSendTime timePacket = new DataPacketSendTime(time, Config.timeAcceleration);
             PlayerList players = event.getServer().getPlayerList();
             for (var player : players.getPlayers()) {
                 Services.PLATFORM.sendPacketToPlayer(Constants.PACKET_ID_TIME_SEND, timePacket, player);
@@ -56,28 +56,28 @@ public class TimeManager {
         }
     }
 
-    public static void setTime(long offset) {
-        data_store.setTimeOffset(offset);
+    public static void setTime(long time) {
+        TimeManager.time = time;
+        data_store.setTime(time);
     }
 
     /**
      * 时间数据管理器，用于持久化存储时间偏移量
      */
     public static class TimeStore extends SavedData {
-
-        private long timeOffset = 0;
+        private long time = 0;
 
         public TimeStore() {
             // 默认构造函数
         }
 
         public TimeStore(CompoundTag compoundTag, HolderLookup.Provider provider) {
-            timeOffset = compoundTag.getLong(DATA_NAME);
+            time = compoundTag.getLong(DATA_NAME);
         }
 
         @Override
         public @NotNull CompoundTag save(CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-            tag.putLong(DATA_NAME, timeOffset);
+            tag.putLong(DATA_NAME, time);
             return tag;
         }
 
@@ -86,11 +86,11 @@ public class TimeManager {
         }
 
         public long getTime() {
-            return timeOffset;
+            return time;
         }
 
-        public void setTimeOffset(long offset) {
-            this.timeOffset = offset;
+        public void setTime(long time) {
+            this.time = time;
             setDirty();
         }
     }

@@ -3,19 +3,19 @@ Mod for NeoForge Minecraft 1.21.1
 =======
 
 # 星星，行星和恒星系。
-这个 Mod 添加了对太阳系运转的模拟，月亮和太阳现在不再永不见面了！现在它们的位置将遵从开普勒公式，并隔一段时间重新计算。
+该 Mod 添加了对星系运转的模拟，日月和行星的位置将遵从开普勒公式，而遥远的星辰则锚定在天球上。
+日月行星的轨道数据跟随服务器数据，在玩家加入时分发给玩家；绝大部分轨道参数都是可以修改的，包括自转轴、轨道半长轴、轨道离心率、轨道倾角、近心点俯角、升交点经度。
+该 Mod 添加了一个全局计时器，用于同步服务端和客户端的时钟，服务端的时间流速通过config中的timeAcceleration进行设置。
 
-# 内容
-歪斜的行星？现在的地球可以有一个倾斜的自转轴，这会改变该星球上观测者的视野。\
-遥远的星星！在天球上的天体，因为过于遥远，所以在绝对坐标系中是“静止”的。\
-添加了道具“天文手稿”（Astronomical Manuscript），你可以通过它找到行星们的位置。\
-望远镜升级！你可以看到星星的信息了。\
-添加了流星效果，在天幕中的发生概率为0.06。
+# 甜品内容
+道具“天文手稿”（Astronomical Manuscript），标注了星系中行星的相对位置和一些描述内容（你可以通过资源包修改它）。\
+望远镜升级！你可以看到星星的名字。\
+添加了流星效果，在天幕中的发生概率默认为0.2，这个概率可以通过config中的meteorProbability修改。
 
 # 设置和自定义
-现在是基于数据包和资源包驱动的。\
+现在该MOD是基于数据包和资源包驱动的。\
 如何修改星系结构：在数据包中/data/readstar/custom/planets/system.json中写入你自定义的星系树。\
-例如默认的星系树：
+例如这默认的星系树：
 
 ```javascript
 {
@@ -116,7 +116,7 @@ axis是行星自转轴指向，若axis长度为0，则认为axis=[0, 1, 0]。\
 欢迎交流：QQ 1210136901。
 
 # 画廊
-![正确的月相 The correct moon phase]()
+![正确的月相 The correct moon phase](imgs/trueMoonPhase.jpg)
 ![天文手稿 Astronomical Manuscript](imgs/aMeteor.jpg)
 ![乱入星海的流星 A meteor that strays into the stars](imgs/aMeteor.jpg)
 ![昴宿星团 The Pleiades](imgs/xt.png)

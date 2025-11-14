@@ -3,7 +3,6 @@ package frozenstream.readstar.world.overworld;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import frozenstream.readstar.Constants;
 import frozenstream.readstar.data.meteor.MeteorManager;
 import frozenstream.readstar.data.meteor.MeteorRenderer;
 import frozenstream.readstar.events.FovEvent;
@@ -84,7 +83,7 @@ public class OverworldEffects extends DimensionSpecialEffects {
     }
 
     @Override
-    public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f frustumMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable skyFogSetup) {
+    public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick, @NotNull Matrix4f frustumMatrix, @NotNull Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable skyFogSetup) {
         skyFogSetup.run();
         if (!isFoggy) {
             FogType fogtype = camera.getFluidInCamera();

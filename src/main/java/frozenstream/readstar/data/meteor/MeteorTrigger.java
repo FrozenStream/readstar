@@ -1,5 +1,6 @@
 package frozenstream.readstar.data.meteor;
 
+import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.network.DataPacketSendMeteor;
 import frozenstream.readstar.platform.Services;
@@ -15,8 +16,6 @@ import org.joml.Vector3f;
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class MeteorTrigger {
     private static final RandomSource random = RandomSource.create(10842L);
-
-    private static final float MeteorProbability = 0.6f;
 
     public static void init(PlayerList playerList) {
         Vector3f startPosition = new Vector3f(
@@ -45,7 +44,7 @@ public class MeteorTrigger {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
-        if(random.nextFloat() < MeteorProbability){
+        if(random.nextFloat() < Config.meteorProbability){
             init(event.getServer().getPlayerList());
         }
     }

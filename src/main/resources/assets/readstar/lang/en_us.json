@@ -3,6 +3,7 @@
 
   "block.examplemod.example_block": "Example Block",
   "item.examplemod.example_item": "Example Item",
+  "item.readstar.astronomical_manuscript": "Astronomical Manuscript",
   "screen.readstar.astronomical_manuscript": "Astronomical Manuscript",
 
   "planet.readstar.sun": "Sun",

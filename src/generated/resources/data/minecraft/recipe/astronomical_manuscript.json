@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "minecraft:paper"
-    },
     "B": {
       "item": "minecraft:book"
+    },
+    "P": {
+      "item": "minecraft:paper"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "PPP"
   ],
   "result": {
-    "id": "readstar:astronomical_manuscript",
-    "count": 1
+    "count": 1,
+    "id": "readstar:astronomical_manuscript"
   }
 }

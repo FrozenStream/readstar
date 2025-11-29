@@ -1,7 +1,7 @@
 package frozenstream.readstar;
 
-import frozenstream.readstar.data.planet.Planet;
-import frozenstream.readstar.data.planet.PlanetResourceReader;
+import frozenstream.readstar.element.planet.Planet;
+import frozenstream.readstar.element.planet.PlanetResourceReader;
 import frozenstream.readstar.network.DataPacketSendPlanets;
 import frozenstream.readstar.platform.Services;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,9 +1,5 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.element;
 
-import frozenstream.readstar.Constants;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
 import org.joml.Vector2f;
 
 

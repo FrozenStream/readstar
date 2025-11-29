@@ -4,7 +4,7 @@ package frozenstream.readstar;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import frozenstream.readstar.data.TimeManager;
+import frozenstream.readstar.element.TimeManager;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.neoforged.bus.api.SubscribeEvent;

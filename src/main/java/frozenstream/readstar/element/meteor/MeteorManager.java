@@ -1,6 +1,5 @@
-package frozenstream.readstar.data.meteor;
+package frozenstream.readstar.element.meteor;
 
-import frozenstream.readstar.Constants;
 import net.minecraft.client.Minecraft;
 import org.joml.Vector3f;
 import java.util.LinkedList;

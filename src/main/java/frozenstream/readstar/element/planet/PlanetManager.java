@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.planet;
+package frozenstream.readstar.element.planet;
 
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.util;

@@ -1,8 +1,8 @@
-package frozenstream.readstar.data.star;
+package frozenstream.readstar.element.star;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.planet.Planet;
-import frozenstream.readstar.data.planet.PlanetManager;
+import frozenstream.readstar.element.planet.Planet;
+import frozenstream.readstar.element.planet.PlanetManager;
 import frozenstream.readstar.util;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;

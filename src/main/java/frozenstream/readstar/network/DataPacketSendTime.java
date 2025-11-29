@@ -1,7 +1,7 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.TimeClient;
+import frozenstream.readstar.element.TimeClient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.meteor;
+package frozenstream.readstar.element.meteor;
 
 import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;

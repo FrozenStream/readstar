@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.star;
+package frozenstream.readstar.element.star;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

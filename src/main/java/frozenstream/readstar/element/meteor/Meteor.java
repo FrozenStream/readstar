@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.meteor;
+package frozenstream.readstar.element.meteor;
 
 import org.joml.Vector3f;
 

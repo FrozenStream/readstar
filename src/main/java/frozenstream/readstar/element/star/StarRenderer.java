@@ -1,9 +1,9 @@
-package frozenstream.readstar.data.star;
+package frozenstream.readstar.element.star;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.Textures;
+import frozenstream.readstar.element.Textures;
 import frozenstream.readstar.util;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;

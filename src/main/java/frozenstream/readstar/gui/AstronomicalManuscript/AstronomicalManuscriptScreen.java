@@ -1,8 +1,8 @@
 package frozenstream.readstar.gui.AstronomicalManuscript;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.planet.Planet;
-import frozenstream.readstar.data.planet.PlanetManager;
+import frozenstream.readstar.element.planet.Planet;
+import frozenstream.readstar.element.planet.PlanetManager;
 import frozenstream.readstar.gui.RenderUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

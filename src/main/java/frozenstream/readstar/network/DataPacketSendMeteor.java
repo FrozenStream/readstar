@@ -1,7 +1,7 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.meteor.MeteorManager;
+import frozenstream.readstar.element.meteor.MeteorManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;

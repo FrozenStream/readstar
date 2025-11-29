@@ -1,9 +1,9 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.data.planet.Oribit;
-import frozenstream.readstar.data.planet.Planet;
-import frozenstream.readstar.data.planet.PlanetManager;
+import frozenstream.readstar.element.planet.Oribit;
+import frozenstream.readstar.element.planet.Planet;
+import frozenstream.readstar.element.planet.PlanetManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

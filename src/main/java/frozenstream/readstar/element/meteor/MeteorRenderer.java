@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.meteor;
+package frozenstream.readstar.element.meteor;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;

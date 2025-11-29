@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.element;
 
 import frozenstream.readstar.Config;
 import frozenstream.readstar.Constants;

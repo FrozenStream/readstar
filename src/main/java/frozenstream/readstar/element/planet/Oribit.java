@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.planet;
+package frozenstream.readstar.element.planet;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

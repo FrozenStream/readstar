@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.planet;
+package frozenstream.readstar.element.planet;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

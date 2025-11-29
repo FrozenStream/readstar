@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.star;
+package frozenstream.readstar.element.star;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;

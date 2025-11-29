@@ -1,4 +1,4 @@
-package frozenstream.readstar.data.planet;
+package frozenstream.readstar.element.planet;
 
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;

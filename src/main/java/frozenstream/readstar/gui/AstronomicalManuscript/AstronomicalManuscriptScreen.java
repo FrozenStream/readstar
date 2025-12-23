@@ -114,8 +114,8 @@ public class AstronomicalManuscriptScreen extends Screen {
         if (!MinDistanceMap.containsKey(centre.name)) {
             // 计算行星系最小距离
             double MinDistance = 1e20;
-            for (Planet planet : centre.children) MinDistance = Math.min(MinDistance, planet.oribit.a());
-            if (centre.oribit.a() != 0) MinDistance = Math.min(MinDistance, centre.oribit.a());
+            for (Planet planet : centre.children) MinDistance = Math.min(MinDistance, planet.orbit.a());
+            if (centre.orbit.a() != 0) MinDistance = Math.min(MinDistance, centre.orbit.a());
 
             MinDistance *= 0.5;
             MinDistanceMap.put(centre.name, MinDistance);

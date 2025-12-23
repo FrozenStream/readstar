@@ -9,7 +9,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class PlanetRenderer {
-    private static final Vector3f OriVec = new Vector3f(0.0F, 0.0F, -1.0F);
+    private static final Vector3f OriVec = new Vector3f(0.0F, 0.0F, 1.0F);
 
     private static final Quaternionf quaternionf = new Quaternionf();
     private static final Vector3f positionVec = new Vector3f();
@@ -36,13 +36,12 @@ public class PlanetRenderer {
     }
 
     public static void drawSun(Tesselator tesselator, Planet observer, PoseStack.Pose pose, float rain) {
+        // 设置透明度，下雨则关闭
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         for(Planet planet : PlanetManager.getPlanets()) {
             if(PlanetManager.getPlanetsLevel(planet) != 1)continue;
-
-            // 设置透明度，下雨则关闭
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, rain);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, planet.getTexture());
 
             planet.position.sub(observer.position, positionVec).normalize(101.0f);
@@ -57,9 +56,9 @@ public class PlanetRenderer {
             uvs[3].set(0, 0);
 
             v[0].set(s, -s, 0.0F).rotate(quaternionf);
-            v[1].set(s, s, 0.0F).rotate(quaternionf);
+            v[1].set(-s, -s, 0.0F).rotate(quaternionf);
             v[2].set(-s, s, 0.0F).rotate(quaternionf);
-            v[3].set(-s, -s, 0.0F).rotate(quaternionf);
+            v[3].set(s, s, 0.0F).rotate(quaternionf);
 
             builder.addVertex(pose, v[0].add(positionVec)).setUv(uvs[3].x, uvs[3].y);
             builder.addVertex(pose, v[1].add(positionVec)).setUv(uvs[0].x, uvs[0].y);

@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.datagen;
 
 import frozenstream.readstar.item.ModItems;
 import net.minecraft.core.HolderLookup;

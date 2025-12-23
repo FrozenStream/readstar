@@ -1,4 +1,4 @@
-package frozenstream.readstar.data;
+package frozenstream.readstar.datagen;
 
 import frozenstream.readstar.Constants;
 import net.minecraft.core.HolderLookup;

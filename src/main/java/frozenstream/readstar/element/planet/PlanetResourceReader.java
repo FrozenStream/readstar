@@ -104,12 +104,12 @@ public class PlanetResourceReader extends SimplePreparableReloadListener<ArrayLi
             double o = root.get("o").getAsDouble();
             double M0 = root.get("M0").getAsDouble();
 
-            Oribit oribit = new Oribit(a, e, i, w, o, M0);
+            Orbit oribit = new Orbit(a, e, i, w, o, M0);
 
             planet.mass = mass;
             planet.radius = radius;
             planet.axis = axis;
-            planet.oribit = oribit;
+            planet.orbit = oribit;
 
         } catch (Exception e) {
             Constants.LOG.error("Error reading {}: {}", planet.name, e.getMessage());

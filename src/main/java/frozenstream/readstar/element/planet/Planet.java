@@ -11,7 +11,7 @@ public class Planet {
     public double radius;
     public Vector3f position;
     public Vector3f axis;
-    public Oribit oribit;
+    public Orbit orbit;
     public Planet parent;
     public ArrayList<Planet> children;
     public int level = -1;
@@ -33,13 +33,13 @@ public class Planet {
     }
 
 
-    public Planet(String name, double mass, double radius, Vector3f axis, Oribit oribit) {
+    public Planet(String name, double mass, double radius, Vector3f axis, Orbit orbit) {
         this.name = name;
         this.mass = mass;
         this.radius = radius;
         this.position = new Vector3f();
         this.axis = axis;
-        this.oribit = oribit;
+        this.orbit = orbit;
         this.parent = null;
         this.children = new ArrayList<>();
     }
@@ -52,8 +52,8 @@ public class Planet {
     }
 
     public Vector3f getAxis() {
-        if (axis == null) axis = new Vector3f(0, 1, 0);
-        if (axis.lengthSquared() == 0f) axis.set(0, 1, 0);
+        if (axis == null) axis = new Vector3f(0, 0, -1);
+        if (axis.lengthSquared() == 0f) axis.set(0, 0, -1);
         return axis;
     }
 

@@ -3,9 +3,8 @@ package frozenstream.readstar.element.star;
 import frozenstream.readstar.Constants;
 import frozenstream.readstar.element.planet.Planet;
 import frozenstream.readstar.element.planet.PlanetManager;
-import frozenstream.readstar.util;
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -13,10 +12,6 @@ import java.util.ArrayList;
 public class StarManager {
     public static Star[] stars = new Star[32768];
     public static int starCount = 0;
-
-    private static final Vector3f OriginX = new Vector3f(1.0F, 0.0F, 0.0F);
-    private static final Vector3f OriginY = new Vector3f(0.0F, 1.0F, 0.0F);
-
     public static void init() {
         stars = StarResourceReader.getStars().toArray(new Star[0]);
         starCount = StarResourceReader.getStars().size();
@@ -27,25 +22,13 @@ public class StarManager {
 
 
     public static Matrix4f observeFrom(Planet planet, long t) {
-        Matrix4f mat = new Matrix4f();
-        Vector3f axis = planet.getAxis();
-        Vector3f current = PlanetManager.updateCurrentSkyVec(planet, t);
+        Vector3f z = planet.getAxis();
+        Vector3f y = PlanetManager.updateCurrentSkyVec(planet, t);
+        Vector3f x = y.cross(z, new Vector3f());
 
-        Quaternionf rotationToY = (new Quaternionf()).rotationTo(axis, OriginY);
-        Vector3f rotatedCurrent = rotationToY.transform(current, new Vector3f());
+        Matrix3f localFromWorld = new Matrix3f().set(x, y, z).transpose();
 
-        Quaternionf rotationToX = (new Quaternionf()).rotationTo(rotatedCurrent, OriginX);
-
-        // 创建表示120度绕(1,1,1)轴旋转的四元数
-        Quaternionf rotation = new Quaternionf().rotateAxis(120f / 180.0f * util.PI, 1.0f, 1.0f, 1.0f);
-
-        // 组合旋转
-        Quaternionf finalRotation = new Quaternionf();
-        finalRotation.set(rotation);
-        finalRotation.mul(rotationToX);
-        finalRotation.mul(rotationToY);
-
-        return mat.rotation(finalRotation);
+        return (new Matrix4f()).set(localFromWorld);
     }
 
 

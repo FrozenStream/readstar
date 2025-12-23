@@ -5,7 +5,7 @@ import net.minecraft.network.codec.StreamCodec;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
-public record Oribit(
+public record Orbit(
         double a,
         double e,
         double i,
@@ -15,7 +15,7 @@ public record Oribit(
 ) {
     private static final double G = 6.67430e-11;
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, Oribit> ORBIT_CODEC =
+    public static final StreamCodec<RegistryFriendlyByteBuf, Orbit> ORBIT_CODEC =
             StreamCodec.of(
                     (buf, orbit) -> {
                         buf.writeDouble(orbit.a());
@@ -25,7 +25,7 @@ public record Oribit(
                         buf.writeDouble(orbit.o());
                         buf.writeDouble(orbit.M0());
                     },
-                    buf -> new Oribit(
+                    buf -> new Orbit(
                             buf.readDouble(),
                             buf.readDouble(),
                             buf.readDouble(),
@@ -103,6 +103,6 @@ public record Oribit(
 
         double Z = (sin_w * sin_i) * xp + (cos_w * sin_i) * yp;
 
-        return new Vector3f((float) X, (float) Z, (float) Y);
+        return new Vector3f((float) X, (float) Y, (float) Z);
     }
 }

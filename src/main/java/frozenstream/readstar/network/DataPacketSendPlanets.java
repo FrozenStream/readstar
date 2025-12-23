@@ -1,7 +1,7 @@
 package frozenstream.readstar.network;
 
 import frozenstream.readstar.Constants;
-import frozenstream.readstar.element.planet.Oribit;
+import frozenstream.readstar.element.planet.Orbit;
 import frozenstream.readstar.element.planet.Planet;
 import frozenstream.readstar.element.planet.PlanetManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -31,7 +31,7 @@ public record DataPacketSendPlanets(ArrayList<Planet> planets) implements Packet
                             buf.writeDouble(planet.mass);
                             buf.writeDouble(planet.radius);
                             buf.writeVector3f(planet.axis);
-                            Oribit.ORBIT_CODEC.encode(buf, planet.oribit);
+                            Orbit.ORBIT_CODEC.encode(buf, planet.orbit);
 
                             buf.writeInt(map.get(planet.parent));
                             buf.writeInt(planet.children.size());
@@ -55,7 +55,7 @@ public record DataPacketSendPlanets(ArrayList<Planet> planets) implements Packet
                             double mass = buf.readDouble(); //读取质量
                             double radius = buf.readDouble();   //读取半径
                             var axis = buf.readVector3f();      //读取轴向
-                            Oribit oribit = Oribit.ORBIT_CODEC.decode(buf); //读取轨道参数
+                            Orbit oribit = Orbit.ORBIT_CODEC.decode(buf); //读取轨道参数
 
                             parent_index.add(buf.readInt());    //读取父级索引
                             int children_size = buf.readInt();  //读取子级数量

@@ -54,7 +54,7 @@ public class PlanetManager {
         if(planet.position == null)planet.position = new Vector3f();
         if(planet.mass == 0) planet.position.set(0, 0, 0);
 
-        planet.position.set(planet.parent.position).add(planet.oribit.calPosition(planet.parent.mass, t));
+        planet.position.set(planet.parent.position).add(planet.orbit.calPosition(planet.parent.mass, t));
         updateNoonVec(planet);
         planet.children.forEach(child -> updatePositions(child, t));
     }
@@ -95,9 +95,8 @@ public class PlanetManager {
         Vector3f tmp = (new Vector3f()).set(planet.getAxis());   //构建 @parent_vec 平行于 @planet.axis 的向量分量
         float n = planet.getAxis().dot(parent_vec);
         tmp.mul(n);
-        planet.Vec_noon.set(parent_vec).sub(tmp);   //减去平行于 @planet.axis 的分量，获得垂直于 @planet.axis 向量分量
-        if (planet.Vec_noon.lengthSquared() < 0.01f) planet.Vec_noon.set(0, 1, 0);
-        planet.Vec_noon.normalize();
+        planet.Vec_noon.set(parent_vec).sub(tmp).normalize();   //减去平行于 @planet.axis 的分量，获得垂直于 @planet.axis 向量分量
+        if (planet.Vec_noon.lengthSquared() < 0.01f) planet.Vec_noon.set(-1, 0, 0);
     }
 
 
